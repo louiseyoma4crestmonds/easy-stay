@@ -4,7 +4,7 @@
 
 @screen desktop {
   .appWrapper {
-    @apply bg-crest-background h-full min-h-screen py-14 px-10;
+    @apply h-full min-h-screen py-14 px-10;
   }
 
   .appMainWrapperWithNavigation {

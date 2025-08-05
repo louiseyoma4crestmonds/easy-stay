@@ -8,7 +8,7 @@
 }
 
 .headingLight {
-  @apply text-crest-black;
+  @apply text-black;
 }
 
 /* Variants */

@@ -10,9 +10,6 @@
 .btn:disabled:hover {
   @apply cursor-not-allowed bg-gray-50 text-gray-200;
 }
-.btn:disabled:hover {
-  @apply animate-shake;
-}
 
 /* Button Widths */
 .btnFull {
@@ -20,37 +17,3 @@
 }
 
 /* Button Varients */
-.btnPrimary {
-  @apply bg-crest-red text-white;
-}
-.btnPrimary:hover {
-  @apply bg-crest-red-dark;
-}
-
-.btnSecondary {
-  @apply bg-crest-red/[.08] text-crest-red;
-}
-.btnSecondary:hover {
-  @apply bg-crest-red/[.2];
-}
-
-.btnMuted {
-  @apply bg-crest-gray text-white;
-}
-.btnMuted:hover {
-  @apply bg-crest-gray-dark;
-}
-
-.btnAccent {
-  @apply bg-crest-purple text-white;
-}
-.btnAccent:hover {
-  @apply bg-crest-purple-dark;
-}
-
-.btnBlack {
-  @apply bg-crest-black text-white;
-}
-.btnBlack:hover {
-  @apply bg-black;
-}

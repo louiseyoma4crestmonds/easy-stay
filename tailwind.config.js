@@ -24,8 +24,7 @@ module.exports = {
         desktop: "1280px", // => @media (min-width: 1280px) { ... }
       },
       colors: {
-        "primary600": customColors.primary600,
-
+        primary600: customColors.primary600,
       },
     },
   },

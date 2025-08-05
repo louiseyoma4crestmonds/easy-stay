@@ -5,8 +5,6 @@ import Modal from "@/molecules/Modal";
 import Panel from "@/atoms/Panel";
 import Button from "@/atoms/Button";
 import Heading from "@/atoms/Heading";
-import ProgressStatus from "@/atoms/ProgressStatus";
-import LearningJourneyItem from "@/molecules/LearningJourneyItem";
 
 function Home(): JSX.Element {
   const [showModal, setShowModal] = useState(false);
@@ -60,15 +58,6 @@ function Home(): JSX.Element {
                   <span>Learning objective</span>
                   <span>Progress Status</span>
                 </div>
-                <LearningJourneyItem itemNumber={1} title="Learning one">
-                  <ProgressStatus status="completed" />
-                </LearningJourneyItem>
-                <LearningJourneyItem itemNumber={2} title="Learning two">
-                  <ProgressStatus status="inProgress" />
-                </LearningJourneyItem>
-                <LearningJourneyItem itemNumber={3} title="Learning three">
-                  <ProgressStatus status="notStarted" />
-                </LearningJourneyItem>
               </div>
             </Panel>
           </div>

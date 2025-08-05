@@ -4,7 +4,9 @@
 
 @font-face {
   font-family: GT Walsheim Pro;
-  src: local("GT Walsheim Pro Regular"), local("GTWalsheimProRegular"),
+  src:
+    local("GT Walsheim Pro Regular"),
+    local("GTWalsheimProRegular"),
     url("/fonts/GTWalsheimProRegular.woff2") format("woff2"),
     url("/fonts/GTWalsheimProRegular.woff") format("woff"),
     url("/fonts/GTWalsheimProRegular.ttf") format("truetype");
@@ -14,7 +16,9 @@
 
 @font-face {
   font-family: GT Walsheim Pro;
-  src: local("GT Walsheim Pro Medium"), local("GTWalsheimProMedium"),
+  src:
+    local("GT Walsheim Pro Medium"),
+    local("GTWalsheimProMedium"),
     url("/fonts/GTWalsheimProMedium.woff2") format("woff2"),
     url("/fonts/GTWalsheimProMedium.woff") format("woff"),
     url("/fonts/GTWalsheimProMedium.ttf") format("truetype");
@@ -24,7 +28,9 @@
 
 @font-face {
   font-family: GT Walsheim Pro;
-  src: local("GT Walsheim Pro Bold"), local("GTWalsheimProBold"),
+  src:
+    local("GT Walsheim Pro Bold"),
+    local("GTWalsheimProBold"),
     url("/fonts/GTWalsheimProBold.woff2") format("woff2"),
     url("/fonts/GTWalsheimProBold.woff") format("woff"),
     url("/fonts/GTWalsheimProBold.ttf") format("truetype");
@@ -35,6 +41,8 @@
 @layer base {
   html {
     position: relative;
-    font-family: GT Walsheim Pro, sans-serif;
+    font-family:
+      GT Walsheim Pro,
+      sans-serif;
   }
 }
