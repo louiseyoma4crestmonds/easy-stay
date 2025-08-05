@@ -1,0 +1,3 @@
+.utilityBarContainer {
+  @apply flex justify-between items-center mb-11;
+}

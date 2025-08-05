@@ -1,0 +1,13 @@
+.appWrapper {
+  @apply flex flex-col px-4;
+}
+
+@screen desktop {
+  .appWrapper {
+    @apply bg-crest-background h-full min-h-screen py-14 px-10;
+  }
+
+  .appMainWrapperWithNavigation {
+    @apply lg:ml-[290px];
+  }
+}
