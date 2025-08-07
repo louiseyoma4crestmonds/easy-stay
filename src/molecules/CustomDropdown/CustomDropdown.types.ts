@@ -11,11 +11,5 @@ export interface CustomDropdownProps {
   options: DropdownOption[];
   value?: DropdownOption;
   onChange?: (value: DropdownOption) => void;
-  showCounter?: boolean;
-  counterValue?: number;
-  min?: number;
-  max?: number;
-  onCounterChange?: (value: number) => void;
-  onApply?: () => void;
   placeholder?: string;
 }

@@ -207,7 +207,6 @@ function SignupComp({ setShowOtp }: SignupCompProps) {
               options={countries}
               value={country}
               onChange={(val) => setCountry(val)}
-              showCounter={false}
             />{" "}
             <input
               type="tel"

@@ -3,23 +3,10 @@ import { CustomDropdownProps, DropdownOption } from "./CustomDropdown.types";
 import styles from "./CustomDropdown.module.css";
 
 function CustomDropdown(props: CustomDropdownProps) {
-  const {
-    options,
-    value,
-    onChange,
-    showCounter,
-    counterValue,
-    min = 1,
-    max = 10,
-    onCounterChange,
-    onApply,
-    placeholder,
-  } = props;
+  const { options, value, onChange, placeholder } = props;
 
   const [open, setOpen] = useState(false);
-  const [internalCounter, setInternalCounter] = useState<number>(
-    counterValue ?? min
-  );
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,33 +22,8 @@ function CustomDropdown(props: CustomDropdownProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    setInternalCounter(counterValue ?? min);
-  }, [counterValue, min]);
-
   const handleSelect = (option: DropdownOption) => {
     onChange?.(option);
-    setOpen(false);
-  };
-
-  const handleMinus = () => {
-    if (internalCounter > min) {
-      const newVal = internalCounter - 1;
-      setInternalCounter(newVal);
-      onCounterChange?.(newVal);
-    }
-  };
-
-  const handlePlus = () => {
-    if (internalCounter < max) {
-      const newVal = internalCounter + 1;
-      setInternalCounter(newVal);
-      onCounterChange?.(newVal);
-    }
-  };
-
-  const handleApply = () => {
-    onApply?.();
     setOpen(false);
   };
 
@@ -141,34 +103,6 @@ function CustomDropdown(props: CustomDropdownProps) {
               </li>
             ))}
           </ul>
-          {showCounter && (
-            <div className="flex items-center justify-between px-4 py-2 border-t mt-2">
-              <button
-                type="button"
-                className="px-2 py-1 border rounded"
-                onClick={handleMinus}
-                disabled={internalCounter <= min}
-              >
-                -
-              </button>
-              <span className="mx-2">{internalCounter}</span>
-              <button
-                type="button"
-                className="px-2 py-1 border rounded"
-                onClick={handlePlus}
-                disabled={internalCounter >= max}
-              >
-                +
-              </button>
-              <button
-                type="button"
-                className="ml-4 px-3 py-1 bg-blue-600 text-white rounded"
-                onClick={handleApply}
-              >
-                Apply
-              </button>
-            </div>
-          )}
         </div>
       )}
     </div>

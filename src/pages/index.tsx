@@ -1,19 +1,16 @@
+import HeroSec from "@/molecules/HeroSec";
 import { useState } from "react";
-
-import AppLayout from "@/layouts/AppLayout";
-import Modal from "@/molecules/Modal";
-import Panel from "@/atoms/Panel";
-import Button from "@/atoms/Button";
-import Heading from "@/atoms/Heading";
 
 function Home(): JSX.Element {
   const [showModal, setShowModal] = useState(false);
 
-  const onCloseModal = () => {
-    setShowModal(false);
-  };
+  return (
+    <div>
+      <HeroSec />
 
-  return <div>HELLO EXPLORE PAGE</div>;
+      {/* Add other components as needed */}
+    </div>
+  );
 }
 
 export default Home;
