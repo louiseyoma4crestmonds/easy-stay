@@ -1,0 +1,15 @@
+.bgdiv {
+  @apply absolute inset-0 flex items-center justify-center;
+}
+.bgSecond {
+  @apply bg-white/10  backdrop-blur-2xl px-8 py-28 rounded-lg text-left max-w-lg;
+}
+.reviewH2 {
+  @apply text-4xl font-bold mb-2 text-gray-50;
+}
+.reviewP {
+  @apply text-gray-300 font-medium text-base;
+}
+.reviewP2 {
+  @apply text-xl font-normal text-gray-300;
+}
