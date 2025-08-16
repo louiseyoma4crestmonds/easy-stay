@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Image from "next/image";
 import { ButtonProps } from "./Button.types";
 
 import styles from "./Button.module.css";
@@ -10,6 +11,9 @@ function Button(props: ButtonProps) {
     disabled = false,
     onClick,
     children,
+    image,
+    imageWidth,
+    height,
   } = props;
 
   const btnClassName = classNames({
@@ -18,19 +22,24 @@ function Button(props: ButtonProps) {
     [styles.btnPrimary]: variant === "primary",
     [styles.btnSecondary]: variant === "secondary",
     [styles.btnMuted]: variant === "muted",
-    [styles.btnAccent]: variant === "accent",
+    [styles.btnAccentWithImg]: variant === "accentWithImg",
     [styles.btnBlack]: variant === "black",
   });
 
-  const handleOnClick = () => onClick;
+  // const handleOnClick = () => onClick;
 
   return (
     <button
-      type="button"
+      type="submit"
       className={btnClassName}
-      onClick={handleOnClick()}
+      onClick={() => onClick?.()}
       disabled={disabled}
     >
+      {variant === "accentWithImg" ? (
+        <Image src={image} width={imageWidth} height={height} />
+      ) : (
+        ""
+      )}
       {children}
     </button>
   );
