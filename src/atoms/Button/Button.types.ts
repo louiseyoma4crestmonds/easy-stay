@@ -2,7 +2,7 @@ export type ButtonVariant =
   | "primary"
   | "secondary"
   | "muted"
-  | "accent"
+  | "accentWithImg"
   | "black"
   | "none"
   | "pink";
@@ -14,5 +14,8 @@ export type ButtonProps = {
   width?: ButtonWidth;
   disabled?: boolean;
   onClick?: () => void;
+  image?: any;
+  imageWidth?: number;
+  height?: number;
   children?: React.ReactNode;
 };
