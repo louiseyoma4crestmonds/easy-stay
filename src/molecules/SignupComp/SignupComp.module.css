@@ -1,0 +1,27 @@
+.maindiv {
+  @apply flex flex-col min-h-screen bg-white;
+}
+.formDiv {
+  @apply w-full md:max-w-xl max-w-none px-5 md:px-0 mx-auto;
+}
+.formLabel {
+  @apply block mb-1 text-gray-700 font-medium;
+}
+.formInput {
+  @apply w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none;
+}
+.formP1 {
+  @apply md:text-2xl text-base font-semibold mb-2 text-center mt-8 text-gray-900;
+}
+.formP2 {
+  @apply md:text-base text-sm font-normal mb-8 text-center text-gray-500;
+}
+.eyeIcon {
+  @apply absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer;
+}
+.formButtonDiv {
+  @apply flex flex-col mt-6 mb-12 space-y-4;
+}
+.errMsg {
+  @apply text-red-500 text-sm mt-1;
+}

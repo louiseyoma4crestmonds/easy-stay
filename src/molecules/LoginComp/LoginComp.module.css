@@ -1,0 +1,29 @@
+.maindiv {
+  @apply flex flex-col min-h-screen  bg-white;
+}
+
+.loginP1 {
+  @apply md:text-2xl text-base font-semibold mb-2 text-center mt-8 text-gray-900;
+}
+.loginP2 {
+  @apply md:text-base text-sm font-normal mb-8 text-center text-gray-500;
+}
+.formDiv {
+  @apply w-full md:max-w-xs max-w-none px-5 md:px-0 mx-auto;
+}
+.formLabel {
+  @apply block mb-1 text-gray-700 font-medium;
+}
+.formButtonDiv {
+  @apply flex flex-col mt-6 mb-12 space-y-4;
+}
+
+.eyeIcon {
+  @apply absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer;
+}
+.checkbox {
+  @apply border border-gray-300 rounded-[4px] w-4 h-4 mr-2 cursor-pointer;
+}
+.checkboxLabel {
+  @apply flex items-center text-gray-700 text-sm font-medium cursor-pointer;
+}
