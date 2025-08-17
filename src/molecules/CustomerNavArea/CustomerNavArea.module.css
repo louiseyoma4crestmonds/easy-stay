@@ -1,0 +1,12 @@
+.btndiv {
+  @apply border border-gray-300 rounded-lg bg-[#00000033] p-[10px] cursor-pointer w-full flex flex-row items-center justify-center text-sm font-medium text-white;
+}
+.dropdowndiv {
+  @apply absolute right-0 z-10 mt-1 w-full bg-white text-gray-700 text-sm border border-gray-200 min-w-[250px] rounded shadow-lg;
+}
+.btndivBanner {
+  @apply border border-gray-200 rounded-lg bg-transparent p-[10px] cursor-pointer w-full flex flex-row items-center justify-center text-sm font-medium text-white;
+}
+.dropdowndivBanner {
+  @apply absolute right-0 z-10 mt-1 w-full bg-white border text-gray-700 text-sm border-gray-200 min-w-[250px] rounded shadow-lg;
+}

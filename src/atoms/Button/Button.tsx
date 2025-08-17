@@ -20,10 +20,14 @@ function Button(props: ButtonProps) {
     [styles.btn]: true,
     [styles.btnFull]: width === "full",
     [styles.btnPrimary]: variant === "primary",
+    [styles.btnPrimaryWithImg]: variant === "primaryWithImg",
     [styles.btnSecondary]: variant === "secondary",
     [styles.btnMuted]: variant === "muted",
+    [styles.btnExplore]: variant === "explore",
+    [styles.btnExplore2]: variant === "explore2",
     [styles.btnAccentWithImg]: variant === "accentWithImg",
     [styles.btnBlack]: variant === "black",
+    [styles.btnProfile]: variant === "profile",
   });
 
   // const handleOnClick = () => onClick;
@@ -35,7 +39,7 @@ function Button(props: ButtonProps) {
       onClick={() => onClick?.()}
       disabled={disabled}
     >
-      {variant === "accentWithImg" ? (
+      {variant === "accentWithImg" || variant === "primaryWithImg" ? (
         <Image src={image} width={imageWidth} height={height} />
       ) : (
         ""

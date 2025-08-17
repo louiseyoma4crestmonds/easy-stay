@@ -207,6 +207,10 @@ function SignupComp({ setShowOtp }: SignupCompProps) {
               options={countries}
               value={country}
               onChange={(val) => setCountry(val)}
+              buttonClassName={styles.btndiv}
+              dropdownClassName={styles.dropdowndiv}
+              toggleIcon="/images/chevron-down-outline.png"
+              spanClassName="flex items-center gap-3"
             />{" "}
             <input
               type="tel"

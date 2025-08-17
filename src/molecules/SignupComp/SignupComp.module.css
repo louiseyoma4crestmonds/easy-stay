@@ -25,3 +25,9 @@
 .errMsg {
   @apply text-red-500 text-sm mt-1;
 }
+.btndiv {
+  @apply w-full px-5 py-3 border flex flex-row items-center justify-center  border-gray-300 rounded-l-lg bg-gray-100;
+}
+.dropdowndiv {
+  @apply absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg;
+}

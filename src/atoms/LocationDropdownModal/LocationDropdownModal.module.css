@@ -1,0 +1,12 @@
+.modaldiv {
+  @apply absolute  z-50 w-full  mt-2 top-full bg-white rounded-lg shadow-xl p-4;
+}
+.modalP1 {
+  @apply my-2 text-xs text-gray-500 font-semibold;
+}
+.modalText {
+  @apply text-sm text-gray-500 font-normal;
+}
+.modaldiv2 {
+  @apply flex justify-between items-center  cursor-pointer bg-gray-50 py-2 px-3 rounded-lg;
+}

@@ -1,0 +1,12 @@
+.background {
+  @apply fixed  z-50 bg-black bg-opacity-75  top-0 right-0 bottom-0 left-0 flex justify-center items-center overflow-y-auto cursor-default;
+}
+.frame {
+  @apply top-0 left-0 right-0 bottom-0 bg-white max-w-3xl  rounded-lg;
+}
+.seconddiv {
+  @apply flex flex-row justify-between items-center  absolute inset-0 p-8;
+}
+.thirddiv {
+  @apply flex flex-row gap-2 items-center px-3;
+}

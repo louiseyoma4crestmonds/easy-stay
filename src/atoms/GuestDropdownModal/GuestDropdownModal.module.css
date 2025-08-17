@@ -1,0 +1,27 @@
+.modaldiv {
+  @apply absolute  z-50 w-full  mt-2 top-full bg-white rounded-lg shadow-xl;
+}
+.guestType {
+  @apply flex justify-between items-center cursor-pointer;
+}
+.guestTypeHeader {
+  @apply flex flex-col;
+}
+.guestTypeLabel {
+  @apply text-sm text-gray-800 font-semibold;
+}
+.guestTypeHelper {
+  @apply text-sm text-gray-500 font-normal;
+}
+.guestCount {
+  @apply text-sm text-gray-800 font-normal;
+}
+.decrementButton {
+  @apply border border-gray-300 bg-gray-100 rounded p-[2px] w-5 h-5 flex items-center justify-center cursor-pointer text-gray-900;
+}
+.incrementButton {
+  @apply border border-gray-300 bg-gray-100 rounded p-[2px] w-5 h-5 flex items-center justify-center cursor-pointer text-gray-900;
+}
+.guestCountControls {
+  @apply flex items-center gap-2;
+}

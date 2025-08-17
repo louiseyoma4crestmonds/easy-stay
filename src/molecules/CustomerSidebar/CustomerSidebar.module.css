@@ -1,0 +1,3 @@
+.maindiv {
+  @apply flex flex-col gap-2 bg-white w-[15%] max-h-52 max-w-xs p-4 rounded-xl;
+}
