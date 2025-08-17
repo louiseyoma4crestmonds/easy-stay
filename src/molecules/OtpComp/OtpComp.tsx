@@ -2,9 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import styles from "./OtpComp.module.css";
+import { resendVerificationCode, verifyCode } from "src/pages/api/user";
 
-function OtpComp() {
+export type OtpCompProps = {
+  email: string;
+};
+
+function OtpComp(props: OtpCompProps) {
   const router = useRouter();
+  const { email } = props;
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [showModal, setShowModal] = useState(false);
@@ -63,6 +69,7 @@ function OtpComp() {
   const handleSubmit = () => {
     if (isComplete) {
       // FUTURE API CALLS
+      verifyCode(`${otp[0]}${otp[1]}${otp[2]}${otp[3]}`, email);
       // Reset before triggering modal again
       setShowModal(false);
       setModalVisible(false);
@@ -79,6 +86,7 @@ function OtpComp() {
 
   const handleResend = () => {
     // Future: call resend API here
+    resendVerificationCode(email);
     setOtp(["", "", "", ""]);
     inputsRef.current[0]?.focus();
   };
@@ -96,8 +104,7 @@ function OtpComp() {
       <div className={styles.secondDiv}>
         <p className={styles.otpP1}>Two‑Factor Authentication</p>
         <p className={styles.otpP2}>
-          OTP has been sent to{" "}
-          <span className="text-gray-800">Lek**@gmail.com</span>
+          OTP has been sent to <span className="text-gray-800">{email}</span>
         </p>
         {/* OTP inputs with dash inside initially */}
         <div className={styles.otpDiv}>

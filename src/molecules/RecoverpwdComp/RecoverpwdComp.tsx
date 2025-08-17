@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import styles from "./RecoverpwdComp.module.css";
+import { sendPasswordResetLink } from "src/pages/api/user";
 
 function RecoverpwdComp() {
   const router = useRouter();
@@ -27,6 +28,9 @@ function RecoverpwdComp() {
 
     try {
       // 🔒 Future: Replace this block with your real API call
+      sendPasswordResetLink(email).then((response: any) => {
+        console.log("tt", response);
+      });
       setErrors("");
       setStep(2); // Proceed to new password inputs
     } catch (err: any) {
