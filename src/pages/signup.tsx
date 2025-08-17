@@ -7,6 +7,7 @@ import OtpComp from "@/molecules/OtpComp";
 
 export default function SignupPage() {
   const [showOtp, setShowOtp] = useState(false);
+  const [otpEmail, setOtpEmail] = useState("");
 
   const router = useRouter();
   const handleSigninClick = () => {
@@ -26,12 +27,12 @@ export default function SignupPage() {
       {showOtp ? (
         <div className="w-full md:w-1/2">
           {" "}
-          <OtpComp />{" "}
+          <OtpComp email={otpEmail} />{" "}
         </div>
       ) : (
         <div className="w-full md:w-1/2">
           {" "}
-          <SignupComp setShowOtp={setShowOtp} />{" "}
+          <SignupComp setShowOtp={setShowOtp} setOtpEmail={setOtpEmail} />{" "}
         </div>
       )}
     </div>
