@@ -1,7 +1,10 @@
 import Button from "@/atoms/Button";
+import { HeroSecProps } from "./HeroSec.types";
 import styles from "./HeroSec.module.css";
 
-function HeroSec() {
+function HeroSec(props: HeroSecProps) {
+  const { userDetails, userAuthenticated } = props;
+
   return (
     <div className={styles.heroSection}>
       <img
@@ -20,12 +23,30 @@ function HeroSec() {
           />{" "}
         </div>
 
-        <div className="flex justify-between items-center gap-2">
-          <div className="border border-gray-300 rounded-lg bg-[#00000033] p-[10px] ">
-            <img src="/images/menu.png" alt="menu Logo" className="w-5 h-5 " />
+        {userAuthenticated ? (
+          <div className="text-white flex gap-x-8">
+            <div>Explore</div>
+            <div>My Bookings</div>
+            <div>Saved</div>
           </div>
-          <Button variant="primary">Login or Sign Up</Button>
-        </div>
+        ) : (
+          <div />
+        )}
+
+        {userAuthenticated ? (
+          <div className="text-white">Hi, {userDetails.lastName}</div>
+        ) : (
+          <div className="flex justify-between items-center gap-2">
+            <div className="border border-gray-300 rounded-lg bg-[#00000033] p-[10px] ">
+              <img
+                src="/images/menu.png"
+                alt="menu Logo"
+                className="w-5 h-5 "
+              />
+            </div>
+            <Button variant="primary">Login or Sign Up</Button>
+          </div>
+        )}
       </div>
       {/* hero modal */}
       <div className={styles.heromodal}>
