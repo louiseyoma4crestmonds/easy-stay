@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import CustomDropdown from "../CustomDropdown";
 import styles from "./SignupComp.module.css";
+import { createNewUser } from "src/pages/api/user";
 
 interface DropdownOption {
   label?: string;
@@ -15,9 +16,10 @@ interface DropdownOption {
 
 export type SignupCompProps = {
   setShowOtp: (show: boolean) => void;
+  setOtpEmail: (email: string) => void;
 };
 
-function SignupComp({ setShowOtp }: SignupCompProps) {
+function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
   const router = useRouter();
   const countries = [
     { name: "USA", code: "+1", flag: "/images/US.png" },
@@ -94,7 +96,19 @@ function SignupComp({ setShowOtp }: SignupCompProps) {
 
     if (Object.keys(newErrors).length === 0) {
       // All validations passed
-      setShowOtp(true); // Show OTP component
+      createNewUser(firstName, lastName, email, phone, password).then(
+        (response: any) => {
+          console.log("sign up response: ", response);
+          if (response?.data?.code === 208) {
+            // Show a mordal that says email already exists
+          }
+          if (response.data.code === 201) {
+            // Show otp mordal
+            setOtpEmail(email);
+            setShowOtp(true);
+          }
+        }
+      );
     }
   };
 
@@ -343,7 +357,7 @@ function SignupComp({ setShowOtp }: SignupCompProps) {
         </div>
         <div className={styles.formButtonDiv}>
           <Button variant="primary" width="full">
-            Create Account
+            <button type="submit">Create Account</button>
           </Button>
           <Button
             variant="accentWithImg"
