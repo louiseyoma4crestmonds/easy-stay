@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import Button from "@/atoms/Button";
 import styles from "./LoginComp.module.css";
 
@@ -8,28 +9,43 @@ function LoginComp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState("");
+  const [error, setError] = useState("");
+
+  const signinUser = async () => {
+    await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    })
+      .then((res) => {
+        if (res?.status === 200) {
+          router.push({ pathname: "/" });
+        } else if (res?.status === 401) {
+          setError("Wrong Login credentials");
+        } else {
+          setError("Network error");
+        }
+      })
+      .catch((err) => {
+        setError("Something went wrong");
+      });
+  };
 
   // Handle login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email || !password) {
-      setErrors("Please enter both email and password.");
+      setError("Please enter both email and password.");
       return;
     }
 
-    setErrors(""); // Clear previous errors
+    setError(""); // Clear previous errors
 
     try {
-      // 🔒 Future: Replace this block with your real API call
-      setErrors("");
-      // ✅ Redirect after successful login
-      const redirectPath = (router.query.redirect as string) || "/";
-      router.push(redirectPath);
+      signinUser();
     } catch (err: any) {
-      // 🧯 Handle error and show it to user
-      setErrors(err.message || "An unexpected error occurred. Try again.");
+      setError(err.message || "An unexpected error occurred. Try again.");
     }
   };
 
@@ -76,7 +92,7 @@ function LoginComp() {
               autoComplete="new-email"
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (errors) setErrors("");
+                if (error) setError("");
               }}
               placeholder="Input email"
               className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none "
@@ -99,7 +115,7 @@ function LoginComp() {
               autoComplete="new-password"
               onChange={(e) => {
                 setPassword(e.target.value);
-                if (errors) setErrors("");
+                if (error) setError("");
               }}
               placeholder=" Password"
               className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none"
@@ -142,11 +158,12 @@ function LoginComp() {
           </p>
         </div>
         {/* Error message */}
-        {errors && <p className="text-red-600 text-sm mb-4">{errors}</p>}
+        {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
         <div className={styles.formButtonDiv}>
           <Button variant="primary" width="full">
-            Log in
+            <button type="submit">Log in</button>
           </Button>
+
           <Button
             variant="accentWithImg"
             width="full"
