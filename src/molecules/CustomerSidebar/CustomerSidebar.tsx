@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { SettingsTab } from "src/pages/customer/settings";
+import { SettingsTab } from "src/pages/guest/settings";
 import styles from "./CustomerSidebar.module.css";
 
 export default function CustomerSidebar({
@@ -27,7 +27,7 @@ export default function CustomerSidebar({
             onClick={() => {
               onChange(tab);
               router.push(
-                { pathname: "/customer/settings", query: { tab } },
+                { pathname: "/guest/settings", query: { tab } },
                 undefined,
                 { shallow: true }
               );

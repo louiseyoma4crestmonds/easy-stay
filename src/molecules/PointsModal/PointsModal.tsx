@@ -1,11 +1,16 @@
 import Button from "@/atoms/Button";
 import styles from "./PointsModal.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { PointsModalProps } from "./PointsModal.types";
 
-function PointsModal({ onClose }: PointsModalProps) {
+function PointsModal({
+  onClose,
+  onProceed,
+  selected,
+  setSelected,
+}: PointsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<null | "apartment" | "ride">(null);
+  // const [selected, setSelected] = useState<null | "apartment" | "ride">(null);
 
   // Example points (this will come from props or API in real app)
   const userPoints = 12000;
@@ -23,22 +28,29 @@ function PointsModal({ onClose }: PointsModalProps) {
   // Message logic
   let statusMessage = "";
   if (!canAffordAny) {
-    statusMessage = "Insufficient points";
+    statusMessage = "Insufficient Points";
   } else {
     statusMessage = ` ${userPoints.toLocaleString()} Points Available`;
   }
 
   // Close if click is outside modal content
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      onClose();
-    }
-  };
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [onClose]);
 
   return (
-    <div className={styles.background} onClick={handleBackdropClick}>
+    <div className={styles.background}>
       <div className={styles.frame} ref={modalRef}>
-        <div className="flex justify-between items-center border-b px-8 py-6 ">
+        <div className={styles.firstdiv}>
           <span className="text-gray-900 font-medium text-xl ">
             Redeem Your Points
           </span>
@@ -83,13 +95,13 @@ function PointsModal({ onClose }: PointsModalProps) {
 
         {/*WIN A FREE APARTMENT BOOKING*/}
         <div
-          className={`flex flex-row bg-blue-100 border p-4 rounded-lg mx-8 justify-between mb-8 items-center cursor-pointer transition-all ${
+          className={` ${styles.apartmentBooking}  ${
             selected === "apartment" ? "border border-blue-700" : ""
           }`}
           onClick={() => setSelected("apartment")}
         >
           <div className="flex flex-row items-center gap-3 ">
-            <div className="w-12 h-12 flex-shrink-0 self-center rounded-full bg-white flex items-center justify-center ">
+            <div className={styles.giftoutline}>
               <img
                 src="/images/gift-outline.png"
                 alt="gift-icon"
@@ -97,9 +109,7 @@ function PointsModal({ onClose }: PointsModalProps) {
               />
             </div>
             <div className="flex flex-col ">
-              <p className="text-gray-800 font-semibold text-base ">
-                Free Apartment Booking{" "}
-              </p>
+              <p className={styles.P1}>Free Apartment Booking </p>
               <p className="text-gray-500 font-normal text-sm ">
                 Get a complimentary night stay at one of our partner apartments
               </p>
@@ -112,20 +122,18 @@ function PointsModal({ onClose }: PointsModalProps) {
               </p>
             </div>{" "}
           </div>
-          <div className="h-10 px-4 rounded-full flex items-center justify-center bg-blue-600 text-base text-white font-normal flex-shrink-0 ">
-            10,000 Points
-          </div>
+          <div className={styles.pointsdiv1}>10,000 Points</div>
         </div>
 
         {/*WIN A FREE AIRPORT RIDE*/}
         <div
-          className={`flex flex-row bg-purple-100 border p-4 rounded-lg mx-8 justify-between mb-8 items-center cursor-pointer transition-all ${
+          className={` ${styles.airportRide} ${
             selected === "ride" ? "border border-purple-600" : ""
           }`}
           onClick={() => setSelected("ride")}
         >
           <div className="flex flex-row items-center gap-3 ">
-            <div className="w-12 h-12 flex-shrink-0 self-center rounded-full bg-white flex items-center justify-center ">
+            <div className={styles.giftoutline}>
               <img
                 src="/images/purple-gift-outline.png"
                 alt="gift-icon"
@@ -133,9 +141,7 @@ function PointsModal({ onClose }: PointsModalProps) {
               />
             </div>
             <div className="flex flex-col ">
-              <p className="text-gray-800 font-semibold text-base ">
-                Free Airport Ride
-              </p>
+              <p className={styles.P1}>Free Airport Ride</p>
               <p className="text-gray-500 font-normal text-sm ">
                 Complimentary airport transfer service to or from your
                 destination
@@ -149,12 +155,10 @@ function PointsModal({ onClose }: PointsModalProps) {
               </p>
             </div>{" "}
           </div>
-          <div className="h-10 px-4 rounded-full flex items-center justify-center bg-purple-600 text-base text-white font-normal flex-shrink-0 ">
-            10,000 Points
-          </div>
+          <div className={styles.pointsdiv2}>10,000 Points</div>
         </div>
         <hr />
-        <div className="px-8 py-5 flex items-center justify-between ">
+        <div className={styles.buttondiv}>
           <p
             className={` ${
               !canAffordAny
@@ -164,7 +168,11 @@ function PointsModal({ onClose }: PointsModalProps) {
           >
             {statusMessage}{" "}
           </p>
-          <Button variant="primary" disabled={isButtonDisabled}>
+          <Button
+            variant="primary"
+            disabled={isButtonDisabled}
+            onClick={onProceed}
+          >
             Proceed
           </Button>
         </div>

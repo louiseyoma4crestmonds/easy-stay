@@ -35,3 +35,30 @@
 .btndiv2 {
   @apply flex justify-between items-center px-8 py-5;
 }
+.modalContent {
+  @apply max-w-xs flex flex-col justify-center py-4 items-center;
+}
+.modalContent2 {
+  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center;
+}
+.modalContent3 {
+  @apply max-w-md flex flex-col justify-center px-2 py-3 items-center;
+}
+.modalContent4 {
+  @apply max-w-sm flex flex-col justify-center px-4 py-5 items-center -mt-4;
+}
+.P1 {
+  @apply text-gray-900 text-lg font-semibold text-center my-4;
+}
+.otpP2 {
+  @apply text-sm font-normal text-gray-500 text-center;
+}
+.otpDiv {
+  @apply flex items-center justify-center gap-4 my-4;
+}
+.otpInput {
+  @apply w-20 h-20 text-center text-5xl text-gray-600 font-medium border border-gray-300 rounded-lg bg-white focus:outline-none;
+}
+.otpText {
+  @apply text-gray-500 text-sm mt-2 mb-6 text-center font-normal;
+}

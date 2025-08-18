@@ -35,3 +35,6 @@
 .btnProfile {
   @apply text-gray-800 font-medium border border-gray-300 py-3 px-5 text-base;
 }
+.btnDelete {
+  @apply text-white bg-red-600 font-medium py-3 px-5 text-base;
+}

@@ -139,7 +139,7 @@ function RecoverpwdComp() {
                   if (errors) setErrors("");
                 }}
                 placeholder="Input email"
-                className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none "
+                className={styles.formInput}
               />
             </div>
           </div>
@@ -164,7 +164,7 @@ function RecoverpwdComp() {
                     if (errors) setErrors("");
                   }}
                   placeholder="Password"
-                  className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none"
+                  className={styles.formInput}
                 />
                 <img
                   src={
@@ -199,7 +199,7 @@ function RecoverpwdComp() {
                     if (errors) setErrors("");
                   }}
                   placeholder=" Password"
-                  className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none"
+                  className={styles.formInput}
                 />
                 <img
                   src={

@@ -1,65 +1,71 @@
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import Panel from "@/atoms/Panel";
-import Backdrop from "@/atoms/Backdrop";
+import Image from "next/image";
+import { useEffect } from "react";
 import { ModalProps } from "./Modal.types";
-
 import styles from "./Modal.module.css";
 
 function Modal(props: ModalProps) {
-  const { isOpen, onClose, children } = props;
-  const [isBrowser, setIsBrowser] = useState(false);
+  const {
+    onClose,
+    isOpen,
+    message,
+    imageUrl,
+    width,
+    height,
+    modalcontent,
+    children,
+    showCloseButton = true,
+    disableCloseOnClickOutside = false,
+  } = props;
 
+  // Handle click outside modal to close it
   useEffect(() => {
-    setIsBrowser(true);
-  }, []);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && !disableCloseOnClickOutside) {
+        const modalElement = document.querySelector(`.${styles.frame}`);
+        if (modalElement && !modalElement.contains(event.target as Node)) {
+          onClose();
+        }
+      }
+    };
 
-  const handleCloseClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onClose();
-  };
+    document.addEventListener("mousedown", handleClickOutside);
 
-  const modalContent = isOpen ? (
-    <>
-      <Backdrop />
-      <div className={styles.modal}>
-        <div className={styles.modalContent}>
-          <Panel>
-            <button
-              type="button"
-              className="absolute top-5 right-5 z-50"
-              onClick={handleCloseClick}
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose, disableCloseOnClickOutside]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className={styles.background}>
+      <div className={styles.frame}>
+        <div className="p-4 ">
+          {showCloseButton && (
+            <div
+              className="cursor-pointer flex justify-end "
+              onClick={() => {
+                if (!disableCloseOnClickOutside) {
+                  onClose();
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => {}}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </button>
-            <div className={styles.modalBody}>{children}</div>
-          </Panel>
+              <Image src="/images/x-outline.png" width={20} height={20} />{" "}
+            </div>
+          )}
+
+          <div className={modalcontent}>
+            {imageUrl && <Image src={imageUrl} width={width} height={height} />}
+
+            {children}
+          </div>
         </div>
       </div>
-    </>
-  ) : null;
-
-  if (isBrowser) {
-    return ReactDOM.createPortal(
-      modalContent,
-      document.getElementById("modalSlot") as Element
-    );
-  }
-
-  return null;
+    </div>
+  );
 }
 
 export default Modal;

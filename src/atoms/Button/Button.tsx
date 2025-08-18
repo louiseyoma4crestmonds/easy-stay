@@ -28,6 +28,7 @@ function Button(props: ButtonProps) {
     [styles.btnAccentWithImg]: variant === "accentWithImg",
     [styles.btnBlack]: variant === "black",
     [styles.btnProfile]: variant === "profile",
+    [styles.btnDelete]: variant === "delete",
   });
 
   // const handleOnClick = () => onClick;

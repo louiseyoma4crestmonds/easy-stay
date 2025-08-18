@@ -1,6 +1,9 @@
+import ChangePwdTab from "@/molecules/ChangePwdTab";
 import CustomerNavArea from "@/molecules/CustomerNavArea";
 import CustomerSidebar from "@/molecules/CustomerSidebar";
+import NotificationTab from "@/molecules/NotificationTab";
 import ProfileTab from "@/molecules/ProfileTab";
+import SupportTab from "@/molecules/SupportTab";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -37,7 +40,7 @@ export default function Settings() {
   const points = 100;
 
   return (
-    <section className="min-h-screen bg-gray-50 w-full">
+    <section className="min-h-screen bg-gray-50 w-full pb-10 ">
       <CustomerNavArea
         isLoggedIn={isLoggedIn}
         isOnImage={false}
@@ -52,9 +55,9 @@ export default function Settings() {
           tabs={SETTINGS_TABS}
         />
         {activeTab === "my Profile" && <ProfileTab />}
-        {activeTab === "password" && <div>Password Content</div>}
-        {activeTab === "support" && <div>Support Content</div>}
-        {activeTab === "notifications" && <div>Notifications Content</div>}
+        {activeTab === "password" && <ChangePwdTab />}
+        {activeTab === "support" && <SupportTab />}
+        {activeTab === "notifications" && <NotificationTab />}
       </div>
     </section>
   );

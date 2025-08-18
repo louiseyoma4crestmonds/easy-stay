@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import CustomerProfile from "@/atoms/CustomerProfile";
 import styles from "./CustomerNavLeft.module.css";
 import NotificationModal from "../NotificationModal";
-import ProfileModal from "../ProfileModal";
 
 type NavLeftProps = {
   isOnImage?: boolean; // checker for color
@@ -23,7 +22,7 @@ function CustomerNavLeft({
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const goToSupport = () => router.push("/customer/support");
+  const goToSupport = () => router.push("/guest/support");
 
   const toggleNotifications = () => setShowNotifications((prev) => !prev);
 

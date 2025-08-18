@@ -106,7 +106,7 @@ function FooterComp() {
           <p className={styles.quicklinkP1}>Product</p>
           <ul className={styles.quicklinkUL}>
             <li>
-              <a href="/customer/register-your-apartment" className="">
+              <a href="/guest/register-your-apartment" className="">
                 Register your Apartment
               </a>
             </li>
@@ -184,7 +184,7 @@ function FooterComp() {
           <p className={styles.quicklinkP1}>Company</p>
           <ul className={styles.quicklinkUL}>
             <li>
-              <a href="/about-us" className="">
+              <a href="/guest/about-us" className="">
                 About Us
               </a>
             </li>

@@ -10,11 +10,11 @@ type ProfileModalProps = {
 const profileOptions = [
   {
     label: "Settings",
-    link: "/customer/settings?tab=profile",
+    link: "/guest/settings?tab=profile",
   },
-  { label: "Redeem Points", link: "/customer/how-it-works" },
+  { label: "Redeem Points", link: "/guest/how-it-works" },
   { label: "Support", link: "/country/france" },
-  { label: "Logout", link: "/customer/about-us" },
+  { label: "Logout", link: "/guest/about-us" },
 ];
 
 function ProfileModal({ firstName, lastName, points }: ProfileModalProps) {

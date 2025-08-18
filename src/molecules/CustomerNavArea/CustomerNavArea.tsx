@@ -29,16 +29,16 @@ function CustomerNavArea({
   const menuOptions = [
     {
       label: "Register Your Apartment",
-      link: "/customer/register-your-apartment",
+      link: "/guest/register-your-apartment",
     },
-    { label: "How it Works", link: "/customer/how-it-works" },
+    { label: "How it Works", link: "/guest/how-it-works" },
     { label: "Report an Issue", link: "/country/france" },
-    { label: "About Us", link: "/customer/about-us" },
-    { label: "FAQs", link: "/customer/faqs" },
+    { label: "About Us", link: "/guest/about-us" },
+    { label: "FAQs", link: "/guest/faqs" },
   ];
 
-  const handleSignupClick = () => router.push("/customer/signup");
-  const goToHomepage = () => router.push("/customer");
+  const handleSignupClick = () => router.push("/guest/signup");
+  const goToHomepage = () => router.push("/guest");
 
   return (
     <div

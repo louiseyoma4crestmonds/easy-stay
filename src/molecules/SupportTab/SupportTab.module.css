@@ -1,0 +1,33 @@
+.maindiv1 {
+  @apply bg-white flex flex-row rounded-lg w-full px-8 py-5;
+}
+.maindiv2 {
+  @apply bg-white rounded-lg w-full mt-7;
+}
+.title {
+  @apply text-gray-900 text-base font-medium py-5 px-8 border-b;
+}
+.span {
+  @apply text-gray-900 font-normal text-sm;
+}
+.btndiv {
+  @apply w-full px-4 py-3 border flex flex-row items-center justify-between text-gray-500 text-base font-normal  border-gray-300 rounded-lg bg-gray-100;
+}
+.dropdowndiv {
+  @apply absolute z-10 mt-1 w-full text-gray-800 text-sm bg-white border border-gray-200 rounded shadow-lg;
+}
+.div1 {
+  @apply flex flex-col px-8 py-5;
+}
+.P1 {
+  @apply text-sm font-medium text-gray-900 mb-2;
+}
+.text {
+  @apply text-gray-800 text-base font-semibold;
+}
+.textarea {
+  @apply border text-gray-500 text-base font-normal border-gray-300 rounded-lg bg-gray-100 px-4 py-3 focus:outline-none;
+}
+.modalContent4 {
+  @apply max-w-sm flex flex-col justify-center px-4 py-5 items-center -mt-4;
+}

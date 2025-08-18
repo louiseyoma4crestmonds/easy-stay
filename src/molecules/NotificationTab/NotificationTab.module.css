@@ -1,0 +1,12 @@
+.maindiv1 {
+  @apply bg-white rounded-lg w-full;
+}
+.maindiv2 {
+  @apply bg-white rounded-lg w-full mt-7;
+}
+.title {
+  @apply text-gray-900 text-base font-medium py-5 px-8 border-b;
+}
+.span {
+  @apply text-gray-900 font-normal text-sm;
+}

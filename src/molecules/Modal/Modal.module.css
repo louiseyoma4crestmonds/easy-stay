@@ -1,7 +1,9 @@
-.modal {
-  @apply absolute top-0 right-0 left-0 bottom-0 flex justify-center items-center;
+.background {
+  @apply fixed  z-50 bg-black bg-opacity-75  top-0 right-0 bottom-0 left-0 flex justify-center items-center overflow-y-auto cursor-default;
 }
-
-.modalContent {
-  @apply flex flex-col items-center justify-center z-50;
+.frame {
+  @apply top-0 left-0 right-0 bottom-0 bg-white  flex justify-center mx-auto items-center rounded-lg;
 }
+/* .content {
+  @apply flex justify-center flex-col items-center;
+} */

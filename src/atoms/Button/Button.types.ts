@@ -9,7 +9,8 @@ export type ButtonVariant =
   | "explore"
   | "pink"
   | "explore2"
-  | "profile";
+  | "profile"
+  | "delete";
 
 export type ButtonWidth = "normal" | "full";
 
