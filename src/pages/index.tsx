@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getSessionDetails } from "./api/user";
 
 function Home(): JSX.Element {
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [token, setToken] = useState();

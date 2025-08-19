@@ -29,10 +29,13 @@ function RecoverpwdComp() {
     try {
       // 🔒 Future: Replace this block with your real API call
       sendPasswordResetLink(email).then((response: any) => {
-        console.log("tt", response);
+        setShowModal(true);
+        console.log("tt", response.data.status);
+        if (response?.data?.status === "OK") {
+          setShowModal(true);
+        }
       });
       setErrors("");
-      setStep(2); // Proceed to new password inputs
     } catch (err: any) {
       // 🧯 Handle error and show it to user
       setErrors(err.message || "Failed to send reset link. Try again.");
@@ -106,7 +109,7 @@ function RecoverpwdComp() {
       {/* Logo at top center */}
       <div className="mt-24">
         <img
-          src="/images/text.png"
+          src="/images/Text.png"
           alt="Easy Stay Logo"
           className="h-12  w-auto mx-auto"
         />
@@ -149,78 +152,6 @@ function RecoverpwdComp() {
           </div>
         )}
 
-        {step === 2 && (
-          <>
-            <div className="mb-4">
-              <label className={styles.formLabel}>New Password</label>
-              <div className="relative">
-                <img
-                  src="/images/lock-outline.png"
-                  alt="lock"
-                  style={{ width: 20, height: 20 }}
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 "
-                />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors) setErrors("");
-                  }}
-                  placeholder="Password"
-                  className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none"
-                />
-                <img
-                  src={
-                    showPassword
-                      ? "/images/eye-outline.png"
-                      : "/images/eye-slash-outline.png"
-                  }
-                  alt="toggle visibility"
-                  className={styles.eyeIcon}
-                  style={{ width: 12, height: 12 }}
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-              <p className="text-sm text-gray-500 mt-1">
-                Must contain number or symbol, at least 8 characters.
-              </p>
-            </div>
-            <div className="mb-4">
-              <label className={styles.formLabel}>Confirm Password</label>
-              <div className="relative">
-                <img
-                  src="/images/lock-outline.png"
-                  alt="lock"
-                  style={{ width: 20, height: 20 }}
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 "
-                />
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    if (errors) setErrors("");
-                  }}
-                  placeholder=" Password"
-                  className="w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none"
-                />
-                <img
-                  src={
-                    showConfirmPassword
-                      ? "/images/eye-outline.png"
-                      : "/images/eye-slash-outline.png"
-                  }
-                  alt="toggle visibility"
-                  className={styles.eyeIcon}
-                  style={{ width: 12, height: 12 }}
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                />
-              </div>
-            </div>
-          </>
-        )}
-
         {/* Error Message */}
         {errors && <p className="text-red-600 text-sm mb-4">{errors}</p>}
         <div className={styles.formButtonDiv}>
@@ -231,7 +162,7 @@ function RecoverpwdComp() {
       </form>
 
       {/* Modal for OTP approval */}
-      {showModal && (
+      {showModal ? (
         <div
           className={`${styles.otpModal} ${
             modalVisible ? "translate-x-0" : "translate-x-[700px] "
@@ -248,7 +179,7 @@ function RecoverpwdComp() {
             Password reset successfully
           </p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

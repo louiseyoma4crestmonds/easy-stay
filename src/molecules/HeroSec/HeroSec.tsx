@@ -1,26 +1,31 @@
+import Router from "next/router";
+import Image from "next/future/image";
 import Button from "@/atoms/Button";
 import { HeroSecProps } from "./HeroSec.types";
 import styles from "./HeroSec.module.css";
+import logo from "public/images/hero-img.png";
+import logoText from "public/images/Text.png";
 
 function HeroSec(props: HeroSecProps) {
   const { userDetails, userAuthenticated } = props;
 
   return (
     <div className={styles.heroSection}>
-      <img
-        src="/images/hero-img.png"
-        alt="hero section img"
-        className="h-full  w-full object-cover"
-      />
+      <Image src={logo} alt="hero section img" />
       {/* top header section */}
       <div className="absolute top-8 left-0 right-0 z-20 flex justify-between items-center mx-12 ">
-        <div>
-          {" "}
-          <img
-            src="/images/text.png"
-            alt="Easy Stay Logo"
-            className="h-12  w-auto "
-          />{" "}
+        <div
+          className="h-12 w-auto"
+          role="button"
+          tabIndex={0}
+          onKeyDown={() => {
+            Router.push({ pathname: "/" });
+          }}
+          onClick={() => {
+            Router.push({ pathname: "/" });
+          }}
+        >
+          <Image src={logoText} height={100} width={120} alt="Easy Stay Logo" />
         </div>
 
         {userAuthenticated ? (
@@ -44,7 +49,14 @@ function HeroSec(props: HeroSecProps) {
                 className="w-5 h-5 "
               />
             </div>
-            <Button variant="primary">Login or Sign Up</Button>
+            <Button
+              onClick={() => {
+                Router.push({ pathname: "/signin" });
+              }}
+              variant="primary"
+            >
+              Login or Sign Up
+            </Button>
           </div>
         )}
       </div>
