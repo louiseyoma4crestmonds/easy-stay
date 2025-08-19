@@ -11,7 +11,7 @@
   @apply w-[80%]  mx-auto border border-gray-300 px-8 py-4  rounded-lg flex justify-between items-center shadow-lg bg-[#00000033];
 }
 .checkoutdiv {
-  @apply flex flex-col w-[12%] border-r border-gray-300;
+  @apply relative flex cursor-pointer flex-col w-[12%] border-r border-gray-300;
 }
 /* .checkindiv{
   @apply flex flex-col  w-[12%] border-r border-gray-300

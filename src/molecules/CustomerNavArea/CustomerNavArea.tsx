@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
 import CustomerTabs from "@/atoms/CustomerTabs";
 import Button from "@/atoms/Button";
 import CustomDropdown from "../CustomDropdown";
 import styles from "./CustomerNavArea.module.css";
 import CustomerNavLeft from "../CustomerNavLeft";
+import logoText from "public/images/Text.png";
 import { CustomerNavAreaProps } from "./CustomerNavArea.types";
 
 function CustomerNavArea(props: CustomerNavAreaProps) {
@@ -42,12 +44,16 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
           : "bg-white py-6 border-b border-gray-200  "
       }`}
     >
-      <div onClick={goToHomepage}>
+      <div
+        onClick={goToHomepage}
+        className=" flex items-center cursor-pointer  "
+      >
         {" "}
-        <img
-          src="/images/text.png"
+        <Image
+          src={logoText}
           alt="Easy Stay Logo"
-          className="h-12  w-auto cursor-pointer "
+          width={115}
+          height={48}
         />{" "}
       </div>
 

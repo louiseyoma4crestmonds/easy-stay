@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-// import Button from "@/atoms/Button";
-// import { HeroSecProps } from "./HeroSec.types";
-// import styles from "./HeroSec.module.css";
+import Image from "next/future/image";
+import Button from "@/atoms/Button";
+import { HeroSecProps } from "./HeroSec.types";
+import styles from "./HeroSec.module.css";
+import logo from "public/images/hero-img.png";
+import DateDropdownModal from "../DateDropdownModal";
 import LocationDropdownModal from "@/atoms/LocationDropdownModal";
 import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 // import { useRouter } from "next/router";
@@ -15,27 +18,19 @@ type GuestCounts = {
   infants: number;
   pets: number;
 };
-import Router from "next/router";
-import Image from "next/future/image";
-import Button from "@/atoms/Button";
-import { HeroSecProps } from "./HeroSec.types";
-import styles from "./HeroSec.module.css";
-import logo from "public/images/hero-img.png";
-import logoText from "public/images/Text.png";
+// import Router from "next/router";
 
 function HeroSec(props: HeroSecProps) {
-  const {
-    userAuthenticated,
-    userDetails,
-    isLoggedIn,
-    firstName,
-    lastName,
-    points,
-  } = props;
+  const { isLoggedIn, firstName, lastName, points } = props;
   // const router = useRouter();
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [guestDropdownOpen, setGuestDropdownOpen] = useState(false);
+  const [checkinDate, setCheckinDate] = useState<Date | null>(null);
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
+  const [checkinOpen, setCheckinOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
   const [guestCounts, setGuestCounts] = useState<GuestCounts>({
     adults: 0,
     children: 0,
@@ -46,6 +41,7 @@ function HeroSec(props: HeroSecProps) {
   const guestRef = useRef<HTMLDivElement>(null);
 
   const locationRef = useRef<HTMLDivElement>(null);
+  const checkinRef = useRef<HTMLDivElement>(null);
 
   const locations = [
     "Ikeja, Lagos",
@@ -71,6 +67,13 @@ function HeroSec(props: HeroSecProps) {
       ) {
         setGuestDropdownOpen(false);
       }
+
+      if (
+        checkinRef.current &&
+        !checkinRef.current.contains(event.target as Node)
+      ) {
+        setCheckinOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -81,11 +84,8 @@ function HeroSec(props: HeroSecProps) {
 
   return (
     <div className={styles.heroSection}>
-      <img
-        src="/images/hero-img.png"
-        alt="hero section img"
-        className="h-full  w-full object-cover "
-      />
+      <Image src={logo} alt="hero section img" priority />
+
       {/* top header section */}
       <CustomerNavArea
         firstName={firstName}
@@ -96,58 +96,8 @@ function HeroSec(props: HeroSecProps) {
         leftIcon="/images/menu.png"
       />
 
-      {/* <Image src={logo} alt="hero section img" /> */}
       {/* top header section */}
-      <div className="absolute top-8 left-0 right-0 z-20 flex justify-between items-center mx-12 ">
-        {/* <div
-          className="h-12 w-auto"
-          role="button"
-          tabIndex={0}
-          onKeyDown={() => {
-            Router.push({ pathname: "/" });
-          }}
-          onClick={() => {
-            Router.push({ pathname: "/" });
-          }}
-        >
-          <Image src={logoText} height={100} width={120} alt="Easy Stay Logo" />
-        </div>
-      ) : (
-        <div /> */}
 
-        {/* {userAuthenticated ? (
-        <div className="text-white">Hi, {userDetails?.lastName}</div>
-      ) : (
-        <div className="flex justify-between items-center gap-2">
-          <div className="border border-gray-300 rounded-lg bg-[#00000033] p-[10px] ">
-            <img src="/images/menu.png" alt="menu Logo" className="w-5 h-5 " />
-          </div>
-          <Button variant="primary">Login or Sign Up</Button>
-        </div>
-      )} */}
-
-        {userAuthenticated ? (
-          <div className="text-white">Hi, {userDetails?.lastName}</div>
-        ) : (
-          <div className="flex justify-between items-center gap-2">
-            <div className="border border-gray-300 rounded-lg bg-[#00000033] p-[10px] ">
-              <img
-                src="/images/menu.png"
-                alt="menu Logo"
-                className="w-5 h-5 "
-              />
-            </div>
-            <Button
-              onClick={() => {
-                Router.push({ pathname: "/signin" });
-              }}
-              variant="primary"
-            >
-              Login or Sign Up
-            </Button>
-          </div>
-        )}
-      </div>
       {/* hero modal */}
       <div className={styles.heromodal}>
         <p className={styles.heroP1}>
@@ -195,19 +145,39 @@ function HeroSec(props: HeroSecProps) {
           </div>
 
           {/* check in */}
-          <div className={styles.checkoutdiv}>
-            <p className={styles.text}>Check In</p>
+          <div ref={checkinRef} className={styles.checkoutdiv}>
+            <div
+              className=""
+              onClick={() => {
+                setCheckinOpen(true);
+                setCheckoutOpen(false);
+              }}
+            >
+              <p className={styles.text}>Check In</p>
 
-            <div className={styles.seconddiv}>
-              <img
-                src="/images/calendar-month-outline.png"
-                alt="calendar icon"
-                className="w-4 h-4"
-              />
-              <span className="text-sm text-gray-200 font-normal">
-                Select Date
-              </span>
+              <div className={styles.seconddiv}>
+                <img
+                  src="/images/calendar-month-outline.png"
+                  alt="calendar icon"
+                  className="w-4 h-4"
+                />
+                <span className="text-sm text-gray-200 font-normal">
+                  {checkinDate
+                    ? checkinDate.toLocaleDateString()
+                    : "Select Date"}
+                </span>
+              </div>
             </div>
+
+            {checkinOpen && (
+              <DateDropdownModal
+                initialDate={checkinDate}
+                onConfirm={(date) => {
+                  if (date) setCheckinDate(date);
+                  setCheckinOpen(false);
+                }}
+              />
+            )}
           </div>
 
           {/* check out */}
@@ -236,8 +206,6 @@ function HeroSec(props: HeroSecProps) {
                   : "hover:bg-white hover:bg-opacity-10"
               }`}
               onClick={() => setGuestDropdownOpen((prev) => !prev)}
-              // className="flex flex-col "
-              // onClick={() => setGuestDropdownOpen((prev) => !prev)}
             >
               <p className={styles.text}>Guests</p>
 

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import Button from "@/atoms/Button";
+import logoText from "public/images/Text.png";
 import styles from "./LoginComp.module.css";
 
 function LoginComp() {
@@ -19,6 +21,7 @@ function LoginComp() {
     })
       .then((res) => {
         if (res?.status === 200) {
+          console.log("login response", res);
           router.push({ pathname: "/guest" });
         } else if (res?.status === 401) {
           setError("Wrong Login credentials");
@@ -62,12 +65,14 @@ function LoginComp() {
   return (
     <div className={styles.maindiv}>
       {/* Logo at top center */}
-      <div className="mt-24">
-        <img
-          src="/images/text.png"
+      <div className=" flex  mt-24 justify-center  ">
+        {" "}
+        <Image
+          src={logoText}
           alt="Easy Stay Logo"
-          className="h-12  w-auto mx-auto"
-        />
+          width={167}
+          height={70}
+        />{" "}
       </div>
 
       <form className={styles.formDiv} onSubmit={handleLogin}>

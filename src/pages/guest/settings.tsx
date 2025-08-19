@@ -1,9 +1,11 @@
+import useSessionDetails from "@/hooks/useSessionDetails";
 import ChangePwdTab from "@/molecules/ChangePwdTab";
 import CustomerNavArea from "@/molecules/CustomerNavArea";
 import CustomerSidebar from "@/molecules/CustomerSidebar";
 import NotificationTab from "@/molecules/NotificationTab";
 import ProfileTab from "@/molecules/ProfileTab";
 import SupportTab from "@/molecules/SupportTab";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -21,6 +23,10 @@ const SETTINGS_TABS: SettingsTab[] = [
 
 export default function Settings() {
   const router = useRouter();
+  const { status } = useSession();
+  const { firstName, lastName } = useSessionDetails();
+  const isLoggedIn = status === "authenticated";
+
   const [activeTab, setActiveTab] = useState<SettingsTab>("my Profile");
 
   useEffect(() => {
@@ -34,9 +40,6 @@ export default function Settings() {
     }
   }, [router.isReady, router.query.tab]);
 
-  const isLoggedIn = true;
-  const firstName = "Lekan";
-  const lastName = "Okeowo";
   const points = 100;
 
   return (
@@ -45,6 +48,7 @@ export default function Settings() {
         isLoggedIn={isLoggedIn}
         isOnImage={false}
         firstName={firstName}
+        lastName={lastName}
         leftIcon="/images/menu-white.png"
         defaultTextColor="text-gray-500"
       />

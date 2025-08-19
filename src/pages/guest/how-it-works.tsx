@@ -1,26 +1,43 @@
+// pages/how-it-works.tsx
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import BottomHero from "@/molecules/BottomHero";
 import FooterComp from "@/organisms/FooterComp";
 import HeroBanner from "@/organisms/HeroBanner";
+import useSessionDetails from "@/hooks/useSessionDetails";
+import PageSkeletons from "@/components/PageSkeletons";
 
 export default function HowItWorks() {
+  const { status } = useSession();
+  const isLoggedIn = status === "authenticated";
+  const { firstName, lastName } = useSessionDetails();
+  const [mounted, setMounted] = useState(false);
+  // Prevent hydration flicker and cover cases where 'loading' is brief
+  useEffect(() => setMounted(true), []);
+
+  const isLoading = !mounted || status === "loading";
+
+  if (isLoading) return <PageSkeletons />;
+
+  console.log("sttaus", status);
+
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroBanner
+        isLoggedIn={isLoggedIn}
         backgroundImg="/images/hero-one.png"
         primaryText="How it Works"
         secondaryText="We understand plans can change. As your host, we aim to make our refund policy clear and fair, detailing everything you need to know about cancellations and refunds for your booking."
         buttons={[
-          {
-            label: "Book an Apartment",
-            link: "/",
-            variant: "explore2",
-          },
+          { label: "Book an Apartment", link: "/", variant: "explore2" },
           {
             label: "Register Your Apartment Now",
             link: "/",
             variant: "primary",
           },
         ]}
+        firstName={firstName}
+        lastName={lastName}
       />
 
       {/* TEXT SECTION */}
@@ -70,7 +87,6 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      {/*///////// section*/}
       <BottomHero
         backgroundImage="/images/hero-two.png"
         title="Your hosting journey starts here"

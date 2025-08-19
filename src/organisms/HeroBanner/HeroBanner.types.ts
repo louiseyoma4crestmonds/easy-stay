@@ -9,4 +9,7 @@ export type HeroBannerProps = {
     onClick?: () => void;
   }[];
   isLoggedIn?: boolean;
+  firstName?: string;
+  lastName?: string;
+  points?: number;
 };
