@@ -88,7 +88,7 @@ function ProfileTab() {
     setActiveModal("saved");
   };
 
-  // SAVE CHNAGES AFTER FILLING PROFILE
+  // PROCEED AFTER SELECTING FREE RIDE OR APARTMENT
   const onProceed = () => {
     setShowPointsModal(false);
     // setShowFinalModal(true);

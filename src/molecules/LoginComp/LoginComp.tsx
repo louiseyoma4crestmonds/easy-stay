@@ -19,7 +19,7 @@ function LoginComp() {
     })
       .then((res) => {
         if (res?.status === 200) {
-          router.push({ pathname: "/" });
+          router.push({ pathname: "/guest" });
         } else if (res?.status === 401) {
           setError("Wrong Login credentials");
         } else {
@@ -51,12 +51,12 @@ function LoginComp() {
 
   const handleForgotPasswordClick = () => {
     console.log("Redirect to forgot password");
-    router.push("/recover-password");
+    router.push("/guest/recover-password");
   };
 
   const handleSignupClick = () => {
     console.log("Redirect to signup");
-    router.push("/signup");
+    router.push("/guest/signup");
   };
 
   return (

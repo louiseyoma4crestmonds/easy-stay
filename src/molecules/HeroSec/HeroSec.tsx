@@ -99,7 +99,7 @@ function HeroSec(props: HeroSecProps) {
         <div />
       )}
 
-      {userAuthenticated ? (
+      {/* {userAuthenticated ? (
         <div className="text-white">Hi, {userDetails?.lastName}</div>
       ) : (
         <div className="flex justify-between items-center gap-2">
@@ -108,151 +108,150 @@ function HeroSec(props: HeroSecProps) {
           </div>
           <Button variant="primary">Login or Sign Up</Button>
         </div>
-      )}
+      )} */}
+
+      <div className={styles.heromodal}>
+        <p className={styles.heroP1}>
+          Find Your Perfect Shortlet, Anytime, Anywhere.
+        </p>
+        <div className={styles.heroSearchdiv}>
+          {/* location segment */}
+          <div
+            className="relative  w-[35%] border-r border-gray-300   cursor-pointer"
+            ref={locationRef}
+          >
+            <div
+              className="flex  flex-row gap-2 "
+              onClick={() => setLocationDropdownOpen((prev) => !prev)}
+            >
+              <img
+                src="/images/location-icon.png"
+                alt="location icon"
+                className="w-6 h-6"
+              />
+              <div
+                className={`flex flex-col items-start w-[85%]   transition ${
+                  locationDropdownOpen
+                    ? "bg-white bg-opacity-10"
+                    : "hover:bg-white hover:bg-opacity-10"
+                }`}
+              >
+                <p className="font-medium text-sm text-white">Where</p>
+                <p className="text-sm text-gray-200 font-normal">
+                  {selectedLocation || "Select Location"}
+                </p>
+              </div>
+            </div>
+
+            {/* location modal */}
+            {locationDropdownOpen && (
+              <LocationDropdownModal
+                locations={locations}
+                onSelectLocation={(location) => {
+                  setSelectedLocation(location);
+                  setLocationDropdownOpen(false);
+                }}
+              />
+            )}
+          </div>
+
+          {/* check in */}
+          <div className={styles.checkoutdiv}>
+            <p className={styles.text}>Check In</p>
+
+            <div className={styles.seconddiv}>
+              <img
+                src="/images/calendar-month-outline.png"
+                alt="calendar icon"
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-gray-200 font-normal">
+                Select Date
+              </span>
+            </div>
+          </div>
+
+          {/* check out */}
+          <div className={styles.checkoutdiv}>
+            <p className={styles.text}>Check Out</p>
+
+            <div className={styles.seconddiv}>
+              <img
+                src="/images/calendar-month-outline.png"
+                alt="calendar icon"
+                className="w-4 h-4"
+              />
+
+              <span className="text-sm text-gray-200 font-normal">
+                Select Date
+              </span>
+            </div>
+          </div>
+
+          {/* Guest */}
+          <div ref={guestRef} className="relative w-[26%] cursor-pointer ">
+            <div
+              className={`flex flex-col items-start w-[95%]   transition ${
+                guestDropdownOpen
+                  ? "bg-white bg-opacity-10"
+                  : "hover:bg-white hover:bg-opacity-10"
+              }`}
+              onClick={() => setGuestDropdownOpen((prev) => !prev)}
+              // className="flex flex-col "
+              // onClick={() => setGuestDropdownOpen((prev) => !prev)}
+            >
+              <p className={styles.text}>Guests</p>
+
+              <div className={styles.seconddiv}>
+                <img
+                  src="/images/users-group-outline.png"
+                  alt="guest icon"
+                  className="w-4 h-4"
+                />
+
+                <span className="text-sm text-gray-200 font-normal">
+                  {guestCounts.adults === 0 &&
+                  guestCounts.children === 0 &&
+                  guestCounts.infants === 0 &&
+                  guestCounts.pets === 0
+                    ? "Add Guests"
+                    : `${guestCounts.adults} Adult${guestCounts.adults > 1 ? "s" : ""}${
+                        guestCounts.children > 0
+                          ? `, ${guestCounts.children} Child${guestCounts.children > 1 ? "ren" : ""}`
+                          : ""
+                      }${guestCounts.infants > 0 ? `, ${guestCounts.infants} Infant${guestCounts.infants > 1 ? "s" : ""}` : ""}${
+                        guestCounts.pets > 0
+                          ? `, ${guestCounts.pets} Pet${guestCounts.pets > 1 ? "s" : ""}`
+                          : ""
+                      }`}
+                </span>
+              </div>
+            </div>
+
+            {guestDropdownOpen && (
+              <GuestDropdownModal
+                // onClose={() => setGuestDropdownOpen(false)}
+                onConfirm={(guests) => {
+                  setGuestCounts(guests);
+                  setGuestDropdownOpen(false);
+                }}
+                initialGuests={guestCounts}
+              />
+            )}
+          </div>
+          <div className="flex w-auto">
+            <Button
+              variant="primaryWithImg"
+              image="/images/search-outline.png"
+              imageWidth={20}
+              height={20}
+            >
+              Search
+            </Button>{" "}
+          </div>
+        </div>
+      </div>
     </div>
-
-    // <div className={styles.heromodal}>
-    //   <p className={styles.heroP1}>
-    //     Find Your Perfect Shortlet, Anytime, Anywhere.
-    //   </p>
-    //   <div className={styles.heroSearchdiv}>
-    //     {/* location segment */}
-    //     <div
-    //       className="relative  w-[35%] border-r border-gray-300   cursor-pointer"
-    //       ref={locationRef}
-    //     >
-    //       <div
-    //         className="flex  flex-row gap-2 "
-    //         onClick={() => setLocationDropdownOpen((prev) => !prev)}
-    //       >
-    //         <img
-    //           src="/images/location-icon.png"
-    //           alt="location icon"
-    //           className="w-6 h-6"
-    //         />
-    //         <div
-    //           className={`flex flex-col items-start w-[85%]   transition ${
-    //             locationDropdownOpen
-    //               ? "bg-white bg-opacity-10"
-    //               : "hover:bg-white hover:bg-opacity-10"
-    //           }`}
-    //         >
-    //           <p className="font-medium text-sm text-white">Where</p>
-    //           <p className="text-sm text-gray-200 font-normal">
-    //             {selectedLocation || "Select Location"}
-    //           </p>
-    //         </div>
-    //       </div>
-
-    //       {/* location modal */}
-    //       {locationDropdownOpen && (
-    //         <LocationDropdownModal
-    //           locations={locations}
-    //           onSelectLocation={(location) => {
-    //             setSelectedLocation(location);
-    //             setLocationDropdownOpen(false);
-    //           }}
-    //         />
-    //       )}
-    //     </div>
-
-    //     {/* check in */}
-    //     <div className={styles.checkoutdiv}>
-    //       <p className={styles.text}>Check In</p>
-
-    //       <div className={styles.seconddiv}>
-    //         <img
-    //           src="/images/calendar-month-outline.png"
-    //           alt="calendar icon"
-    //           className="w-4 h-4"
-    //         />
-    //         <span className="text-sm text-gray-200 font-normal">
-    //           Select Date
-    //         </span>
-    //       </div>
-    //     </div>
-
-    //     {/* check out */}
-    //     <div className={styles.checkoutdiv}>
-    //       <p className={styles.text}>Check Out</p>
-
-    //       <div className={styles.seconddiv}>
-    //         <img
-    //           src="/images/calendar-month-outline.png"
-    //           alt="calendar icon"
-    //           className="w-4 h-4"
-    //         />
-
-    //         <span className="text-sm text-gray-200 font-normal">
-    //           Select Date
-    //         </span>
-    //       </div>
-    //     </div>
-
-    //     {/* Guest */}
-    //     <div ref={guestRef} className="relative w-[26%] cursor-pointer ">
-    //       <div
-    //         className={`flex flex-col items-start w-[95%]   transition ${
-    //           guestDropdownOpen
-    //             ? "bg-white bg-opacity-10"
-    //             : "hover:bg-white hover:bg-opacity-10"
-    //         }`}
-    //         onClick={() => setGuestDropdownOpen((prev) => !prev)}
-    //         // className="flex flex-col "
-    //         // onClick={() => setGuestDropdownOpen((prev) => !prev)}
-    //       >
-    //         <p className={styles.text}>Guests</p>
-
-    //         <div className={styles.seconddiv}>
-    //           <img
-    //             src="/images/users-group-outline.png"
-    //             alt="guest icon"
-    //             className="w-4 h-4"
-    //           />
-
-    //           <span className="text-sm text-gray-200 font-normal">
-    //             {guestCounts.adults === 0 &&
-    //             guestCounts.children === 0 &&
-    //             guestCounts.infants === 0 &&
-    //             guestCounts.pets === 0
-    //               ? "Add Guests"
-    //               : `${guestCounts.adults} Adult${guestCounts.adults > 1 ? "s" : ""}${
-    //                   guestCounts.children > 0
-    //                     ? `, ${guestCounts.children} Child${guestCounts.children > 1 ? "ren" : ""}`
-    //                     : ""
-    //                 }${guestCounts.infants > 0 ? `, ${guestCounts.infants} Infant${guestCounts.infants > 1 ? "s" : ""}` : ""}${
-    //                   guestCounts.pets > 0
-    //                     ? `, ${guestCounts.pets} Pet${guestCounts.pets > 1 ? "s" : ""}`
-    //                     : ""
-    //                 }`}
-    //           </span>
-    //         </div>
-    //       </div>
-
-    //       {guestDropdownOpen && (
-    //         <GuestDropdownModal
-    //           // onClose={() => setGuestDropdownOpen(false)}
-    //           onConfirm={(guests) => {
-    //             setGuestCounts(guests);
-    //             setGuestDropdownOpen(false);
-    //           }}
-    //           initialGuests={guestCounts}
-    //         />
-    //       )}
-    //     </div>
-    //     <div className="flex w-auto">
-    //       <Button
-    //         variant="primaryWithImg"
-    //         image="/images/search-outline.png"
-    //         imageWidth={20}
-    //         height={20}
-    //       >
-    //         Search
-    //       </Button>{" "}
-    //     </div>
-    //   </div>
-    // </div>
-    // </div>
   );
 }
 

@@ -4,26 +4,20 @@ import Button from "@/atoms/Button";
 import CustomDropdown from "../CustomDropdown";
 import styles from "./CustomerNavArea.module.css";
 import CustomerNavLeft from "../CustomerNavLeft";
+import { CustomerNavAreaProps } from "./CustomerNavArea.types";
 
-type CustomerNavAreaProps = {
-  isOnImage?: boolean;
-  leftIcon?: string;
-  defaultTextColor?: string;
-  isLoggedIn?: boolean;
-  firstName?: string;
-  lastName?: string;
-  points?: number;
-};
-
-function CustomerNavArea({
-  isOnImage,
-  leftIcon,
-  defaultTextColor,
-  isLoggedIn,
-  firstName,
-  lastName,
-  points,
-}: CustomerNavAreaProps) {
+function CustomerNavArea(props: CustomerNavAreaProps) {
+  const {
+    isOnImage,
+    leftIcon,
+    defaultTextColor,
+    isLoggedIn,
+    firstName,
+    lastName,
+    points,
+    userAuthenticated,
+    userDetails,
+  } = props;
   const router = useRouter();
 
   const menuOptions = [

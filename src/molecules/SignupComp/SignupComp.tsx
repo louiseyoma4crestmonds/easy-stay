@@ -46,7 +46,7 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
 
   const handleSigninClick = () => {
     console.log("Redirect to signin");
-    router.push("/signin");
+    router.push("/guest/signin");
   };
 
   const validateEmail = (value: string): boolean => {

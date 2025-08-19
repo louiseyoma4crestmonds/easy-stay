@@ -91,7 +91,10 @@ function SupportTab() {
             <CustomDropdown
               options={issueOptions}
               value={selectedIssue}
-              onChange={(val) => setSelectedIssue(val)}
+              onChange={(val) => {
+                setSelectedIssue(val);
+                if (errorMsg) setErrorMsg("");
+              }}
               buttonClassName={styles.btndiv}
               dropdownClassName={styles.dropdowndiv}
               placeholder="Select issue"
@@ -107,7 +110,10 @@ function SupportTab() {
               className={styles.textarea}
               placeholder="Input a short description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                if (errorMsg) setErrorMsg("");
+              }}
             />
           </div>
         </div>

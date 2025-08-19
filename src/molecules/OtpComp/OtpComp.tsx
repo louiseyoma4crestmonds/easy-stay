@@ -19,7 +19,7 @@ function OtpComp(props: OtpCompProps) {
 
   const handleSigninClick = () => {
     console.log("Redirect to signin");
-    router.push("/signin");
+    router.push("/guest/signin");
   };
 
   // Focus first input on mount
@@ -36,7 +36,7 @@ function OtpComp(props: OtpCompProps) {
 
       const redirectTimer = setTimeout(() => {
         setShowModal(false); // unmount
-        router.push("/"); // go to homepage
+        router.push("/guest"); // go to homepage
       }, 5000);
 
       return () => {

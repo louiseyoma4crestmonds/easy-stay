@@ -4,3 +4,6 @@
 .pointsdiv {
   @apply absolute -top-3 -right-3 bg-primary-600 text-white text-[10px] font-medium rounded-full border shadow-lg px-2 py-0.5;
 }
+.modalContent {
+  @apply max-w-xs flex flex-col justify-center py-4 items-center;
+}

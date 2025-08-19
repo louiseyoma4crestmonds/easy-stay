@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import styles from "./RecoverpwdComp.module.css";
 import { sendPasswordResetLink } from "src/pages/api/user";
 
 function RecoverpwdComp() {
-  const router = useRouter();
+  // const router = useRouter();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [showPassword, setShowPassword] = useState(false);
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  // const [confirmPassword, setConfirmPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [step, setStep] = useState(1);
+  // const [step, setStep] = useState(1);
   const [errors, setErrors] = useState("");
 
   const handleSendEmail = async (e: React.FormEvent) => {
@@ -32,55 +32,55 @@ function RecoverpwdComp() {
         console.log("tt", response);
       });
       setErrors("");
-      setStep(2); // Proceed to new password inputs
+      // setStep(2); // Proceed to new password inputs
     } catch (err: any) {
       // 🧯 Handle error and show it to user
       setErrors(err.message || "Failed to send reset link. Try again.");
     }
   };
 
-  const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleResetPassword = async (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (!password || !confirmPassword) {
-      setErrors("Please enter both password fields.");
-      return;
-    }
+  //   if (!password || !confirmPassword) {
+  //     setErrors("Please enter both password fields.");
+  //     return;
+  //   }
 
-    if (password !== confirmPassword) {
-      setErrors("Passwords do not match.");
-      return;
-    }
+  //   if (password !== confirmPassword) {
+  //     setErrors("Passwords do not match.");
+  //     return;
+  //   }
 
-    const isValidPassword = password.length >= 8 && /[\d\W]/.test(password); // contains number or symbol
+  //   const isValidPassword = password.length >= 8 && /[\d\W]/.test(password); // contains number or symbol
 
-    if (!isValidPassword) {
-      setErrors(
-        "Password must be at least 8 characters and contain a number or symbol"
-      );
-      return;
-    }
+  //   if (!isValidPassword) {
+  //     setErrors(
+  //       "Password must be at least 8 characters and contain a number or symbol"
+  //     );
+  //     return;
+  //   }
 
-    setErrors(""); // Clear previous errors
+  //   setErrors(""); // Clear previous errors
 
-    try {
-      // 🔒 Future: Replace this block with your real API call
-      // Reset before triggering modal again
-      setShowModal(false);
-      setModalVisible(false);
+  //   try {
+  //     // 🔒 Future: Replace this block with your real API call
+  //     // Reset before triggering modal again
+  //     setShowModal(false);
+  //     setModalVisible(false);
 
-      // Allow the DOM to register the reset before setting again
-      setTimeout(() => {
-        setShowModal(true); // Mount
-        setTimeout(() => {
-          setModalVisible(true); // Slide in
-        }, 50);
-      }, 10); // Tiny delay to re-trigger effect
-    } catch (err: any) {
-      // 🧯 Handle error and show it to user
-      setErrors(err.message || "Failed to reset password. Try again.");
-    }
-  };
+  //     // Allow the DOM to register the reset before setting again
+  //     setTimeout(() => {
+  //       setShowModal(true); // Mount
+  //       setTimeout(() => {
+  //         setModalVisible(true); // Slide in
+  //       }, 50);
+  //     }, 10); // Tiny delay to re-trigger effect
+  //   } catch (err: any) {
+  //     // 🧯 Handle error and show it to user
+  //     setErrors(err.message || "Failed to reset password. Try again.");
+  //   }
+  // };
 
   // Auto-close modal after 5s
   useEffect(() => {
@@ -89,17 +89,16 @@ function RecoverpwdComp() {
         setModalVisible(false); // start sliding out
       }, 4000);
 
-      const redirectTimer = setTimeout(() => {
-        setShowModal(false); // unmount
-        router.push("/signin"); // go to signin page
+      const closeTimer = setTimeout(() => {
+        setShowModal(false); // unmount modal
       }, 5000);
 
       return () => {
         clearTimeout(slideOutTimer);
-        clearTimeout(redirectTimer);
+        clearTimeout(closeTimer);
       };
     }
-  }, [showModal, router]);
+  }, [showModal]);
 
   return (
     <div className={styles.maindiv}>
@@ -112,44 +111,38 @@ function RecoverpwdComp() {
         />
       </div>
 
-      <form
-        className={styles.formDiv}
-        onSubmit={step === 1 ? handleSendEmail : handleResetPassword}
-      >
+      <form className={styles.formDiv} onSubmit={handleSendEmail}>
         <p className={styles.loginP1}>Recover Password</p>
         <p className={styles.loginP2}>
-          {step === 1
-            ? "Please enter your registered email below. We'll send you a link to continue"
-            : "Create your new password"}
+          "Please enter your registered email below. We'll send you a link to
+          continue"
         </p>
 
-        {step === 1 && (
-          <div className="mb-4">
-            <label className={styles.formLabel}>Email Address</label>
-            <div className="relative">
-              <img
-                src="/images/envelope-outline.png"
-                alt="envelope"
-                style={{ width: 20, height: 20 }}
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              />
-              <input
-                type="email"
-                name="no-autofill-email"
-                value={email}
-                autoComplete="new-email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (errors) setErrors("");
-                }}
-                placeholder="Input email"
-                className={styles.formInput}
-              />
-            </div>
+        <div className="mb-4">
+          <label className={styles.formLabel}>Email Address</label>
+          <div className="relative">
+            <img
+              src="/images/envelope-outline.png"
+              alt="envelope"
+              style={{ width: 20, height: 20 }}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+            <input
+              type="email"
+              name="no-autofill-email"
+              value={email}
+              autoComplete="new-email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors) setErrors("");
+              }}
+              placeholder="Input email"
+              className={styles.formInput}
+            />
           </div>
-        )}
+        </div>
 
-        {step === 2 && (
+        {/* {step === 2 && (
           <>
             <div className="mb-4">
               <label className={styles.formLabel}>New Password</label>
@@ -219,7 +212,7 @@ function RecoverpwdComp() {
               </div>
             </div>
           </>
-        )}
+        )} */}
 
         {/* Error Message */}
         {errors && <p className="text-red-600 text-sm mb-4">{errors}</p>}
@@ -245,7 +238,7 @@ function RecoverpwdComp() {
               alt="OTP Approved"
               className="inline-block mr-2"
             />
-            Password reset successfully
+            Password reset sent to your email
           </p>
         </div>
       )}
