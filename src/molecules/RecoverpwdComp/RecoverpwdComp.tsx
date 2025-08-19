@@ -29,7 +29,11 @@ function RecoverpwdComp() {
     try {
       // 🔒 Future: Replace this block with your real API call
       sendPasswordResetLink(email).then((response: any) => {
-        console.log("tt", response);
+        setShowModal(true);
+        console.log("tt", response.data.status);
+        if (response?.data?.status === "OK") {
+          setShowModal(true);
+        }
       });
       setErrors("");
       // setStep(2); // Proceed to new password inputs
@@ -105,7 +109,7 @@ function RecoverpwdComp() {
       {/* Logo at top center */}
       <div className="mt-24">
         <img
-          src="/images/text.png"
+          src="/images/Text.png"
           alt="Easy Stay Logo"
           className="h-12  w-auto mx-auto"
         />
@@ -224,7 +228,7 @@ function RecoverpwdComp() {
       </form>
 
       {/* Modal for OTP approval */}
-      {showModal && (
+      {showModal ? (
         <div
           className={`${styles.otpModal} ${
             modalVisible ? "translate-x-0" : "translate-x-[700px] "
@@ -241,7 +245,7 @@ function RecoverpwdComp() {
             Password reset sent to your email
           </p>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

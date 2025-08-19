@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import Button from "@/atoms/Button";
-import { HeroSecProps } from "./HeroSec.types";
-import styles from "./HeroSec.module.css";
+// import Button from "@/atoms/Button";
+// import { HeroSecProps } from "./HeroSec.types";
+// import styles from "./HeroSec.module.css";
 import LocationDropdownModal from "@/atoms/LocationDropdownModal";
 import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 // import { useRouter } from "next/router";
@@ -15,6 +15,13 @@ type GuestCounts = {
   infants: number;
   pets: number;
 };
+import Router from "next/router";
+import Image from "next/future/image";
+import Button from "@/atoms/Button";
+import { HeroSecProps } from "./HeroSec.types";
+import styles from "./HeroSec.module.css";
+import logo from "public/images/hero-img.png";
+import logoText from "public/images/Text.png";
 
 function HeroSec(props: HeroSecProps) {
   const {
@@ -89,17 +96,26 @@ function HeroSec(props: HeroSecProps) {
         leftIcon="/images/menu.png"
       />
 
-      {userAuthenticated ? (
-        <div className="text-white flex gap-x-8">
-          <div>Explore</div>
-          <div>My Bookings</div>
-          <div>Saved</div>
+      {/* <Image src={logo} alt="hero section img" /> */}
+      {/* top header section */}
+      <div className="absolute top-8 left-0 right-0 z-20 flex justify-between items-center mx-12 ">
+        {/* <div
+          className="h-12 w-auto"
+          role="button"
+          tabIndex={0}
+          onKeyDown={() => {
+            Router.push({ pathname: "/" });
+          }}
+          onClick={() => {
+            Router.push({ pathname: "/" });
+          }}
+        >
+          <Image src={logoText} height={100} width={120} alt="Easy Stay Logo" />
         </div>
       ) : (
-        <div />
-      )}
+        <div /> */}
 
-      {/* {userAuthenticated ? (
+        {/* {userAuthenticated ? (
         <div className="text-white">Hi, {userDetails?.lastName}</div>
       ) : (
         <div className="flex justify-between items-center gap-2">
@@ -110,6 +126,29 @@ function HeroSec(props: HeroSecProps) {
         </div>
       )} */}
 
+        {userAuthenticated ? (
+          <div className="text-white">Hi, {userDetails?.lastName}</div>
+        ) : (
+          <div className="flex justify-between items-center gap-2">
+            <div className="border border-gray-300 rounded-lg bg-[#00000033] p-[10px] ">
+              <img
+                src="/images/menu.png"
+                alt="menu Logo"
+                className="w-5 h-5 "
+              />
+            </div>
+            <Button
+              onClick={() => {
+                Router.push({ pathname: "/signin" });
+              }}
+              variant="primary"
+            >
+              Login or Sign Up
+            </Button>
+          </div>
+        )}
+      </div>
+      {/* hero modal */}
       <div className={styles.heromodal}>
         <p className={styles.heroP1}>
           Find Your Perfect Shortlet, Anytime, Anywhere.
