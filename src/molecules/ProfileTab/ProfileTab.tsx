@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./ProfileTab.module.css";
 import CustomDropdown from "../CustomDropdown";
 import Button from "@/atoms/Button";
 import PointsModal from "../PointsModal";
 import Modal from "../Modal";
+import useSessionDetails from "@/hooks/useSessionDetails";
 
 interface DropdownOption {
   label?: string;
@@ -21,6 +22,13 @@ const countries = [
 ];
 
 function ProfileTab() {
+  // ✅ get session data
+  const {
+    firstName: sessionFirstName,
+    lastName: sessionLastName,
+    email: sessionEmail,
+    token,
+  } = useSessionDetails();
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
   const [firstName, setFirstName] = useState("");
@@ -38,6 +46,15 @@ function ProfileTab() {
     null | "saved" | "final" | "delete" | "deleteFinal" | "delOtp" | "archive"
   >(null);
 
+  // populate form fields once session loads
+  useEffect(() => {
+    if (sessionFirstName || sessionLastName || sessionEmail) {
+      setFirstName(sessionFirstName);
+      setLastName(sessionLastName);
+      setEmail(sessionEmail);
+    }
+  }, [sessionFirstName, sessionLastName, sessionEmail]);
+
   // Fetch user data from backend
   //   useEffect(() => {
   //     async function fetchProfile() {
@@ -52,7 +69,7 @@ function ProfileTab() {
   //     fetchProfile();
   //   }, []);
 
-  //FOR THE IMAGE
+  //IMAGE UPLOAD
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./ProfileModal.module.css";
+import useSessionDetails from "@/hooks/useSessionDetails";
 
 type ProfileModalProps = {
   firstName?: string;
@@ -27,6 +28,7 @@ function ProfileModal({
   onRedeemPoints,
 }: ProfileModalProps) {
   // Compute initials safely
+
   const initials = (firstName?.[0] || "") + (lastName?.[0] || "");
 
   return (

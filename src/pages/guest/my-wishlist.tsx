@@ -1,9 +1,12 @@
+import useSessionDetails from "@/hooks/useSessionDetails";
 import CustomerNavArea from "@/molecules/CustomerNavArea";
 import NoSaved from "@/molecules/NoSaved";
+import { useSession } from "next-auth/react";
 
 export default function MyWishList() {
-  const isLoggedIn = true;
-  const firstName = "Lekan";
+  const { status } = useSession();
+  const { firstName, lastName } = useSessionDetails();
+  const isLoggedIn = status === "authenticated";
 
   return (
     <section className="min-h-screen bg-gray-50 w-full pb-10 ">

@@ -6,14 +6,25 @@ import CustomerNavArea from "@/molecules/CustomerNavArea";
 import styles from "./HeroBanner.module.css";
 
 function HeroBanner(props: HeroBannerProps) {
-  const { primaryText, secondaryText, backgroundImg, buttons, isLoggedIn } =
-    props;
+  const {
+    primaryText,
+    secondaryText,
+    backgroundImg,
+    buttons,
+    isLoggedIn,
+    firstName,
+    lastName,
+    points,
+  } = props;
   const router = useRouter();
 
   return (
     <section className=" w-full">
       <CustomerNavArea
         isLoggedIn={isLoggedIn}
+        firstName={firstName}
+        lastName={lastName}
+        points={points}
         isOnImage={false}
         leftIcon="/images/menu-white.png"
         defaultTextColor="text-gray-500"

@@ -1,9 +1,22 @@
+import PageSkeletons from "@/components/PageSkeletons";
+import useSessionDetails from "@/hooks/useSessionDetails";
 import BottomHero from "@/molecules/BottomHero";
 import FooterComp from "@/organisms/FooterComp";
 import HeroBanner from "@/organisms/HeroBanner";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function RegisterYourApartment() {
-  const isLoggedIn = true;
+  const { status } = useSession();
+  const { firstName, lastName } = useSessionDetails();
+  const isLoggedIn = status === "authenticated";
+  const [mounted, setMounted] = useState(false);
+  // Prevent hydration flicker and cover cases where 'loading' is brief
+  useEffect(() => setMounted(true), []);
+
+  const isLoading = !mounted || status === "loading";
+
+  if (isLoading) return <PageSkeletons />;
 
   return (
     <main className="min-h-screen flex flex-col ">
@@ -19,6 +32,8 @@ export default function RegisterYourApartment() {
           },
         ]}
         isLoggedIn={isLoggedIn}
+        firstName={firstName}
+        lastName={lastName}
       />
 
       {/* TEXT SECTION */}

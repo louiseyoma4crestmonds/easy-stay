@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { passwordValidation } from "src/services/utilities/passwordValidation";
 import {
@@ -8,6 +9,7 @@ import {
 import styles from "./resetToken.module.css";
 import SignupLeftside from "@/molecules/SignupLeftside";
 import Button from "@/atoms/Button";
+import logoText from "public/images/Text.png";
 
 function AccountRecovery(): JSX.Element {
   const router = useRouter();
@@ -141,12 +143,14 @@ function AccountRecovery(): JSX.Element {
 
         {/* RIGHT SIDE - FORM */}
         <div className="w-full md:w-1/2">
-          <div className="mt-24">
-            <img
-              src="/images/text.png"
+          <div className=" flex  mt-24 justify-center  ">
+            {" "}
+            <Image
+              src={logoText}
               alt="Easy Stay Logo"
-              className="h-12  w-auto mx-auto"
-            />
+              width={167}
+              height={70}
+            />{" "}
           </div>
           {tokenIsValid ? (
             <form

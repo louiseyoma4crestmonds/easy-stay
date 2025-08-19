@@ -6,9 +6,11 @@ import PropertyCard from "@/molecules/PropertyCard";
 // import { useState } from "react";
 import BottomHero from "@/molecules/BottomHero";
 import { useSession } from "next-auth/react";
+import useSessionDetails from "@/hooks/useSessionDetails";
 
 function Home(): JSX.Element {
   const { status } = useSession();
+  const { firstName, lastName } = useSessionDetails();
   const cities = [
     {
       primaryText: "Lagos",
@@ -102,9 +104,9 @@ function Home(): JSX.Element {
     },
   ];
 
-  const isLoggedIn = false;
-  const firstName = "Lekan";
-  const lastName = "Okeowo";
+  const isLoggedIn = status === "authenticated";
+  // const firstName = "Lekan";
+  // const lastName = "Okeowo";
   const points = 100;
 
   return (

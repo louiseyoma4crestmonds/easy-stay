@@ -116,7 +116,7 @@ function FooterComp() {
               </a>
             </li>
             <li>
-              <a href="/customer/how-it-works" className="">
+              <a href="/guest/how-it-works" className="">
                 How it Works
               </a>
             </li>
@@ -127,7 +127,7 @@ function FooterComp() {
           <p className={styles.quicklinkP1}>Support</p>
           <ul className={styles.quicklinkUL}>
             <li>
-              <a href="/customer/faqs" className="">
+              <a href="/guest/faqs" className="">
                 FAQs
               </a>
             </li>

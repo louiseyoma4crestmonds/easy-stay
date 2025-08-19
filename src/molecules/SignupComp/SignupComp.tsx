@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import CustomDropdown from "../CustomDropdown";
 import styles from "./SignupComp.module.css";
+import logoText from "public/images/Text.png";
 import { createNewUser } from "src/pages/api/user";
 
 interface DropdownOption {
@@ -101,6 +103,7 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
           console.log("sign up response: ", response);
           if (response?.data?.code === 208) {
             // Show a mordal that says email already exists
+            newErrors.notExist = "Email already exists";
           }
           if (response?.data?.code === 201) {
             // Show otp mordal
@@ -115,12 +118,14 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
   return (
     <div className={styles.maindiv}>
       {/* Logo at top center */}
-      <div className="mt-20">
-        <img
-          src="/images/text.png"
+      <div className=" flex  mt-20 justify-center  ">
+        {" "}
+        <Image
+          src={logoText}
           alt="Easy Stay Logo"
-          className="h-12  w-auto mx-auto"
-        />
+          width={167}
+          height={70}
+        />{" "}
       </div>
 
       <form className={styles.formDiv} onSubmit={handleSubmit}>
