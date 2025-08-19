@@ -5,7 +5,7 @@ import SignupLeftside from "@/molecules/SignupLeftside";
 export default function Signin() {
   const router = useRouter();
   const handleSignupClick = () => {
-    router.push("/signup");
+    router.push("/guest/signup");
   };
 
   return (

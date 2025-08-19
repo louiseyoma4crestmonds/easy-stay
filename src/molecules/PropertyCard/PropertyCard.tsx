@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
+import Image from "next/image";
 
 function PropertyCard(props: PropertyCardProps) {
   const {
@@ -59,7 +60,7 @@ function PropertyCard(props: PropertyCardProps) {
           onClick={prevImage}
           className={styles.leftarrow}
         >
-          <img
+          <Image
             //   src="/images/angle-left.png"
             src="/images/angle-right.png"
             alt="Previous"
@@ -75,7 +76,7 @@ function PropertyCard(props: PropertyCardProps) {
           onClick={nextImage}
           className={styles.rightarrow}
         >
-          <img
+          <Image
             src="/images/angle-right.png"
             alt="Next"
             width={12}
@@ -88,10 +89,13 @@ function PropertyCard(props: PropertyCardProps) {
           aria-pressed={isSaved}
           aria-label={isSaved ? "Unsave listing" : "Save listing"}
           onClick={toggleSave}
-          className={styles.heartbtn}
+          // className={styles.heartbtn}
+          className={`${isSaved ? styles.heartbtn2 : styles.heartbtn} `}
         >
-          <img
-            src="/images/heart-outline.png"
+          <Image
+            src={
+              isSaved ? "/images/filled-heart.png" : "/images/heart-outline.png"
+            }
             alt={isSaved ? "Unsave listing" : "Save listing"}
             width={12}
             height={12}
@@ -120,7 +124,7 @@ function PropertyCard(props: PropertyCardProps) {
         <div className="flex justify-between items-start">
           <p className="font-bold text-xs text-primary-600">N{price}/ Night</p>
           <div className="flex items-center gap-1 ">
-            <img
+            <Image
               src="/images/little-star.png"
               alt="rating"
               width={12}

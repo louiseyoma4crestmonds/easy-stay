@@ -6,7 +6,7 @@ export default function RecoverPassword() {
   const router = useRouter();
   const handleSignupClick = () => {
     console.log("Redirect to signup");
-    router.push("/signup");
+    router.push("/guest/signup");
   };
 
   return (

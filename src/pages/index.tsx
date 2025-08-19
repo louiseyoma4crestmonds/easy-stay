@@ -17,6 +17,7 @@ function Home(): JSX.Element {
           setFirstName(response.user.user.token.token.firstName);
           setLastName(response.user.user.token.token.lastName);
           setToken(response?.user.user.token.token.userData.data[0].token);
+          console.log("response", response);
         } catch (error) {}
       });
     }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./CityCard.module.css";
 
 type CityCardProps = {
@@ -8,17 +9,14 @@ type CityCardProps = {
 
 function CityCard({ primaryText, secondaryText, image }: CityCardProps) {
   return (
-    <div className={`group ${styles.cityCard}`}>
-      {/* Background image */}
+    <div className={`group relative ${styles.cityCard}`}>
+      <div className="absolute inset-0 border-8 border-transparent z-20 group-hover:border-white transition-colors duration-300 pointer-events-none" />
 
-      <img
-        src={image}
-        alt={primaryText}
-        className="w-full h-full object-cover "
-      />
+      {/* Background image */}
+      <Image src={image} alt={primaryText} layout="fill" />
 
       {/* Black overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-60 group-hover:bg-opacity-0 transition-all duration-300" />
+      <div className="absolute inset-0 bg-black z-10 bg-opacity-60 group-hover:bg-opacity-20 transition-all duration-300" />
 
       {/* Centered text */}
       <div className={styles.cityCardTextDiv}>

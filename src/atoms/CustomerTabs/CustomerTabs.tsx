@@ -5,17 +5,17 @@ import SavedIcon from "../Icons/SavedIcon";
 import ExploreIcon from "../Icons/ExploreIcon";
 import styles from "./CustomerTabs.module.css";
 
-type CustomerTabsProps = {
-  defaultTextColor?: string; // new prop
-};
+// type CustomerTabsProps = {
+//   defaultTextColor?: string; // new prop
+// };
 
 function CustomerTabs({ defaultTextColor = "text-gray-100" }) {
   const router = useRouter();
 
   const tabs = [
-    { name: "Explore", href: "/customer", Icon: ExploreIcon },
-    { name: "My Bookings", href: "/customer/my-bookings", Icon: BookingsIcon },
-    { name: "Saved", href: "/customer/saved", Icon: SavedIcon },
+    { name: "Explore", href: "/guest", Icon: ExploreIcon },
+    { name: "My Bookings", href: "/guest/my-bookings", Icon: BookingsIcon },
+    { name: "Saved", href: "/guest/my-wishlist", Icon: SavedIcon },
   ];
 
   return (

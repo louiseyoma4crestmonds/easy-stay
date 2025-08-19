@@ -5,7 +5,10 @@
   @apply flex absolute left-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] p-1 rounded-full shadow;
 }
 .heartbtn {
-  @apply absolute top-3 right-3 bg-[#00000033] opacity-30 p-1 rounded-full shadow;
+  @apply absolute top-3 right-3 bg-[#00000033] opacity-30 h-6 w-6 rounded-full shadow;
+}
+.heartbtn2 {
+  @apply absolute top-3 right-3 bg-gray-50 h-6 w-6 rounded-full shadow;
 }
 .dotsdiv {
   @apply absolute bg-[#0000004D] rounded-3xl px-[6px] py-[3px] bottom-3 left-1/2 -translate-x-1/2 flex gap-2;

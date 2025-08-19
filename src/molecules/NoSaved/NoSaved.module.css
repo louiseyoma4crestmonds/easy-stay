@@ -1,0 +1,9 @@
+.maindiv {
+  @apply bg-white rounded-lg w-full py-8 flex flex-col justify-center items-center;
+}
+.text {
+  @apply text-gray-800 text-xl font-semibold mt-8;
+}
+.P1 {
+  @apply text-gray-500 font-normal text-base w-[40%] text-center mb-6 mt-2;
+}

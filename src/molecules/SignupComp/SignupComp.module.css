@@ -2,7 +2,7 @@
   @apply flex flex-col min-h-screen bg-white;
 }
 .formDiv {
-  @apply w-full md:max-w-xl max-w-none px-5 md:px-0 mx-auto;
+  @apply w-full md:max-w-lg max-w-none px-5 md:px-0 mx-auto;
 }
 .formLabel {
   @apply block mb-1 text-gray-700 font-medium;

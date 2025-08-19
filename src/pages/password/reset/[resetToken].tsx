@@ -28,7 +28,7 @@ function AccountRecovery(): JSX.Element {
   const [errors, setErrors] = useState("");
 
   const handleSignupClick = () => {
-    router.push("/signup");
+    router.push("/guest/signup");
   };
 
   const handleResetPassword = async (e: React.FormEvent) => {
@@ -141,6 +141,13 @@ function AccountRecovery(): JSX.Element {
 
         {/* RIGHT SIDE - FORM */}
         <div className="w-full md:w-1/2">
+          <div className="mt-24">
+            <img
+              src="/images/text.png"
+              alt="Easy Stay Logo"
+              className="h-12  w-auto mx-auto"
+            />
+          </div>
           {tokenIsValid ? (
             <form
               onSubmit={handleResetPassword}

@@ -1,9 +1,9 @@
 .cityCard {
-  @apply relative w-full cursor-pointer overflow-hidden  transition-all duration-300;
+  @apply relative w-full h-[255px] cursor-pointer overflow-hidden  transition-all duration-300;
 }
 /* .cityCardOverlay {
   @apply absolute inset-0 bg-black bg-opacity-60 group-hover:bg-opacity-0 transition-all duration-300;
 } */
 .cityCardTextDiv {
-  @apply absolute inset-0 flex flex-col items-center justify-center text-center z-10;
+  @apply absolute inset-0 flex flex-col items-center justify-center text-center z-30;
 }

@@ -21,7 +21,7 @@ export function passwordValidation(str: any) {
     containsLowerCase &&
     containsUpperCase &&
     containsNumber &&
-    str.length > 7
+    str.length > 8
   ) {
     isValid = true;
   }

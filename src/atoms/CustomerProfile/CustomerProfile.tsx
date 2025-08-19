@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import styles from "./CustomerProfile.module.css";
 import { useEffect, useRef, useState } from "react";
 import ProfileModal from "@/molecules/ProfileModal";
+import PointsModal from "@/molecules/PointsModal";
+import Modal from "@/molecules/Modal";
 
 type CustomerProfileProps = {
   firstName?: string;
@@ -20,6 +22,9 @@ function CustomerProfile({
 }: CustomerProfileProps) {
   //   const router = useRouter();
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showRedeemModal, setShowRedeemModal] = useState(false);
+  const [selected, setSelected] = useState<null | "apartment" | "ride">(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Fallback to default avatar if none is provided
   const displayAvatar = avatarUrl || "/images/Avatar.png";
@@ -43,6 +48,24 @@ function CustomerProfile({
   }, []);
 
   const toggleProfileModal = () => setShowProfileModal((prev) => !prev);
+
+  // PROCEED AFTER SELECTING FREE RIDE OR APARTMENT
+  const onProceed = () => {
+    setShowRedeemModal(false);
+    // setShowFinalModal(true);
+    setShowSuccessModal(true);
+  };
+
+  const onClose = () => {
+    if (showRedeemModal) {
+      setShowRedeemModal(false);
+      setSelected(null);
+    }
+    if (showSuccessModal) {
+      setShowSuccessModal(false);
+      setSelected(null);
+    }
+  };
 
   return (
     <div ref={profileRef} className="relative">
@@ -70,7 +93,45 @@ function CustomerProfile({
           firstName={firstName}
           points={points}
           lastName={lastName}
+          onClose={() => setShowProfileModal(false)}
+          onRedeemPoints={() => setShowRedeemModal(true)}
         />
+      )}
+
+      {/**POINTS MODAL*/}
+      {showRedeemModal && (
+        <PointsModal
+          onClose={onClose}
+          onProceed={onProceed}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      )}
+
+      {showSuccessModal && (
+        <Modal
+          isOpen
+          onClose={onClose}
+          imageUrl="/images/success-icon.png"
+          width={48}
+          height={48}
+          modalcontent={styles.modalContent}
+        >
+          <div className="flex flex-col justify-center items-center mt-4">
+            <p className="text-lg font-semibold text-gray-900 "> 🎉Success!</p>
+            {selected === "ride" ? (
+              <p className="font-normal text-gray-500 text-sm text-center pt-2 ">
+                Your free airport ride has been redeemed. We'll contact you to
+                arrange pickup.
+              </p>
+            ) : (
+              <p className="font-normal text-gray-500 text-sm text-center pt-2 ">
+                Your free apartment booking has been redeemed. Check your email
+                for booking details.
+              </p>
+            )}
+          </div>
+        </Modal>
       )}
     </div>
   );

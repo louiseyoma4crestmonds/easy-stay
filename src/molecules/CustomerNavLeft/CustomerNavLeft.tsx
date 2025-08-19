@@ -22,7 +22,7 @@ function CustomerNavLeft({
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const goToSupport = () => router.push("/guest/support");
+  const goToSupport = () => router.push("/guest/settings?tab=support");
 
   const toggleNotifications = () => setShowNotifications((prev) => !prev);
 

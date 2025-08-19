@@ -12,7 +12,7 @@ export default function SignupPage() {
   const router = useRouter();
   const handleSigninClick = () => {
     console.log("Redirect to signin");
-    router.push("/signin");
+    router.push("/guest/signin");
   };
 
   return (
