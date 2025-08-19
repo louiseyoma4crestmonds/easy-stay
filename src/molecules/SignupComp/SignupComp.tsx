@@ -102,7 +102,7 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
           if (response?.data?.code === 208) {
             // Show a mordal that says email already exists
           }
-          if (response.data.code === 201) {
+          if (response?.data?.code === 201) {
             // Show otp mordal
             setOtpEmail(email);
             setShowOtp(true);
