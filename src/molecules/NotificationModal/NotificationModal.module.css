@@ -1,0 +1,15 @@
+.notificationmodaldiv {
+  @apply absolute  z-50 max-w-2xl w-96  top-full right-1  bg-white rounded-lg shadow-2xl overflow-hidden;
+}
+.text {
+  @apply text-base bg-gray-50 p-3 font-medium text-gray-900  text-center;
+}
+.imgDiv {
+  @apply h-10 w-10  flex items-center justify-center rounded-lg bg-primary-50;
+}
+.P1 {
+  @apply text-gray-500 font-normal text-sm;
+}
+.P2 {
+  @apply font-normal text-primary-700 text-xs;
+}

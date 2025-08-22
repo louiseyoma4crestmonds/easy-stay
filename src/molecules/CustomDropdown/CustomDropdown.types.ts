@@ -5,6 +5,7 @@ export interface DropdownOption {
   flag?: string; // Optional flag/image URL
   label?: string; // Optional general fallback label
   value?: string; // Optional value
+  link?: string;
 }
 
 export interface CustomDropdownProps {
@@ -12,4 +13,10 @@ export interface CustomDropdownProps {
   value?: DropdownOption;
   onChange?: (value: DropdownOption) => void;
   placeholder?: string;
+  dropdownClassName?: string; // optional class for dropdown container
+  buttonClassName?: string;
+  toggleIcon?: string;
+  leftIcon?: string;
+  spanClassName?: string;
+  ImgClass?: string;
 }

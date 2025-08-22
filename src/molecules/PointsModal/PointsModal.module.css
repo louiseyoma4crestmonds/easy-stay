@@ -1,0 +1,36 @@
+.background {
+  @apply fixed  z-50 bg-black bg-opacity-75  top-0 right-0 bottom-0 left-0 flex justify-center items-center overflow-y-auto cursor-default;
+}
+.frame {
+  @apply top-0 left-0 right-0 bottom-0 bg-white max-w-3xl  rounded-lg;
+}
+.firstdiv {
+  @apply flex justify-between items-center border-b px-8 py-4;
+}
+.seconddiv {
+  @apply flex flex-row justify-between items-center  absolute inset-0 p-8;
+}
+.thirddiv {
+  @apply flex flex-row gap-2 items-center px-3;
+}
+.giftoutline {
+  @apply w-12 h-12 flex-shrink-0 self-center rounded-full bg-white flex items-center justify-center;
+}
+.pointsdiv1 {
+  @apply h-10 px-4 rounded-full flex items-center justify-center bg-blue-600 text-base text-white font-normal flex-shrink-0;
+}
+.pointsdiv2 {
+  @apply h-10 px-4 rounded-full flex items-center justify-center bg-purple-600 text-base text-white font-normal flex-shrink-0;
+}
+.P1 {
+  @apply text-gray-800 font-semibold text-base;
+}
+.buttondiv {
+  @apply px-8 py-3 flex items-center justify-between;
+}
+.airportRide {
+  @apply flex flex-row bg-purple-100 border p-4 rounded-lg mx-8 justify-between mb-8 items-center cursor-pointer transition-all;
+}
+.apartmentBooking {
+  @apply flex flex-row bg-blue-100 border p-4 rounded-lg mx-8 justify-between mb-8 items-center cursor-pointer transition-all;
+}

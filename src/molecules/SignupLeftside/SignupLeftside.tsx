@@ -1,5 +1,6 @@
 import Button from "@/atoms/Button";
-
+import Image from "next/image";
+import homepageImg from "public/images/homepage-bg.png";
 import styles from "./SignupLeftside.module.css";
 
 export type SignupLeftsideProps = {
@@ -11,11 +12,14 @@ function SignupLeftside({ text, onClick }: SignupLeftsideProps) {
   return (
     <div className="h-full relative">
       {/* Background Image */}
-      <img
-        src="/images/homepage-bg.png"
-        alt="Signup background"
-        className="h-full w-full object-cover"
-      />
+      <div className="h-full w-full relative ">
+        <Image
+          src={homepageImg}
+          alt="Signup background"
+          priority
+          layout="fill"
+        />
+      </div>
 
       {/* Centered Transparent Modal */}
       <div className={styles.bgdiv}>

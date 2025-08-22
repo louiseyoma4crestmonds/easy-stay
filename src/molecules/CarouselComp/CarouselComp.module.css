@@ -1,0 +1,3 @@
+.btndiv {
+  @apply border border-gray-200 rounded-full p-2;
+}

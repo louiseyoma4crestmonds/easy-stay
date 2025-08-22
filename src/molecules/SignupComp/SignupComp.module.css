@@ -2,7 +2,7 @@
   @apply flex flex-col min-h-screen bg-white;
 }
 .formDiv {
-  @apply w-full md:max-w-xl max-w-none px-5 md:px-0 mx-auto;
+  @apply w-full md:max-w-lg max-w-none px-5 md:px-0 mx-auto;
 }
 .formLabel {
   @apply block mb-1 text-gray-700 font-medium;
@@ -24,4 +24,10 @@
 }
 .errMsg {
   @apply text-red-500 text-sm mt-1;
+}
+.btndiv {
+  @apply w-full px-5 py-3 border flex flex-row items-center justify-center  border-gray-300 rounded-l-lg bg-gray-100;
+}
+.dropdowndiv {
+  @apply absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg;
 }
