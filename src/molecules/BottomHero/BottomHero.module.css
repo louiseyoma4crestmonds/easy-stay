@@ -1,0 +1,11 @@
+.firstdiv {
+  @apply absolute inset-0 w-[70%] flex justify-center items-center mx-auto;
+}
+
+.P1 {
+  @apply font-bold text-3xl text-white;
+}
+
+.P2 {
+  @apply font-normal text-gray-200 text-xl pt-3;
+}

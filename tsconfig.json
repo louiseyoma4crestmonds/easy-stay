@@ -20,7 +20,8 @@
       "@/molecules/*": ["src/molecules/*"],
       "@/organisms/*": ["src/organisms/*"],
       "@/layouts/*": ["src/layouts/*"],
-      "@/hooks/*": ["src/hooks/*"]
+      "@/hooks/*": ["src/hooks/*"],
+      "@/data/*": ["src/data/*"]
     },
     "incremental": true
   },

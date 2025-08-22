@@ -1,0 +1,3 @@
+.notificationDiv {
+  @apply bg-[#1F2A371A] p-[10px] rounded-lg cursor-pointer;
+}

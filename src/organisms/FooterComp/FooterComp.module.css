@@ -1,0 +1,36 @@
+.maindiv {
+  @apply bg-gray-900 w-full py-6 px-12;
+}
+.footerExploreText {
+  @apply text-gray-50 font-medium text-xl text-center mt-14;
+}
+.footerborder {
+  @apply flex items-center justify-between p-4 border border-gray-600 rounded-lg cursor-pointer;
+}
+.footerAboutDiv {
+  @apply w-[80%] mx-auto my-5 grid grid-cols-2 gap-x-6 gap-y-6;
+}
+.footerAbout {
+  @apply w-[48px] h-[48px] bg-purple-100 rounded-lg flex justify-center items-center;
+}
+.footerP1 {
+  @apply text-gray-50 text-base font-medium;
+}
+.footerP2 {
+  @apply text-gray-400 text-sm font-normal;
+}
+.btndiv {
+  @apply w-full p-2 border flex flex-row items-center justify-center text-sm font-medium text-white bg-[#1F2A37]  border-gray-50 rounded-lg;
+}
+.dropdowndiv {
+  @apply absolute bottom-full z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg;
+}
+.quicklinkP1 {
+  @apply text-sm font-normal text-gray-400 mb-3;
+}
+.quicklinkUL {
+  @apply space-y-2 text-gray-50 font-medium text-base;
+}
+.quicklinkdiv {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-8 mx-auto;
+}

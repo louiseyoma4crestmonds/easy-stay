@@ -1,0 +1,16 @@
+.profilemodaldiv {
+  @apply absolute max-w-3xl w-56  z-50 top-full right-1  bg-white rounded-lg shadow-2xl;
+}
+
+.initialsdiv {
+  @apply h-10 w-10  flex items-center justify-center rounded-full bg-gray-50 text-gray-600 font-medium text-base;
+}
+.pointsdiv {
+  @apply mt-1 self-start px-3 py-1 bg-blue-100 rounded-full text-blue-500 text-[10px] font-medium whitespace-nowrap;
+}
+.label {
+  @apply block px-4 py-2 text-gray-700 text-sm font-normal hover:bg-gray-100;
+}
+.logout {
+  @apply text-red-600;
+}

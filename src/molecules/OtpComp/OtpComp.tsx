@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Button from "@/atoms/Button";
 import styles from "./OtpComp.module.css";
+import logoText from "public/images/Text.png";
 import { resendVerificationCode, verifyCode } from "src/pages/api/user";
 
 export type OtpCompProps = {
@@ -19,7 +21,7 @@ function OtpComp(props: OtpCompProps) {
 
   const handleSigninClick = () => {
     console.log("Redirect to signin");
-    router.push("/signin");
+    router.push("/guest/signin");
   };
 
   // Focus first input on mount
@@ -36,7 +38,8 @@ function OtpComp(props: OtpCompProps) {
 
       const redirectTimer = setTimeout(() => {
         setShowModal(false); // unmount
-        router.push("/signin"); // go to homepage
+        router.push("/guest"); // go to homepage
+        // router.push("/guest/signin"); // go to signin
       }, 5000);
 
       return () => {
@@ -94,12 +97,14 @@ function OtpComp(props: OtpCompProps) {
   return (
     <div className={styles.maindiv}>
       {/* Logo at top center */}
-      <div className="mt-28">
-        <img
-          src="/images/text.png"
+      <div className=" flex  mt-24 justify-center  ">
+        {" "}
+        <Image
+          src={logoText}
           alt="Easy Stay Logo"
-          className="h-12  w-auto mx-auto"
-        />
+          width={167}
+          height={70}
+        />{" "}
       </div>
       <div className={styles.secondDiv}>
         <p className={styles.otpP1}>Two‑Factor Authentication</p>

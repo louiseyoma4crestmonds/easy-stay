@@ -1,11 +1,16 @@
 export type ButtonVariant =
   | "primary"
+  | "primaryWithImg"
   | "secondary"
   | "muted"
   | "accentWithImg"
   | "black"
   | "none"
-  | "pink";
+  | "explore"
+  | "pink"
+  | "explore2"
+  | "profile"
+  | "delete";
 
 export type ButtonWidth = "normal" | "full";
 
