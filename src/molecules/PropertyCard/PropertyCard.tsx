@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Router from "next/router";
 import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
@@ -7,12 +8,12 @@ import Image from "next/image";
 function PropertyCard(props: PropertyCardProps) {
   const {
     id,
-    images,
-    title,
-    location,
-    price,
+    photo,
+    name,
+    neighbourhood,
+    rate,
     rating,
-    bedrooms,
+    rooms,
     onSave,
     className,
   } = props;
@@ -20,9 +21,9 @@ function PropertyCard(props: PropertyCardProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
-  const nextImage = () => setCurrentIndex((p) => (p + 1) % images.length);
+  const nextImage = () => setCurrentIndex((p) => (p + 1) % photo.length);
   const prevImage = () =>
-    setCurrentIndex((p) => (p === 0 ? images.length - 1 : p - 1));
+    setCurrentIndex((p) => (p === 0 ? photo.length - 1 : p - 1));
 
   const handlers = useSwipeable({
     onSwipedLeft: nextImage,
@@ -39,6 +40,14 @@ function PropertyCard(props: PropertyCardProps) {
     });
   };
 
+  let arr: string[] = [];
+  try {
+    arr = JSON.parse(photo ?? "[]");
+  } catch (e) {
+    console.error("Invalid JSON in photo", e);
+    arr = [];
+  }
+
   // Component logic here
   return (
     <div
@@ -49,8 +58,8 @@ function PropertyCard(props: PropertyCardProps) {
       {/* Image / carousel area */}
       <div className="relative" {...handlers}>
         <img
-          src={images[currentIndex]}
-          alt={`${title} - ${currentIndex + 1}`}
+          src={arr[currentIndex]}
+          alt={`${name} - ${currentIndex + 1}`}
           className="w-full h-56 object-cover"
         />
 
@@ -104,7 +113,7 @@ function PropertyCard(props: PropertyCardProps) {
 
         {/* pagination dots */}
         <div className={styles.dotsdiv}>
-          {images.map((_, idx) => (
+          {arr.map((_, idx) => (
             <span
               key={idx}
               className={`w-2 h-2 rounded-full ${
@@ -117,12 +126,28 @@ function PropertyCard(props: PropertyCardProps) {
       </div>
 
       {/* Property details */}
-      <div className="px-4 py-3 space-y-2">
+      <div
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        onClick={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        className="px-4 py-3 space-y-2"
+      >
         <p className="text-sm font-medium text-gray-800 leading-tight">
-          {title}
+          {name}
         </p>
         <div className="flex justify-between items-start">
-          <p className="font-bold text-xs text-primary-600">N{price}/ Night</p>
+          <p className="font-bold text-xs text-primary-600">{rate}</p>
           <div className="flex items-center gap-1 ">
             <Image
               src="/images/little-star.png"
@@ -130,21 +155,17 @@ function PropertyCard(props: PropertyCardProps) {
               width={12}
               height={12}
             />
-            <span className="font-normal text-xs text-gray-800 ">
-              {rating.toFixed(1)}
-            </span>
+            <span className="font-normal text-xs text-gray-800 ">{rating}</span>
             {/* <span className="text-gray-500">({reviewsCount})</span> */}
           </div>
         </div>
 
         <div className="mt-2 flex items-center justify-between">
           <div className="px-2 bg-gray-100 rounded-md">
-            <p className="text-xs font-normal text-gray-900">
-              {bedrooms} {bedrooms === 1 ? "Bedroom" : "Bedrooms"}
-            </p>
+            <p className="text-xs font-normal text-gray-900">{rooms}</p>
           </div>
           <p className="text-gray-500 text-xs font-normal truncate">
-            {location}
+            {neighbourhood}
           </p>
         </div>
       </div>
