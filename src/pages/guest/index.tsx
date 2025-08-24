@@ -7,27 +7,39 @@ import PropertyCard from "@/molecules/PropertyCard";
 import BottomHero from "@/molecules/BottomHero";
 import { useSession } from "next-auth/react";
 import useSessionDetails from "@/hooks/useSessionDetails";
+import { useEffect, useState } from "react";
+import {
+  getLocations,
+  getPopularProperties,
+  getPropertiesNearby,
+} from "../api/property";
+
+import { location, property } from "src/helpers/dataTypes";
 
 function Home(): JSX.Element {
   const { status } = useSession();
   const { firstName, lastName } = useSessionDetails();
-  const cities = [
-    {
-      primaryText: "Lagos",
-      secondaryText: "Over 10,000 apartments available",
-      image: "/images/lagos.png",
-    },
-    {
-      primaryText: "FCT, Abuja",
-      secondaryText: "Over 1,000 apartments available",
-      image: "/images/abuja.png",
-    },
-    {
-      primaryText: "Port Harcourt",
-      secondaryText: "Coming Soon.!",
-      image: "/images/pH.png",
-    },
-  ];
+
+  const [cities, setCities] = useState([]);
+  const [propertiesNearby, setPropertiesNearby] = useState<property[]>([]);
+  const [popularProperties, setPopularProperties] = useState<property[]>([]);
+
+  // GET CITIES
+  useEffect(() => {
+    const usersLattitude: any = localStorage.getItem("usersLattitude");
+    const usersLongitude: any = localStorage.getItem("usersLongitude");
+    getLocations().then((response) => {
+      setCities(response.data.data);
+    });
+
+    getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
+      setPropertiesNearby(response.data.data);
+    });
+
+    getPopularProperties().then((response) => {
+      setPopularProperties(response.data.data);
+    });
+  }, []);
 
   const SampleListings = [
     {
@@ -105,8 +117,6 @@ function Home(): JSX.Element {
   ];
 
   const isLoggedIn = status === "authenticated";
-  // const firstName = "Lekan";
-  // const lastName = "Okeowo";
   const points = 100;
 
   return (
@@ -121,12 +131,13 @@ function Home(): JSX.Element {
       {/* city card section */}
       <section className="overflow-x-auto  ">
         <div className="flex  md:flex-row w-max md:w-full ">
-          {cities.map((city, index) => (
+          {cities?.map((city: location) => (
             <CityCard
-              key={index}
-              primaryText={city.primaryText}
-              secondaryText={city.secondaryText}
-              image={city.image}
+              key={city.id}
+              id={city.id}
+              primaryText={city.name}
+              secondaryText={city.cover_text}
+              image={city.image_cover}
             />
           ))}
         </div>
@@ -134,11 +145,20 @@ function Home(): JSX.Element {
 
       {/* available near me */}
       <CarouselComp
-        title="Available Near Me"
+        title="Available near me"
         itemsPerPage={3}
-        items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} />}
-        className="mt-24"
+        items={propertiesNearby}
+        renderItem={(listings) => (
+          <PropertyCard
+            photo={listings?.photo}
+            name={listings?.name}
+            neighbourhood={listings?.neighbourhood.name}
+            rate={listings?.rate}
+            rating={listings?.rating}
+            rooms={listings?.rooms.name}
+            id={listings?.id}
+          />
+        )}
       />
 
       {/* /////// section */}
@@ -208,10 +228,20 @@ function Home(): JSX.Element {
 
       {/* popular apartments */}
       <CarouselComp
-        title="Popular Apartments in Lagos"
+        title="Popular apartments"
         itemsPerPage={3}
-        items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} />}
+        items={popularProperties}
+        renderItem={(listings) => (
+          <PropertyCard
+            photo={listings?.photo}
+            name={listings?.name}
+            neighbourhood={listings?.neighbourhood.name}
+            rate={listings?.rate}
+            rating={listings?.rating}
+            rooms={listings?.rooms.name}
+            id={listings?.id}
+          />
+        )}
       />
 
       {/*gift section*/}

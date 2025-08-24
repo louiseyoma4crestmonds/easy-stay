@@ -1,15 +1,26 @@
 import Image from "next/image";
 import styles from "./CityCard.module.css";
+import Router from "next/router";
 
 type CityCardProps = {
   primaryText: string;
   secondaryText: string;
   image: string;
+  id: number;
 };
 
-function CityCard({ primaryText, secondaryText, image }: CityCardProps) {
+function CityCard({ primaryText, secondaryText, image, id }: CityCardProps) {
   return (
-    <div className={`group relative ${styles.cityCard}`}>
+    <div
+      role="button"
+      onKeyDown={() => {
+        Router.push({ pathname: "/guest/properties", query: { location: id } });
+      }}
+      onClick={() => {
+        Router.push({ pathname: "/guest/properties", query: { location: id } });
+      }}
+      className={`group relative ${styles.cityCard}`}
+    >
       <div className="absolute inset-0 border-8 border-transparent z-20 group-hover:border-white transition-colors duration-300 pointer-events-none" />
 
       {/* Background image */}
