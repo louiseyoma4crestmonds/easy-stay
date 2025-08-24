@@ -8,6 +8,7 @@ function Button(props: ButtonProps) {
   const {
     variant = "primary",
     width = "normal",
+    type = "submit",
     disabled = false,
     onClick,
     children,
@@ -35,7 +36,7 @@ function Button(props: ButtonProps) {
 
   return (
     <button
-      type="submit"
+      type={type}
       className={btnClassName}
       onClick={() => onClick?.()}
       disabled={disabled}

@@ -57,6 +57,7 @@ function BottomHero({
             {(buttons ?? []).map((btn, idx) => (
               <Button
                 key={idx}
+                type="button"
                 variant={btn.variant as any}
                 onClick={() => {
                   if (btn.onClick) btn.onClick();
