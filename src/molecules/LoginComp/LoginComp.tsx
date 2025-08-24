@@ -165,12 +165,13 @@ function LoginComp() {
         {/* Error message */}
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
         <div className={styles.formButtonDiv}>
-          <Button variant="primary" width="full">
-            <button type="submit">Log in</button>
+          <Button type="submit" variant="primary" width="full">
+            Log in
           </Button>
 
           <Button
             variant="accentWithImg"
+            type="button"
             width="full"
             image="/images/Google.png"
             imageWidth={24}

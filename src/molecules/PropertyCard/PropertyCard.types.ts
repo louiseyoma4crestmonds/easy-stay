@@ -1,11 +1,12 @@
 export type PropertyCardProps = {
   id: string | number;
-  images: string[];
-  title: string;
-  location: string;
-  price: number; // number for easy math/formatting
+  photo: string;
+  name: string;
+  neighbourhood: string;
+  rate: string; // number for easy math/formatting
   rating: number; // 0-5
-  bedrooms?: number;
+  status?: string;
+  rooms: string;
   onSave?: (id: string | number, saved: boolean) => void;
   className?: string;
 };

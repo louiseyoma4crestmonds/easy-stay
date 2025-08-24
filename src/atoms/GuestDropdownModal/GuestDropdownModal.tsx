@@ -103,6 +103,7 @@ function GuestDropdownModal({
       <div className="flex justify-center p-4">
         <Button
           variant="primary"
+          type="button"
           width="full"
           onClick={() => onConfirm(guestCounts)}
         >
