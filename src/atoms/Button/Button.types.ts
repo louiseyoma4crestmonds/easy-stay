@@ -22,6 +22,6 @@ export type ButtonProps = {
   image?: any;
   imageWidth?: number;
   height?: number;
-  type: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
   children?: React.ReactNode;
 };
