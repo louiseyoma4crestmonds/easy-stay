@@ -1,0 +1,9 @@
+.heartborder {
+  @apply bg-transparent border flex justify-center items-center border-gray-200 h-10 w-10 rounded-full;
+}
+.rightarrow {
+  @apply flex absolute right-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center w-16 h-16 rounded-full;
+}
+.leftarrow {
+  @apply flex absolute left-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center  w-16 h-16 rounded-full;
+}

@@ -22,7 +22,7 @@ function LoginComp() {
       .then((res) => {
         if (res?.status === 200) {
           console.log("login response", res);
-          router.push({ pathname: "/guest" });
+          router.push({ pathname: "/" });
         } else if (res?.status === 401) {
           setError("Wrong Login credentials");
         } else {

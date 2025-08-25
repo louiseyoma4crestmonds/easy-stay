@@ -3,6 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function PropertyCard(props: PropertyCardProps) {
   const {
@@ -15,10 +16,13 @@ function PropertyCard(props: PropertyCardProps) {
     bedrooms,
     onSave,
     className,
+    isSaved: initialSaved = false,
+    isWishlist = false,
   } = props;
-
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isSaved, setIsSaved] = useState<boolean>(false);
+  // const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(initialSaved);
 
   const nextImage = () => setCurrentIndex((p) => (p + 1) % images.length);
   const prevImage = () =>
@@ -39,7 +43,26 @@ function PropertyCard(props: PropertyCardProps) {
     });
   };
 
-  // Component logic here
+  // ✅ pick icon depending on where we are
+  const heartIcon = isSaved
+    ? isWishlist
+      ? "/images/heart-white.png" // wishlist saved → white
+      : "/images/filled-heart.png" // normal saved → red
+    : "/images/heart-outline.png"; // not saved → outline
+
+  const handleCardClick = (id: number | string) => {
+    // figure out where user is
+    if (router.pathname.startsWith("/guest/my-wishlist")) {
+      // router.push(`/guest/my-wishlist/${id}`);
+      router.push(`/guest/my-wishlist/1`);
+    } else if (router.pathname.startsWith("/guest/search")) {
+      router.push(`/guest/search/${id}`);
+    } else {
+      // default: Explore
+      router.push(`/guest/${id}`);
+    }
+  };
+
   return (
     <div
       className={`w-full  rounded-lg shadow-md overflow-hidden border border-gray-200 bg-white ${
@@ -47,7 +70,11 @@ function PropertyCard(props: PropertyCardProps) {
       }`}
     >
       {/* Image / carousel area */}
-      <div className="relative" {...handlers}>
+      <div
+        className="relative cursor-pointer"
+        {...handlers}
+        onClick={() => handleCardClick(id)}
+      >
         <img
           src={images[currentIndex]}
           alt={`${title} - ${currentIndex + 1}`}
@@ -90,12 +117,19 @@ function PropertyCard(props: PropertyCardProps) {
           aria-label={isSaved ? "Unsave listing" : "Save listing"}
           onClick={toggleSave}
           // className={styles.heartbtn}
-          className={`${isSaved ? styles.heartbtn2 : styles.heartbtn} `}
+          className={
+            !isSaved
+              ? styles.heartbtn
+              : isWishlist
+                ? styles.heartbtn
+                : styles.heartbtn2
+          }
         >
           <Image
-            src={
-              isSaved ? "/images/filled-heart.png" : "/images/heart-outline.png"
-            }
+            src={heartIcon}
+            // src={
+            //   isSaved ? "/images/filled-heart.png" : "/images/heart-outline.png"
+            // }
             alt={isSaved ? "Unsave listing" : "Save listing"}
             width={12}
             height={12}

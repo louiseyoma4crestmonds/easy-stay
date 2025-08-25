@@ -158,6 +158,7 @@ function ProfileTab() {
       // FUTURE API CALLS
       // Reset before triggering modal again
       setActiveModal("archive");
+      setOtp(["", "", "", ""]);
     }
   };
 

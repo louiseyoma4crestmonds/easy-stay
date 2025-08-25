@@ -7,6 +7,8 @@ import styles from "./CustomerNavArea.module.css";
 import CustomerNavLeft from "../CustomerNavLeft";
 import logoText from "public/images/Text.png";
 import { CustomerNavAreaProps } from "./CustomerNavArea.types";
+import { useState } from "react";
+import Modal from "../Modal";
 
 function CustomerNavArea(props: CustomerNavAreaProps) {
   const {
@@ -17,8 +19,6 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
     firstName,
     lastName,
     points,
-    userAuthenticated,
-    userDetails,
   } = props;
   const router = useRouter();
 
@@ -28,13 +28,15 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
       link: "/guest/register-your-apartment",
     },
     { label: "How it Works", link: "/guest/how-it-works" },
-    { label: "Report an Issue", link: "/country/france" },
+    { label: "Report an Issue", onClick: () => setReportAnIssue(true) },
     { label: "About Us", link: "/guest/about-us" },
     { label: "FAQs", link: "/guest/faqs" },
   ];
 
   const handleSignupClick = () => router.push("/guest/signup");
-  const goToHomepage = () => router.push("/guest");
+  const goToHomepage = () => router.push("/");
+
+  const [reportAnIssue, setReportAnIssue] = useState(false);
 
   return (
     <div
@@ -72,9 +74,7 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
         <div className="flex justify-between items-center gap-2">
           <CustomDropdown
             options={menuOptions}
-            //   buttonClassName={styles.btndiv}
             buttonClassName={isOnImage ? styles.btndiv : styles.btndivBanner}
-            //   dropdownClassName={styles.dropdowndiv}
             dropdownClassName={
               isOnImage ? styles.dropdowndiv : styles.dropdowndivBanner
             }
@@ -85,6 +85,12 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
             Login or Sign Up
           </Button>
         </div>
+      )}
+
+      {reportAnIssue && (
+        <Modal isOpen onClose={() => setReportAnIssue(false)}>
+          <div>hello an issue</div>
+        </Modal>
       )}
     </div>
   );

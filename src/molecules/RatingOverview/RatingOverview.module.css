@@ -1,0 +1,15 @@
+.maindiv {
+  @apply bg-white rounded-lg p-5 mt-6;
+}
+.firstdiv {
+  @apply bg-gray-100 flex flex-col py-4 px-8 justify-center rounded-lg items-center;
+}
+.P1 {
+  @apply text-gray-800 font-bold text-4xl;
+}
+.P2 {
+  @apply text-gray-600 mt-2 font-normal text-sm;
+}
+.text {
+  @apply text-gray-500 font-normal text-sm;
+}

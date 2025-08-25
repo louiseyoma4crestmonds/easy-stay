@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/future/image";
 import Button from "@/atoms/Button";
-import { HeroSecProps } from "./HeroSec.types";
+import { GuestCounts, HeroSecProps } from "./HeroSec.types";
 import styles from "./HeroSec.module.css";
 import logo from "public/images/hero-img.png";
 import DateDropdownModal from "../DateDropdownModal";
@@ -10,15 +10,6 @@ import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 // import { useRouter } from "next/router";
 
 import CustomerNavArea from "../CustomerNavArea";
-
-// types.ts or top of your component file
-type GuestCounts = {
-  adults: number;
-  children: number;
-  infants: number;
-  pets: number;
-};
-// import Router from "next/router";
 
 function HeroSec(props: HeroSecProps) {
   const { isLoggedIn, firstName, lastName, points } = props;

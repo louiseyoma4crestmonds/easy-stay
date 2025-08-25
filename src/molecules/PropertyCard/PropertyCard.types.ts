@@ -8,4 +8,6 @@ export type PropertyCardProps = {
   bedrooms?: number;
   onSave?: (id: string | number, saved: boolean) => void;
   className?: string;
+  isSaved?: boolean;
+  isWishlist?: boolean;
 };

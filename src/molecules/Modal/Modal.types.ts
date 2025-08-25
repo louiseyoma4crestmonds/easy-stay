@@ -10,4 +10,5 @@ export type ModalProps = {
   disableCloseOnClickOutside?: boolean;
   isMobile?: boolean;
   showCloseButton?: boolean;
+  title?: string;
 };

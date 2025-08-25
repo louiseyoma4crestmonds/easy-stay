@@ -13,6 +13,7 @@ function Modal(props: ModalProps) {
     height,
     modalcontent,
     children,
+    title,
     showCloseButton = true,
     disableCloseOnClickOutside = false,
   } = props;
@@ -39,24 +40,33 @@ function Modal(props: ModalProps) {
 
   return (
     <div className={styles.background}>
+      {/* <div className={`${styles.frame} ${modalcontent}`}> */}
       <div className={styles.frame}>
         <div className="p-4 ">
-          {showCloseButton && (
-            <div
-              className="cursor-pointer flex justify-end "
-              onClick={() => {
-                if (!disableCloseOnClickOutside) {
-                  onClose();
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              onKeyDown={() => {}}
-            >
-              <Image src="/images/x-outline.png" width={20} height={20} />{" "}
-            </div>
-          )}
-
+          <div
+            className={`flex items-center ${title ? "justify-between" : "justify-end"}`}
+          >
+            {title && <p>{title} </p>}
+            {showCloseButton && (
+              <div
+                className="cursor-pointer flex justify-end "
+                onClick={() => {
+                  if (!disableCloseOnClickOutside) {
+                    onClose();
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={() => {}}
+              >
+                <Image
+                  src="/images/x-outline.png"
+                  width={20}
+                  height={20}
+                />{" "}
+              </div>
+            )}
+          </div>
           <div className={modalcontent}>
             {imageUrl && <Image src={imageUrl} width={width} height={height} />}
 

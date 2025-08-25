@@ -8,7 +8,7 @@
 
 .btn:disabled,
 .btn:disabled:hover {
-  @apply cursor-not-allowed bg-gray-50 text-gray-200;
+  @apply cursor-not-allowed bg-primary-600 bg-opacity-20 text-gray-200;
 }
 
 /* Button Widths */

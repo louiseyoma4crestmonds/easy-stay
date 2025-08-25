@@ -105,8 +105,7 @@ function Home(): JSX.Element {
   ];
 
   const isLoggedIn = status === "authenticated";
-  // const firstName = "Lekan";
-  // const lastName = "Okeowo";
+
   const points = 100;
 
   return (
@@ -137,7 +136,7 @@ function Home(): JSX.Element {
         title="Available Near Me"
         itemsPerPage={3}
         items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} />}
+        renderItem={(listing) => <PropertyCard {...listing} isSaved={false} />}
         className="mt-24"
       />
 
@@ -211,7 +210,7 @@ function Home(): JSX.Element {
         title="Popular Apartments in Lagos"
         itemsPerPage={3}
         items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} />}
+        renderItem={(listing) => <PropertyCard {...listing} isSaved={false} />}
       />
 
       {/*gift section*/}

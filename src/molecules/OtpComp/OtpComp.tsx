@@ -38,7 +38,7 @@ function OtpComp(props: OtpCompProps) {
 
       const redirectTimer = setTimeout(() => {
         setShowModal(false); // unmount
-        router.push("/guest"); // go to homepage
+        router.push("/"); // go to homepage
         // router.push("/guest/signin"); // go to signin
       }, 5000);
 
