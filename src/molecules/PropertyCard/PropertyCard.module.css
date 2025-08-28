@@ -13,3 +13,6 @@
 .dotsdiv {
   @apply absolute bg-[#0000004D] rounded-3xl px-[6px] py-[3px] bottom-3 left-1/2 -translate-x-1/2 flex gap-2;
 }
+.modalContent3 {
+  @apply max-w-3xl w-[320px] flex flex-col justify-center px-2 py-3 items-center -mt-4;
+}

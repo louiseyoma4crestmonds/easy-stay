@@ -7,106 +7,58 @@ import PropertyCard from "@/molecules/PropertyCard";
 import BottomHero from "@/molecules/BottomHero";
 import { useSession } from "next-auth/react";
 import useSessionDetails from "@/hooks/useSessionDetails";
+import { useEffect, useState } from "react";
+import { location, property } from "src/helpers/dataTypes";
+import {
+  getLocations,
+  getPopularProperties,
+  getPropertiesNearby,
+} from "./api/property";
+import PageSkeletons from "@/components/PageSkeletons";
 
 function Home(): JSX.Element {
   const { status } = useSession();
   const { firstName, lastName } = useSessionDetails();
-  const cities = [
-    {
-      primaryText: "Lagos",
-      secondaryText: "Over 10,000 apartments available",
-      image: "/images/lagos.png",
-    },
-    {
-      primaryText: "FCT, Abuja",
-      secondaryText: "Over 1,000 apartments available",
-      image: "/images/abuja.png",
-    },
-    {
-      primaryText: "Port Harcourt",
-      secondaryText: "Coming Soon.!",
-      image: "/images/pH.png",
-    },
-  ];
 
-  const SampleListings = [
-    {
-      id: 1,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ikeja, Lagos",
-      price: 120000,
-      rating: 4.8,
-      bedrooms: 2,
-    },
-    {
-      id: 2,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ajah, Lagos",
-      price: 250000,
-      rating: 2.8,
-      bedrooms: 1,
-    },
-    {
-      id: 3,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-        "/images/sample-image.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Maitama, Abuja",
-      price: 100000,
-      rating: 3.4,
-      bedrooms: 3,
-    },
-    {
-      id: 4,
-      images: [
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ajah, Lagos",
-      price: 450000,
-      rating: 1.8,
-      bedrooms: 1,
-    },
-    {
-      id: 5,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-        "/images/sample-image.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Maitama, Abuja",
-      price: 100000,
-      rating: 3.4,
-      bedrooms: 3,
-    },
-  ];
+  // const { data: session } = useSession();
+  // console.log(session);
+
+  const [cities, setCities] = useState([]);
+  const [propertiesNearby, setPropertiesNearby] = useState<property[]>([]);
+  const [popularProperties, setPopularProperties] = useState<property[]>([]);
+
+  // GET CITIES
+  useEffect(() => {
+    const usersLattitude: any = localStorage.getItem("usersLattitude");
+    const usersLongitude: any = localStorage.getItem("usersLongitude");
+    console.log("lat/lng from localStorage:", usersLattitude, usersLongitude);
+    getLocations().then((response) => {
+      setCities(response.data.data);
+    });
+
+    getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
+      console.log("Nearby API response:", response.data.data);
+      setPropertiesNearby(response.data.data);
+    });
+
+    getPopularProperties().then((response) => {
+      setPopularProperties(response.data.data);
+    });
+  }, []);
 
   const isLoggedIn = status === "authenticated";
 
   const points = 100;
+  const [mounted, setMounted] = useState(false);
+  // Prevent hydration flicker and cover cases where 'loading' is brief
+  useEffect(() => setMounted(true), []);
+
+  const isLoading = !mounted || status === "loading";
+
+  if (isLoading) return <PageSkeletons />;
+
+  // console.log("status", status);
+  // console.log("property", propertiesNearby);
 
   return (
     <main className="min-h-screen flex flex-col ">
@@ -120,12 +72,13 @@ function Home(): JSX.Element {
       {/* city card section */}
       <section className="overflow-x-auto  ">
         <div className="flex  md:flex-row w-max md:w-full ">
-          {cities.map((city, index) => (
+          {cities?.map((city: location) => (
             <CityCard
-              key={index}
-              primaryText={city.primaryText}
-              secondaryText={city.secondaryText}
-              image={city.image}
+              key={city.id}
+              id={city.id}
+              primaryText={city.name}
+              secondaryText={city.cover_text}
+              image={city.image_cover}
             />
           ))}
         </div>
@@ -135,9 +88,20 @@ function Home(): JSX.Element {
       <CarouselComp
         title="Available Near Me"
         itemsPerPage={3}
-        items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} isSaved={false} />}
-        className="mt-24"
+        className="mt-24 mb-16"
+        items={propertiesNearby}
+        renderItem={(listings) => (
+          <PropertyCard
+            photo={listings?.photo}
+            name={listings?.name}
+            neighbourhood={listings?.neighbourhood.name}
+            rate={listings?.rate}
+            rating={listings?.rating}
+            rooms={listings?.rooms.name}
+            id={listings?.id}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
       />
 
       {/* /////// section */}
@@ -209,8 +173,19 @@ function Home(): JSX.Element {
       <CarouselComp
         title="Popular Apartments in Lagos"
         itemsPerPage={3}
-        items={SampleListings}
-        renderItem={(listing) => <PropertyCard {...listing} isSaved={false} />}
+        items={popularProperties}
+        className="mb-24"
+        renderItem={(listings) => (
+          <PropertyCard
+            photo={listings?.photo}
+            name={listings?.name}
+            neighbourhood={listings?.neighbourhood.name}
+            rate={listings?.rate}
+            rating={listings?.rating}
+            rooms={listings?.rooms.name}
+            id={listings?.id}
+          />
+        )}
       />
 
       {/*gift section*/}
@@ -220,12 +195,16 @@ function Home(): JSX.Element {
         title="Book & Be Rewarded!"
         description="Earn reward points with every apartment booking. These points can be redeemed for incredible benefits, including a free apartment stay or even free airport transport."
         buttons={[
-          { label: "Explore Apartments", link: "/", variant: "explore" },
+          {
+            label: "Explore Apartments",
+            link: "/guest/properties?location=1",
+            variant: "explore",
+          },
         ]}
         divClass="items-start"
       />
 
-      <FooterComp />
+      <FooterComp data={cities} />
     </main>
   );
 }

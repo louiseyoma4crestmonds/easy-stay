@@ -1,3 +1,5 @@
+import { property } from "src/helpers/dataTypes";
+
 export type Review = {
   id: string | number;
   user: {
@@ -24,27 +26,28 @@ export type Rating = {
 
 export type ApartmentDetailsProps = {
   isLoggedIn?: boolean;
+  apartment: property;
 
-  apartment: {
-    id: number | string;
-    title: string;
-    images: string[];
-    description: string;
-    address: string;
-    comment: string[];
-    isSaved: boolean;
+  // apartment: {
+  //   id: number | string;
+  //   title: string;
+  //   images: string[];
+  //   description: string;
+  //   address: string;
+  //   comment: string[];
+  //   isSaved: boolean;
 
-    rating: Rating;
-    amount: number;
-    numberOfReviews: number;
-    apartmentType: number;
-    rooms: number;
-    numberOfGuest: number;
-    amenities: string[];
-    rules: string;
-    checkinTime: string;
-    checkoutTime: string;
-    refundPolicy: string;
-    reviews: Review[];
-  };
+  //   rating: Rating;
+  //   amount: number;
+  //   numberOfReviews: number;
+  //   apartmentType: number;
+  //   rooms: number;
+  //   numberOfGuest: number;
+  //   amenities: string[];
+  //   rules: string;
+  //   checkinTime: string;
+  //   checkoutTime: string;
+  //   refundPolicy: string;
+  //   reviews: Review[];
+  // };
 };

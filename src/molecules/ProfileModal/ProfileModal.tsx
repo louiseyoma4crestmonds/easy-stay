@@ -8,6 +8,7 @@ type ProfileModalProps = {
   points?: number;
   onClose: () => void;
   onRedeemPoints: () => void;
+  onLogoutModal: () => void;
 };
 
 const profileOptions = [
@@ -17,7 +18,7 @@ const profileOptions = [
   },
   { label: "Redeem Points", isRedeem: true },
   { label: "Support", link: "/guest/settings?tab=support" },
-  { label: "Logout", link: "/guest/about-us" },
+  { label: "Logout", isLogout: true },
 ];
 
 function ProfileModal({
@@ -26,6 +27,7 @@ function ProfileModal({
   points,
   onClose,
   onRedeemPoints,
+  onLogoutModal,
 }: ProfileModalProps) {
   // Compute initials safely
 
@@ -50,6 +52,17 @@ function ProfileModal({
             key={i}
             onClick={() => {
               onRedeemPoints(); // open redeem modal
+              onClose(); // close dropdown
+            }}
+            className={`${styles.label} w-full text-left ${i === profileOptions.length - 1 ? styles.logout : ""}`}
+          >
+            {option.label}
+          </button>
+        ) : option.isLogout ? (
+          <button
+            key={i}
+            onClick={() => {
+              onLogoutModal(); // open redeem modal
               onClose(); // close dropdown
             }}
             className={`${styles.label} w-full text-left ${i === profileOptions.length - 1 ? styles.logout : ""}`}

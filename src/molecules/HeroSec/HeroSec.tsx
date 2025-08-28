@@ -4,12 +4,12 @@ import Button from "@/atoms/Button";
 import { GuestCounts, HeroSecProps } from "./HeroSec.types";
 import styles from "./HeroSec.module.css";
 import logo from "public/images/hero-img.png";
-import DateDropdownModal from "../DateDropdownModal";
 import LocationDropdownModal from "@/atoms/LocationDropdownModal";
 import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 // import { useRouter } from "next/router";
 
 import CustomerNavArea from "../CustomerNavArea";
+import Calendar from "../Calendar";
 
 function HeroSec(props: HeroSecProps) {
   const { isLoggedIn, firstName, lastName, points } = props;
@@ -33,6 +33,7 @@ function HeroSec(props: HeroSecProps) {
 
   const locationRef = useRef<HTMLDivElement>(null);
   const checkinRef = useRef<HTMLDivElement>(null);
+  const checkoutRef = useRef<HTMLDivElement>(null);
 
   const locations = [
     "Ikeja, Lagos",
@@ -65,6 +66,13 @@ function HeroSec(props: HeroSecProps) {
       ) {
         setCheckinOpen(false);
       }
+
+      if (
+        checkoutRef.current &&
+        !checkoutRef.current.contains(event.target as Node)
+      ) {
+        setCheckoutOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -88,8 +96,6 @@ function HeroSec(props: HeroSecProps) {
       />
 
       {/* top header section */}
-
-      {/* hero modal */}
       <div className={styles.heromodal}>
         <p className={styles.heroP1}>
           Find Your Perfect Shortlet, Anytime, Anywhere.
@@ -138,7 +144,11 @@ function HeroSec(props: HeroSecProps) {
           {/* check in */}
           <div ref={checkinRef} className={styles.checkoutdiv}>
             <div
-              className=""
+              className={` w-[90%]   transition ${
+                checkinDate
+                  ? "bg-white bg-opacity-10"
+                  : "hover:bg-white hover:bg-opacity-10"
+              }`}
               onClick={() => {
                 setCheckinOpen(true);
                 setCheckoutOpen(false);
@@ -161,7 +171,7 @@ function HeroSec(props: HeroSecProps) {
             </div>
 
             {checkinOpen && (
-              <DateDropdownModal
+              <Calendar
                 initialDate={checkinDate}
                 onConfirm={(date) => {
                   if (date) setCheckinDate(date);
@@ -172,20 +182,44 @@ function HeroSec(props: HeroSecProps) {
           </div>
 
           {/* check out */}
-          <div className={styles.checkoutdiv}>
-            <p className={styles.text}>Check Out</p>
+          <div ref={checkoutRef} className={styles.checkoutdiv}>
+            <div
+              className={` w-[90%] transition ${
+                checkoutDate
+                  ? "bg-white bg-opacity-10"
+                  : "hover:bg-white hover:bg-opacity-10"
+              }`}
+              onClick={() => {
+                setCheckoutOpen(true);
+                setCheckinOpen(false);
+              }}
+            >
+              <p className={styles.text}>Check Out</p>
 
-            <div className={styles.seconddiv}>
-              <img
-                src="/images/calendar-month-outline.png"
-                alt="calendar icon"
-                className="w-4 h-4"
-              />
+              <div className={styles.seconddiv}>
+                <img
+                  src="/images/calendar-month-outline.png"
+                  alt="calendar icon"
+                  className="w-4 h-4"
+                />
 
-              <span className="text-sm text-gray-200 font-normal">
-                Select Date
-              </span>
+                <span className="text-sm text-gray-200 font-normal">
+                  {checkoutDate
+                    ? checkoutDate.toLocaleDateString()
+                    : "Select Date"}
+                </span>
+              </div>
             </div>
+
+            {checkoutOpen && (
+              <Calendar
+                initialDate={checkoutDate}
+                onConfirm={(date) => {
+                  if (date) setCheckoutDate(date);
+                  setCheckoutOpen(false);
+                }}
+              />
+            )}
           </div>
 
           {/* Guest */}

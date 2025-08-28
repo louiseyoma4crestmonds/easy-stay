@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import styles from "./CustomerProfile.module.css";
 import { useEffect, useRef, useState } from "react";
 import ProfileModal from "@/molecules/ProfileModal";
 import PointsModal from "@/molecules/PointsModal";
 import Modal from "@/molecules/Modal";
+import Button from "../Button";
 
 type CustomerProfileProps = {
   firstName?: string;
@@ -25,7 +26,7 @@ function CustomerProfile({
   const [showRedeemModal, setShowRedeemModal] = useState(false);
   const [selected, setSelected] = useState<null | "apartment" | "ride">(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   // Fallback to default avatar if none is provided
   const displayAvatar = avatarUrl || "/images/Avatar.png";
   const profileRef = useRef<HTMLDivElement>(null);
@@ -95,6 +96,7 @@ function CustomerProfile({
           lastName={lastName}
           onClose={() => setShowProfileModal(false)}
           onRedeemPoints={() => setShowRedeemModal(true)}
+          onLogoutModal={() => setShowLogoutModal(true)}
         />
       )}
 
@@ -130,6 +132,37 @@ function CustomerProfile({
                 for booking details.
               </p>
             )}
+          </div>
+        </Modal>
+      )}
+
+      {showLogoutModal && (
+        <Modal
+          isOpen={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          imageUrl="/images/delete-icon.png"
+          width={48}
+          height={48}
+          modalcontent={styles.modalContent3}
+        >
+          <div>
+            <p className="text-gray-900 font-semibold text-lg text-center pt-5 pb-3  ">
+              {" "}
+              Logout
+            </p>
+
+            <p className="text-gray-500 text-sm pb-6 ">
+              Are you sure you want to logout?
+            </p>
+            <div className="flex justify-center items-center gap-5 ">
+              <Button
+                variant="profile"
+                onClick={() => setShowLogoutModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="delete">Logout</Button>
+            </div>
           </div>
         </Modal>
       )}

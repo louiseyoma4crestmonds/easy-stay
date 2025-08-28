@@ -14,6 +14,7 @@ function Modal(props: ModalProps) {
     modalcontent,
     children,
     title,
+    titleImageUrl,
     showCloseButton = true,
     disableCloseOnClickOutside = false,
   } = props;
@@ -42,11 +43,25 @@ function Modal(props: ModalProps) {
     <div className={styles.background}>
       {/* <div className={`${styles.frame} ${modalcontent}`}> */}
       <div className={styles.frame}>
-        <div className="p-4 ">
+        <div className=" ">
           <div
-            className={`flex items-center ${title ? "justify-between" : "justify-end"}`}
+            className={`flex items-center ${title ? "justify-between border-b p-5 " : "justify-end p-4"}`}
           >
-            {title && <p>{title} </p>}
+            {title && (
+              <div className="flex items-center gap-2">
+                {/* Optional image beside the title */}
+                {titleImageUrl && (
+                  <Image
+                    src={titleImageUrl}
+                    alt="title icon"
+                    width={18}
+                    height={18}
+                  />
+                )}
+                <p className="text-gray-900 font-medium text-xl">{title}</p>
+              </div>
+            )}
+
             {showCloseButton && (
               <div
                 className="cursor-pointer flex justify-end "

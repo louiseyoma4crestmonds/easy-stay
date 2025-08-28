@@ -17,7 +17,7 @@
   @apply w-full pl-10 p-3 border bg-gray-50 rounded-lg focus:outline-none;
 }
 .modalContent3 {
-  @apply max-w-md flex flex-col justify-center px-2 py-3 items-center;
+  @apply max-w-md flex flex-col justify-center px-6 -mt-4 py-5 items-center;
 }
 
 .P1 {
@@ -36,5 +36,5 @@
   @apply text-gray-500 text-sm mt-2 mb-6 text-center font-normal;
 }
 .modalContent2 {
-  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center;
+  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-10 py-8 -mt-8 items-center;
 }

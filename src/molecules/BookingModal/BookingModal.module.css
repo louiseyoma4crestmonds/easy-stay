@@ -1,8 +1,8 @@
 .modalContent {
-  @apply w-[700px] flex flex-col justify-center py-4 px-3 items-center h-[550px] overflow-y-auto;
+  @apply w-[700px] flex flex-col justify-center py-4  items-center h-[520px] overflow-y-auto;
 }
 .firstdiv {
-  @apply flex flex-row  border rounded-lg mb-5 mt-14  border-gray-200 p-4 gap-4;
+  @apply flex flex-row items-center  border rounded-lg mb-5 py-2 px-3 border-gray-200  gap-4;
 }
 .text {
   @apply text-gray-500 font-normal text-sm;

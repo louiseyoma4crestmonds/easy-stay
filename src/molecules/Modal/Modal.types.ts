@@ -11,4 +11,5 @@ export type ModalProps = {
   isMobile?: boolean;
   showCloseButton?: boolean;
   title?: string;
+  titleImageUrl?: any;
 };

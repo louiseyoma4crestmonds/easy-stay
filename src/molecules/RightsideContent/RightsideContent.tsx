@@ -9,6 +9,7 @@ import Button from "@/atoms/Button";
 import Modal from "../Modal";
 import StarIcon from "@/atoms/Icons/StarIcon";
 import BookingModal from "../BookingModal";
+import Calendar from "../Calendar";
 
 function RightsideContent({ guests }: RightsideContentProps) {
   const checkinRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,7 @@ function RightsideContent({ guests }: RightsideContentProps) {
   const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
   const [guestDropdownOpen, setGuestDropdownOpen] = useState(false);
   const [showBookingSummary, setShowBookingSummary] = useState(false);
+  const [bookingSuccessModal, setBookingSuccessModal] = useState(false);
   const [guestCounts, setGuestCounts] = useState<GuestCounts>({
     adults: 0,
     children: 0,
@@ -90,7 +92,7 @@ function RightsideContent({ guests }: RightsideContentProps) {
           </div>
 
           {checkinOpen && (
-            <DateDropdownModal
+            <Calendar
               initialDate={checkinDate}
               onConfirm={(date) => {
                 if (date) setCheckinDate(date);
@@ -127,7 +129,7 @@ function RightsideContent({ guests }: RightsideContentProps) {
           </div>
 
           {checkoutOpen && (
-            <DateDropdownModal
+            <Calendar
               initialDate={checkoutDate}
               onConfirm={(date) => {
                 if (date) setCheckoutDate(date);
@@ -200,13 +202,46 @@ function RightsideContent({ guests }: RightsideContentProps) {
           <p className="font-bold text-sm text-primary-600 ">₦70,000/Night</p>
         </div>
       </div>
-      <div></div>
+      <div className=" relative mt-6 ">
+        <Image src="/images/0.png" alt="bg-img" width={322} height={344} />
+        <div className={styles.giftdiv}>
+          <Image
+            src="/images/gift-boxes.png"
+            alt="giftboxes"
+            width={153}
+            height={153}
+          />
+
+          <p className={styles.text2}>Book & Be Rewarded!</p>
+          <p className={styles.text3}>
+            {" "}
+            Earn reward points with every apartment booking. These points can be
+            redeemed for incredible benefits, including a free apartment stay or
+            even free airport transport. It's simple: the more you book, the
+            more you save!
+          </p>
+        </div>
+      </div>
 
       {showBookingSummary && (
         <BookingModal
           setShowBookingSummary={setShowBookingSummary}
           showBookingSummary={showBookingSummary}
+          setBookingSuccessModal={setBookingSuccessModal}
         />
+      )}
+
+      {bookingSuccessModal && (
+        <Modal
+          isOpen
+          onClose={() => setBookingSuccessModal(false)}
+          imageUrl="/images/success-icon.png"
+          width={48}
+          height={48}
+          modalcontent={styles.modalContent2}
+        >
+          <div className="pt-3 "> Booking Successful</div>
+        </Modal>
       )}
     </div>
   );

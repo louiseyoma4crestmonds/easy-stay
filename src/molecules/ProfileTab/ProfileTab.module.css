@@ -36,16 +36,16 @@
   @apply flex justify-between items-center px-8 py-5;
 }
 .modalContent {
-  @apply max-w-xs flex flex-col justify-center py-4 items-center;
+  @apply max-w-xs flex flex-col justify-center p-5 -mt-8 items-center;
 }
 .modalContent2 {
-  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center;
+  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-7;
 }
 .modalContent3 {
-  @apply max-w-md flex flex-col justify-center px-2 py-3 items-center;
+  @apply max-w-md flex flex-col justify-center p-5 -mt-7 items-center;
 }
 .modalContent4 {
-  @apply max-w-sm flex flex-col justify-center px-4 py-5 items-center -mt-4;
+  @apply max-w-sm flex flex-col justify-center px-4 py-6 items-center -mt-6;
 }
 .P1 {
   @apply text-gray-900 text-lg font-semibold text-center my-4;

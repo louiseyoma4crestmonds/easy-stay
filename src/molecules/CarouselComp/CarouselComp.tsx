@@ -23,7 +23,7 @@ export default function CarouselSection<T>({
   );
 
   return (
-    <section className={` my-12 w-full max-w-7xl mx-auto ${className}`}>
+    <section className={` my-8 w-full max-w-7xl mx-auto ${className}`}>
       {/* Header */}
       <div className="flex justify-between items-center px-3 mb-6">
         <div className="flex items-center gap-2">

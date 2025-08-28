@@ -22,17 +22,6 @@ export default function MyWishList() {
     return <PageSkeletons />;
   }
 
-  //  If unauthenticated, you can redirect or just return null
-  //   if (status === "unauthenticated") {
-  //     router.push("/guest");
-  //     return null;
-  //   }
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/guest");
-    }
-  }, [status, router]);
-
   // Example: simulate fetching wishlist
   useEffect(() => {
     // Simulate async fetch
@@ -42,8 +31,8 @@ export default function MyWishList() {
       const data = [
         {
           id: 1,
-          images: ["/images/sample-image.png", "/images/abuja.png"],
-          title: "Cozy Apartment in Lagos",
+          photo: ["/images/sample-image.png", "/images/abuja.png"],
+          name: "Cozy Apartment in Lagos",
           location: "Lagos, Nigeria",
           price: 50000,
           rating: 4.5,
@@ -105,7 +94,7 @@ export default function MyWishList() {
         },
       ];
       setLoading(false);
-      setSavedApartments(data); // comment this out to test NoSaved
+      // setSavedApartments(data); // comment this out to test NoSaved
     };
 
     fetchWishlist();
@@ -114,6 +103,8 @@ export default function MyWishList() {
   const handleRemove = (id: string | number) => {
     setSavedApartments((prev) => prev.filter((item) => item.id !== id));
   };
+
+  console.log("savedApartment", savedApartments);
 
   return (
     <section className="min-h-screen bg-gray-50 w-full pb-10">
