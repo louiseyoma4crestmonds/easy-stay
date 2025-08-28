@@ -43,7 +43,7 @@ export default function Faqs() {
         </div>
       </section>
 
-      {/*///////// section*/}
+      {/*///////////// section*/}
       <BottomHero
         backgroundImage="/images/hero-two.png"
         title="Your hosting journey starts here"

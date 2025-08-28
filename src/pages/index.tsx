@@ -20,24 +20,22 @@ function Home(): JSX.Element {
   const { status } = useSession();
   const { firstName, lastName } = useSessionDetails();
 
-  // const { data: session } = useSession();
-  // console.log(session);
-
   const [cities, setCities] = useState([]);
   const [propertiesNearby, setPropertiesNearby] = useState<property[]>([]);
   const [popularProperties, setPopularProperties] = useState<property[]>([]);
+  const [mounted, setMounted] = useState(false);
+  // Prevent hydration flicker and cover cases where 'loading' is brief
+  useEffect(() => setMounted(true), []);
 
   // GET CITIES
   useEffect(() => {
     const usersLattitude: any = localStorage.getItem("usersLattitude");
     const usersLongitude: any = localStorage.getItem("usersLongitude");
-    console.log("lat/lng from localStorage:", usersLattitude, usersLongitude);
     getLocations().then((response) => {
       setCities(response.data.data);
     });
 
     getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
-      console.log("Nearby API response:", response.data.data);
       setPropertiesNearby(response.data.data);
     });
 
@@ -48,17 +46,11 @@ function Home(): JSX.Element {
 
   const isLoggedIn = status === "authenticated";
 
-  const points = 100;
-  const [mounted, setMounted] = useState(false);
-  // Prevent hydration flicker and cover cases where 'loading' is brief
-  useEffect(() => setMounted(true), []);
-
   const isLoading = !mounted || status === "loading";
 
   if (isLoading) return <PageSkeletons />;
 
-  // console.log("status", status);
-  // console.log("property", propertiesNearby);
+  const points = 100;
 
   return (
     <main className="min-h-screen flex flex-col ">
@@ -86,9 +78,8 @@ function Home(): JSX.Element {
 
       {/* available near me */}
       <CarouselComp
-        title="Available Near Me"
+        title="Available near me"
         itemsPerPage={3}
-        className="mt-24 mb-16"
         items={propertiesNearby}
         renderItem={(listings) => (
           <PropertyCard
@@ -99,7 +90,6 @@ function Home(): JSX.Element {
             rating={listings?.rating}
             rooms={listings?.rooms.name}
             id={listings?.id}
-            isLoggedIn={isLoggedIn}
           />
         )}
       />
