@@ -161,7 +161,7 @@ function Home(): JSX.Element {
 
       {/* popular apartments */}
       <CarouselComp
-        title="Popular Apartments in Lagos"
+        title="Popular apartments"
         itemsPerPage={3}
         items={popularProperties}
         className="mb-24"

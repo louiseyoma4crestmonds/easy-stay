@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./ProfileModal.module.css";
+import useSessionDetails from "@/hooks/useSessionDetails";
 
 type ProfileModalProps = {
   firstName?: string;

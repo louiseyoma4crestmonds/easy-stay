@@ -171,7 +171,23 @@ function PropertyCard(props: PropertyCardProps) {
       </div>
 
       {/* Property details */}
-      <div className="px-4 py-3 space-y-2">
+      <div
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        onClick={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        className="px-4 py-3 space-y-2"
+      >
         <p className="text-sm font-medium text-gray-800 leading-tight">
           {name}
         </p>
