@@ -9,4 +9,7 @@ export type PropertyCardProps = {
   rooms: string;
   onSave?: (id: string | number, saved: boolean) => void;
   className?: string;
+  isSaved?: boolean;
+  isWishlist?: boolean;
+  isLoggedIn?: boolean;
 };

@@ -4,14 +4,23 @@ import FooterComp from "@/organisms/FooterComp";
 import HeroBanner from "@/organisms/HeroBanner";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { getLocations } from "../api/property";
 
 export default function AboutUs() {
   const { status } = useSession();
   const { firstName, lastName } = useSessionDetails();
   const isLoggedIn = status === "authenticated";
   const [mounted, setMounted] = useState(false);
+  const [cities, setCities] = useState([]);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
+
+  // GET CITIES
+  useEffect(() => {
+    getLocations().then((response) => {
+      setCities(response.data.data);
+    });
+  }, []);
 
   const isLoading = !mounted || status === "loading";
 
@@ -180,7 +189,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <FooterComp />
+      <FooterComp data={cities} />
     </main>
   );
 }

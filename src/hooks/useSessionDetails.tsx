@@ -9,7 +9,6 @@ export default function useSessionDetails() {
       .then((res: any) => setSession(res?.user?.user?.token?.token))
       .catch(console.error);
   }, []);
-  console.log("session", session);
   return {
     firstName: session?.firstName ?? "",
     lastName: session?.lastName ?? "",

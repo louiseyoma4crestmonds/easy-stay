@@ -16,7 +16,15 @@ export type property = {
   latitude: number;
   rating: number;
   rate: string;
-  rooms: { id: number; name: string };
+  rooms: { id: number; name: string; number: number };
   status: { id: number; name: string };
   photo: string;
+  address: string;
+  description: string;
+  expected_checkin_time: string;
+  expected_checkout_time: string;
+  number_off_allowed_guests: number;
+  rules: string;
+  refund_policy: string;
+  isLoggedIn?: boolean;
 };

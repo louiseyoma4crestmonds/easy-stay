@@ -1,0 +1,9 @@
+.maindiv {
+  @apply bg-white relative rounded-lg p-5 mt-6 h-[600px] flex flex-col;
+}
+.text {
+  @apply text-gray-500 font-normal text-sm mb-4;
+}
+.datediv {
+  @apply text-xs font-normal text-gray-500;
+}

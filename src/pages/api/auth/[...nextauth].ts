@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import axios from "axios";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { endpointUrl } from "src/services/server";
 
 const authOptions: NextAuthOptions = {
@@ -37,10 +38,27 @@ const authOptions: NextAuthOptions = {
         return { id: "result", token: result };
       },
     }),
+
+    // 🔑 Google login
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!, // from .env
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
 
   callbacks: {
-    jwt: async ({ token, user, trigger, session }) => {
+    jwt: async ({ token, user, trigger, account, profile, session }) => {
+      // Handle Google login
+      if (account?.provider === "google") {
+        token.user = {
+          id: profile?.sub,
+          email: profile?.email,
+          name: profile?.name,
+          // picture: profile?.picture,
+          provider: "google",
+        };
+      }
+
       if (trigger === "update") {
         return { ...token, ...session.user };
       }
@@ -56,7 +74,7 @@ const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/guest/signin",
-    signOut: "/logout",
+    signOut: "/guest/logout",
   },
 };
 

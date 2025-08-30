@@ -23,11 +23,13 @@ export default function CarouselSection<T>({
   );
 
   return (
-    <section className={` my-12 w-full max-w-7xl mx-auto ${className}`}>
+    <section className={` my-8 w-full max-w-7xl mx-auto ${className}`}>
       {/* Header */}
       <div className="flex justify-between items-center px-3 mb-6">
         <div className="flex items-center gap-2">
-          <p className="font-medium text-base text-gray-800">{title}</p>
+          <p className="font-medium text-base text-gray-800 cursor-pointer hover:underline ">
+            {title}
+          </p>
           <img
             src="/images/angle-left.png"
             width={8}

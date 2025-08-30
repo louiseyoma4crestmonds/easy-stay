@@ -5,14 +5,16 @@ import Button from "@/atoms/Button";
 import styles from "./OtpComp.module.css";
 import logoText from "public/images/Text.png";
 import { resendVerificationCode, verifyCode } from "src/pages/api/user";
+import { signIn } from "next-auth/react";
 
 export type OtpCompProps = {
   email: string;
+  password: string;
 };
 
 function OtpComp(props: OtpCompProps) {
   const router = useRouter();
-  const { email } = props;
+  const { email, password } = props;
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +40,7 @@ function OtpComp(props: OtpCompProps) {
 
       const redirectTimer = setTimeout(() => {
         setShowModal(false); // unmount
-        router.push("/guest"); // go to homepage
+        router.push("/"); // go to homepage
         // router.push("/guest/signin"); // go to signin
       }, 5000);
 
@@ -69,23 +71,61 @@ function OtpComp(props: OtpCompProps) {
 
   const isComplete = otp.every((val) => val !== "");
 
-  const handleSubmit = () => {
-    if (isComplete) {
-      // FUTURE API CALLS
-      verifyCode(`${otp[0]}${otp[1]}${otp[2]}${otp[3]}`, email);
-      // Reset before triggering modal again
-      setShowModal(false);
-      setModalVisible(false);
+  const handleSubmit = async () => {
+    if (!isComplete) return;
 
-      // Allow the DOM to register the reset before setting again
-      setTimeout(() => {
-        setShowModal(true); // Mount
-        setTimeout(() => {
-          setModalVisible(true); // Slide in
-        }, 50);
-      }, 10); // Tiny delay to re-trigger effect
+    try {
+      const code = `${otp[0]}${otp[1]}${otp[2]}${otp[3]}`;
+      const res = await verifyCode(code, email);
+      console.log("res from otp", res.status);
+      if (res.status === 200) {
+        // ✅ OTP verified → log user in with NextAuth
+        const loginRes = await signIn("credentials", {
+          email,
+          password,
+          redirect: false, // don't redirect yet
+        });
+        console.log("loginRes", loginRes);
+        if (loginRes?.status === 200) {
+          // 🔄 Reset before triggering modal again
+          setShowModal(false);
+          setModalVisible(false);
+
+          // Tiny delay to re-trigger effect
+          setTimeout(() => {
+            setShowModal(true); // Mount
+            setTimeout(() => {
+              setModalVisible(true); // Slide in
+            }, 50);
+          }, 10);
+        } else {
+          console.error("Login failed", loginRes);
+        }
+      } else {
+        console.error("OTP verification failed");
+      }
+    } catch (err) {
+      console.error("Error verifying OTP:", err);
     }
   };
+
+  // const handleSubmit = () => {
+  //   if (isComplete) {
+  //     const res = verifyCode(`${otp[0]}${otp[1]}${otp[2]}${otp[3]}`, email);
+  //     console.log("res", res);
+  //     // Reset before triggering modal again
+  //     setShowModal(false);
+  //     setModalVisible(false);
+
+  //     // Allow the DOM to register the reset before setting again
+  //     setTimeout(() => {
+  //       setShowModal(true); // Mount
+  //       setTimeout(() => {
+  //         setModalVisible(true); // Slide in
+  //       }, 50);
+  //     }, 10); // Tiny delay to re-trigger effect
+  //   }
+  // };
 
   const handleResend = () => {
     // Future: call resend API here

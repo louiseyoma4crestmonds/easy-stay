@@ -1,0 +1,9 @@
+.maindiv {
+  @apply bg-white rounded-lg p-5 mt-6;
+}
+.text {
+  @apply text-gray-500 font-normal text-sm;
+}
+.P1 {
+  @apply text-gray-800 font-normal text-sm;
+}

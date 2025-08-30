@@ -1,0 +1,23 @@
+.checkindiv {
+  @apply relative px-5 flex cursor-pointer flex-col;
+}
+.seconddiv {
+  @apply flex flex-row border border-gray-300 px-4 py-3 rounded-lg bg-gray-50 items-center gap-1;
+}
+.text {
+  @apply font-medium text-sm text-gray-900 mb-2;
+}
+.giftdiv {
+  @apply absolute inset-0 mx-auto flex flex-col justify-center items-center px-6 -mt-2;
+}
+
+.text2 {
+  @apply text-white font-bold text-xl text-center;
+}
+
+.text3 {
+  @apply text-gray-300 font-normal text-sm text-center pt-1;
+}
+.modalContent2 {
+  @apply max-w-md w-[400px]  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-6;
+}

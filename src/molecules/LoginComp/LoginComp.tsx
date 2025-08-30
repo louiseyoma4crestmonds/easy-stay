@@ -22,7 +22,7 @@ function LoginComp() {
       .then((res) => {
         if (res?.status === 200) {
           console.log("login response", res);
-          router.push({ pathname: "/guest" });
+          router.push({ pathname: "/" });
         } else if (res?.status === 401) {
           setError("Wrong Login credentials");
         } else {
@@ -176,6 +176,7 @@ function LoginComp() {
             image="/images/Google.png"
             imageWidth={24}
             height={24}
+            onClick={() => signIn("google", { callbackUrl: "/" })}
           >
             Sign in with Google
           </Button>

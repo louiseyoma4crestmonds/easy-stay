@@ -44,7 +44,7 @@ function CustomerNavLeft({
   }, []);
 
   return (
-    <div className="flex items-center gap-3 ">
+    <div className={styles.maindiv}>
       {/* Support Icon */}
       <div onClick={goToSupport} className="cursor-pointer ">
         <img

@@ -8,13 +8,13 @@ import BottomHero from "@/molecules/BottomHero";
 import { useSession } from "next-auth/react";
 import useSessionDetails from "@/hooks/useSessionDetails";
 import { useEffect, useState } from "react";
+import { location, property } from "src/helpers/dataTypes";
 import {
   getLocations,
   getPopularProperties,
   getPropertiesNearby,
-} from "../api/property";
-
-import { location, property } from "src/helpers/dataTypes";
+} from "./api/property";
+import PageSkeletons from "@/components/PageSkeletons";
 
 function Home(): JSX.Element {
   const { status } = useSession();
@@ -23,6 +23,9 @@ function Home(): JSX.Element {
   const [cities, setCities] = useState([]);
   const [propertiesNearby, setPropertiesNearby] = useState<property[]>([]);
   const [popularProperties, setPopularProperties] = useState<property[]>([]);
+  const [mounted, setMounted] = useState(false);
+  // Prevent hydration flicker and cover cases where 'loading' is brief
+  useEffect(() => setMounted(true), []);
 
   // GET CITIES
   useEffect(() => {
@@ -41,82 +44,12 @@ function Home(): JSX.Element {
     });
   }, []);
 
-  const SampleListings = [
-    {
-      id: 1,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ikeja, Lagos",
-      price: 120000,
-      rating: 4.8,
-      bedrooms: 2,
-    },
-    {
-      id: 2,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ajah, Lagos",
-      price: 250000,
-      rating: 2.8,
-      bedrooms: 1,
-    },
-    {
-      id: 3,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-        "/images/sample-image.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Maitama, Abuja",
-      price: 100000,
-      rating: 3.4,
-      bedrooms: 3,
-    },
-    {
-      id: 4,
-      images: [
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Ajah, Lagos",
-      price: 450000,
-      rating: 1.8,
-      bedrooms: 1,
-    },
-    {
-      id: 5,
-      images: [
-        "/images/sample-image.png",
-        "/images/abuja.png",
-        "/images/sample-image.png",
-        "/images/lagos.png",
-        "/images/sample-image.png",
-      ],
-      title: "Luxury Suite, Lekki",
-      location: "Maitama, Abuja",
-      price: 100000,
-      rating: 3.4,
-      bedrooms: 3,
-    },
-  ];
-
   const isLoggedIn = status === "authenticated";
+
+  const isLoading = !mounted || status === "loading";
+
+  if (isLoading) return <PageSkeletons />;
+
   const points = 100;
 
   return (
@@ -231,6 +164,7 @@ function Home(): JSX.Element {
         title="Popular apartments"
         itemsPerPage={3}
         items={popularProperties}
+        className="mb-24"
         renderItem={(listings) => (
           <PropertyCard
             photo={listings?.photo}
@@ -251,12 +185,16 @@ function Home(): JSX.Element {
         title="Book & Be Rewarded!"
         description="Earn reward points with every apartment booking. These points can be redeemed for incredible benefits, including a free apartment stay or even free airport transport."
         buttons={[
-          { label: "Explore Apartments", link: "/", variant: "explore" },
+          {
+            label: "Explore Apartments",
+            link: "/guest/properties?location=1",
+            variant: "explore",
+          },
         ]}
         divClass="items-start"
       />
 
-      <FooterComp />
+      <FooterComp data={cities} />
     </main>
   );
 }

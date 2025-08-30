@@ -6,6 +6,7 @@ import CustomDropdown from "../CustomDropdown";
 import styles from "./SignupComp.module.css";
 import logoText from "public/images/Text.png";
 import { createNewUser } from "src/pages/api/user";
+import { signIn } from "next-auth/react";
 
 interface DropdownOption {
   label?: string;
@@ -19,9 +20,14 @@ interface DropdownOption {
 export type SignupCompProps = {
   setShowOtp: (show: boolean) => void;
   setOtpEmail: (email: string) => void;
+  setOtpPassword: (password: string) => void;
 };
 
-function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
+function SignupComp({
+  setShowOtp,
+  setOtpPassword,
+  setOtpEmail,
+}: SignupCompProps) {
   const router = useRouter();
   const countries = [
     { name: "USA", code: "+1", flag: "/images/US.png" },
@@ -108,6 +114,7 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
           if (response?.data?.code === 201) {
             // Show otp mordal
             setOtpEmail(email);
+            setOtpPassword(password);
             setShowOtp(true);
           }
         }
@@ -365,11 +372,13 @@ function SignupComp({ setShowOtp, setOtpEmail }: SignupCompProps) {
             <button type="submit">Create Account</button>
           </Button>
           <Button
+            type="button"
             variant="accentWithImg"
             width="full"
             image="/images/Google.png"
             imageWidth={24}
             height={24}
+            onClick={() => signIn("google", { callbackUrl: "/" })}
           >
             Sign up with Google
           </Button>

@@ -1,0 +1,19 @@
+.paginationContainer {
+  @apply flex text-sm items-center flex-row;
+}
+
+.paginationFrame {
+  @apply flex text-sm items-center flex-row border border-gray-300 rounded;
+}
+.paginationDiv {
+  @apply px-3 py-1.5 cursor-pointer bg-white font-medium text-sm border border-gray-300  text-gray-500;
+}
+.paginationDivActive {
+  @apply bg-primary-600 text-white px-3 py-1.5  cursor-pointer font-medium text-sm;
+}
+.paginationDivBtn {
+  @apply cursor-pointer bg-white  px-3 py-1.5  text-gray-500 flex items-center;
+}
+.mpaginationDropdown {
+  @apply border outline-none border-[#C8CCD2] rounded px-1 py-2 cursor-pointer text-[15px];
+}

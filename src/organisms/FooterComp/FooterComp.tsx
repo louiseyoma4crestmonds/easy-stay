@@ -1,7 +1,10 @@
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./FooterComp.module.css";
 import CustomDropdown from "../../molecules/CustomDropdown";
 import { DropdownOption } from "../../molecules/CustomDropdown/CustomDropdown.types";
+import { Props } from "./FooterComp.types";
+import Router from "next/router";
 
 const languageOptions: DropdownOption[] = [
   { value: "en", label: "English" },
@@ -15,7 +18,7 @@ const currencyOptions: DropdownOption[] = [
   { value: "gbp", label: "GBP - £" },
 ];
 
-function FooterComp() {
+function FooterComp({ data }: Props) {
   const [selectedLanguage, setSelectedLanguage] = useState<
     DropdownOption | undefined
   >(languageOptions[0]);
@@ -23,81 +26,74 @@ function FooterComp() {
     DropdownOption | undefined
   >(currencyOptions[0]);
 
+  const features = [
+    { id: 1, icon: "/images/home-outline-2.png" },
+    { id: 2, icon: "/images/home-outline-3.png" },
+    { id: 3, icon: "/images/home-outline.png" },
+    // add more icons matching the ids from your endpoint
+  ];
+
   return (
     <section className={styles.maindiv}>
-      <p className={styles.footerExploreText}>Explore more opportunities</p>
+      <p className={styles.footerExploreText}>Explore more apartments</p>
 
       {/* Brand / About */}
+
       <div className={styles.footerAboutDiv}>
-        <div className={styles.footerborder}>
-          <div className="flex items-center gap-3 ">
-            <div className={styles.footerAbout}>
-              <img
-                src="/images/home-outline-2.png"
-                alt="giftbox img"
-                className="w-[20px] h-[20px] "
+        {data.map((item, index) => {
+          // find icon for this id
+          const featureIcon = features.find((f) => f.id === item.id)?.icon;
+
+          return (
+            <div
+              key={item.id}
+              className={`${styles.footerborder} flex items-center justify-between`}
+              role="button"
+              onKeyDown={() => {
+                Router.push({
+                  pathname: "/guest/properties",
+                  query: { location: item.id },
+                });
+              }}
+              onClick={() => {
+                Router.push({
+                  pathname: "/guest/properties",
+                  query: { location: item.id },
+                });
+              }}
+            >
+              <div className="flex items-center gap-3 ">
+                {featureIcon && (
+                  <div className={styles.footerAbout}>
+                    <Image
+                      src={featureIcon}
+                      alt={item.name}
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />{" "}
+                  </div>
+                )}
+                <div>
+                  <p className={styles.footerP1}>
+                    {" "}
+                    {`Apartments in ${item.name}`}{" "}
+                  </p>
+                  <p className={styles.footerP2}>{item.cover_text}</p>
+                </div>
+              </div>
+              <Image
+                src="/images/angle-down.png"
+                alt="Previous"
+                width={24}
+                height={24}
+                className="transform -rotate-90 "
               />
             </div>
-            <div className="flex flex-col">
-              <p className={styles.footerP1}>Apartments in Lagos</p>
-              <p className={styles.footerP2}>
-                Over 10,000 apartments available
-              </p>
-            </div>
-          </div>
-          <img
-            src="/images/angle-down.png"
-            alt="Previous"
-            width={24}
-            height={24}
-            className="transform -rotate-90 "
-          />
-        </div>
-        <div className={styles.footerborder}>
-          <div className="flex items-center gap-3 ">
-            <div className={styles.footerAbout}>
-              <img
-                src="/images/home-outline-3.png"
-                alt="giftbox img"
-                className="w-[20px] h-[20px] "
-              />
-            </div>
-            <div className="flex flex-col">
-              <p className={styles.footerP1}>Apartments in Abuja</p>
-              <p className={styles.footerP2}>Over 1,000 apartments available</p>
-            </div>
-          </div>
-          <img
-            src="/images/angle-down.png"
-            alt="Previous"
-            width={24}
-            height={24}
-            className="transform -rotate-90 "
-          />
-        </div>
-        <div className={styles.footerborder}>
-          <div className="flex items-center gap-3 ">
-            <div className={styles.footerAbout}>
-              <img
-                src="/images/home-outline.png"
-                alt="giftbox img"
-                className="w-[20px] h-[20px] "
-              />
-            </div>
-            <div className="flex flex-col">
-              <p className={styles.footerP1}>Apartments in Port Harcourt</p>
-              <p className={styles.footerP2}>Over 300 apartments available</p>
-            </div>
-          </div>
-          <img
-            src="/images/angle-down.png"
-            alt="Previous"
-            width={24}
-            height={24}
-            className="transform -rotate-90 "
-          />
-        </div>
+          );
+        })}
       </div>
+
       <hr className="border-gray-700 my-14 " />
 
       {/* Quick Links */}

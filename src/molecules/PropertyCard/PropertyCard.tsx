@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Router from "next/router";
-import { useSwipeable } from "react-swipeable";
+// import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import Modal from "../Modal";
+import Button from "@/atoms/Button";
 
 function PropertyCard(props: PropertyCardProps) {
   const {
@@ -16,29 +19,15 @@ function PropertyCard(props: PropertyCardProps) {
     rooms,
     onSave,
     className,
+    isLoggedIn,
+    isSaved: initialSaved = false,
+    isWishlist = false,
   } = props;
-
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isSaved, setIsSaved] = useState<boolean>(false);
-
-  const nextImage = () => setCurrentIndex((p) => (p + 1) % photo.length);
-  const prevImage = () =>
-    setCurrentIndex((p) => (p === 0 ? photo.length - 1 : p - 1));
-
-  const handlers = useSwipeable({
-    onSwipedLeft: nextImage,
-    onSwipedRight: prevImage,
-    // preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
-
-  const toggleSave = () => {
-    setIsSaved((s) => {
-      const next = !s;
-      if (onSave) onSave(id, next);
-      return next;
-    });
-  };
+  // const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(initialSaved);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
   let arr: string[] = [];
   try {
@@ -48,7 +37,43 @@ function PropertyCard(props: PropertyCardProps) {
     arr = [];
   }
 
-  // Component logic here
+  const nextImage = () =>
+    setCurrentIndex((p) => (arr.length > 0 ? (p + 1) % arr.length : 0));
+
+  const prevImage = () =>
+    setCurrentIndex((p) =>
+      arr.length > 0 ? (p === 0 ? arr.length - 1 : p - 1) : 0
+    );
+
+  // const handlers = useSwipeable({
+  //   onSwipedLeft: nextImage,
+  //   onSwipedRight: prevImage,
+  //   // preventDefaultTouchmoveEvent: true,
+  //   trackMouse: true,
+  // });
+
+  const toggleSave = () => {
+    if (!isLoggedIn) {
+      setShowAuthModal(true); // Show modal if not logged in
+      return;
+    }
+
+    setIsSaved((s) => {
+      const next = !s;
+      if (onSave) onSave(id, next);
+      return next;
+    });
+  };
+
+  //  pick icon depending on where we are
+  const heartIcon = isSaved
+    ? isWishlist
+      ? "/images/heart-white.png" // wishlist saved → white
+      : "/images/filled-heart.png" // normal saved → red
+    : "/images/heart-outline.png"; // not saved → outline
+
+  // {...handlers}
+
   return (
     <div
       className={`w-full  rounded-lg shadow-md overflow-hidden border border-gray-200 bg-white ${
@@ -56,7 +81,23 @@ function PropertyCard(props: PropertyCardProps) {
       }`}
     >
       {/* Image / carousel area */}
-      <div className="relative" {...handlers}>
+      <div
+        className="relative cursor-pointer"
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        onClick={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+      >
         <img
           src={arr[currentIndex]}
           alt={`${name} - ${currentIndex + 1}`}
@@ -99,12 +140,16 @@ function PropertyCard(props: PropertyCardProps) {
           aria-label={isSaved ? "Unsave listing" : "Save listing"}
           onClick={toggleSave}
           // className={styles.heartbtn}
-          className={`${isSaved ? styles.heartbtn2 : styles.heartbtn} `}
+          className={
+            !isSaved
+              ? styles.heartbtn
+              : isWishlist
+                ? styles.heartbtn
+                : styles.heartbtn2
+          }
         >
           <Image
-            src={
-              isSaved ? "/images/filled-heart.png" : "/images/heart-outline.png"
-            }
+            src={heartIcon}
             alt={isSaved ? "Unsave listing" : "Save listing"}
             width={12}
             height={12}
@@ -169,6 +214,30 @@ function PropertyCard(props: PropertyCardProps) {
           </p>
         </div>
       </div>
+
+      {showAuthModal && (
+        <Modal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          imageUrl="/images/hello-world.png"
+          width={96}
+          height={96}
+          modalcontent={styles.modalContent3}
+        >
+          <div>
+            <p className="text-gray-500 text-sm py-7 ">
+              Loving what you see? Sign in or sign up below to save this to your
+              wishlist and keep track of your favorites!
+            </p>
+            <div className="flex justify-center items-center gap-5 ">
+              <Button variant="profile" onClick={() => setShowAuthModal(false)}>
+                Sign In
+              </Button>
+              <Button variant="primary">Sign Up</Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
