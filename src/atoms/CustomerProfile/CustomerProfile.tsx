@@ -1,6 +1,8 @@
 // import { useRouter } from "next/router";
 import styles from "./CustomerProfile.module.css";
+import { signOut } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import { getSessionDetails, revokeToken } from "src/pages/api/user";
 import ProfileModal from "@/molecules/ProfileModal";
 import PointsModal from "@/molecules/PointsModal";
 import Modal from "@/molecules/Modal";
@@ -161,7 +163,17 @@ function CustomerProfile({
               >
                 Cancel
               </Button>
-              <Button variant="delete">Logout</Button>
+              <Button
+                onClick={() => {
+                  getSessionDetails().then((response: any) => {
+                    revokeToken(response.user.user.token.token.email);
+                  });
+                  signOut();
+                }}
+                variant="delete"
+              >
+                Logout
+              </Button>
             </div>
           </div>
         </Modal>
