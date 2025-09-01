@@ -10,7 +10,12 @@ export type location = {
 export type property = {
   id: number;
   name: string;
-  neighbourhood: { name: string; longitude: string; latitude: string };
+  neighbourhood: {
+    id: number;
+    name: string;
+    longitude: string;
+    latitude: string;
+  };
   location: { name: string; id: number };
   longitude: number;
   latitude: number;
@@ -27,4 +32,31 @@ export type property = {
   rules: string;
   refund_policy: string;
   isLoggedIn?: boolean;
+  isSaved?: boolean;
+  isWishlist?: boolean;
+};
+
+export type LocationType = {
+  name: string;
+  count: number;
+};
+
+export type ApartmentType = {
+  name: string;
+  count: number;
+};
+
+export type Amenity = {
+  name: string;
+  count: number;
+};
+
+export type Rating = {
+  stars: number;
+  count: number;
+};
+
+export type Pricing = {
+  min: number;
+  max: number;
 };

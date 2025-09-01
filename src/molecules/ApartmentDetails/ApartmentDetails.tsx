@@ -313,7 +313,10 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
 
           {/*RIGHTSIDE CONTENT*/}
           <div className=" space-y-4 w-[30%]   ">
-            <RightsideContent guests={apartment.number_off_allowed_guests} />
+            <RightsideContent
+              guests={apartment.number_off_allowed_guests}
+              isLoggedIn={isLoggedIn}
+            />
           </div>
         </div>
       </div>

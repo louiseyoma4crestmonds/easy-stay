@@ -6,29 +6,43 @@ import styles from "./HeroSec.module.css";
 import logo from "public/images/hero-img.png";
 import LocationDropdownModal from "@/atoms/LocationDropdownModal";
 import GuestDropdownModal from "@/atoms/GuestDropdownModal";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 import CustomerNavArea from "../CustomerNavArea";
 import Calendar from "../Calendar";
 
 function HeroSec(props: HeroSecProps) {
-  const { isLoggedIn, firstName, lastName, points } = props;
-  // const router = useRouter();
+  const {
+    isLoggedIn,
+    firstName,
+    lastName,
+    points,
+    initialLocation = "",
+    initialCheckin = null,
+    initialCheckout = null,
+    initialGuests = { adults: 0, children: 0, infants: 0, pets: 0 },
+  } = props;
+  const router = useRouter();
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("");
+  // const [selectedLocation, setSelectedLocation] = useState("");
   const [guestDropdownOpen, setGuestDropdownOpen] = useState(false);
-  const [checkinDate, setCheckinDate] = useState<Date | null>(null);
-  const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
+  // const [checkinDate, setCheckinDate] = useState<Date | null>(null);
+  // const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
   const [checkinOpen, setCheckinOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
-  const [guestCounts, setGuestCounts] = useState<GuestCounts>({
-    adults: 0,
-    children: 0,
-    infants: 0,
-    pets: 0,
-  });
-
+  // const [guestCounts, setGuestCounts] = useState<GuestCounts>({
+  //   adults: 0,
+  //   children: 0,
+  //   infants: 0,
+  //   pets: 0,
+  // });
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
+  const [checkinDate, setCheckinDate] = useState<Date | null>(initialCheckin);
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(
+    initialCheckout
+  );
+  const [guestCounts, setGuestCounts] = useState<GuestCounts>(initialGuests);
   const guestRef = useRef<HTMLDivElement>(null);
 
   const locationRef = useRef<HTMLDivElement>(null);
@@ -81,6 +95,32 @@ function HeroSec(props: HeroSecProps) {
     };
   }, []);
 
+  // 🔑 Handle search click
+  const handleSearch = () => {
+    const query: any = {};
+
+    if (selectedLocation) query.location = selectedLocation;
+    if (checkinDate) query.checkin = checkinDate.toISOString().split("T")[0];
+    if (checkoutDate) query.checkout = checkoutDate.toISOString().split("T")[0];
+
+    if (guestCounts.adults > 0) query.adults = guestCounts.adults;
+    if (guestCounts.children > 0) query.children = guestCounts.children;
+    if (guestCounts.infants > 0) query.infants = guestCounts.infants;
+    if (guestCounts.pets > 0) query.pets = guestCounts.pets;
+
+    router.push({
+      pathname: "/guest/property-search",
+      query,
+    });
+  };
+
+  // filtered list for dropdown (only used when dropdown is open)
+  const filteredLocations = selectedLocation
+    ? locations.filter((l) =>
+        l.toLowerCase().includes(selectedLocation.toLowerCase())
+      )
+    : locations;
+
   return (
     <div className={styles.heroSection}>
       <Image src={logo} alt="hero section img" priority />
@@ -107,6 +147,53 @@ function HeroSec(props: HeroSecProps) {
             ref={locationRef}
           >
             <div
+              className="flex flex-row gap-2 items-center cursor-text"
+              // clicking the wrapper should focus input and open the dropdown
+              onClick={() => {
+                setLocationDropdownOpen(true);
+                const input = locationRef.current?.querySelector(
+                  "input"
+                ) as HTMLInputElement | null;
+                input?.focus();
+              }}
+            >
+              {/* icon (kept) */}
+              <img
+                src="/images/location-icon.png"
+                alt="location icon"
+                className="w-6 h-6"
+              />
+
+              {/* label + input (kept label as requested) */}
+              <div
+                className={`flex flex-col items-start w-[85%] transition ${
+                  locationDropdownOpen
+                    ? "bg-white bg-opacity-10"
+                    : "hover:bg-white hover:bg-opacity-10"
+                } px-2 py-1 rounded-sm`}
+              >
+                <label className="font-medium text-sm text-white">Where</label>
+
+                <input
+                  type="text"
+                  value={selectedLocation}
+                  placeholder="Select location"
+                  onChange={(e) => {
+                    // when user types, hide dropdown as requested
+                    setSelectedLocation(e.target.value);
+                    setLocationDropdownOpen(false);
+                  }}
+                  onFocus={() => {
+                    // open dropdown on focus (user may focus without typing)
+                    setLocationDropdownOpen(true);
+                  }}
+                  className="bg-transparent text-sm text-gray-200 font-normal focus:outline-none w-full placeholder-gray-400"
+                  aria-label="Location"
+                />
+              </div>
+            </div>
+
+            {/* <div
               className="flex  flex-row gap-2 "
               onClick={() => setLocationDropdownOpen((prev) => !prev)}
             >
@@ -127,12 +214,12 @@ function HeroSec(props: HeroSecProps) {
                   {selectedLocation || "Select Location"}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* location modal */}
             {locationDropdownOpen && (
               <LocationDropdownModal
-                locations={locations}
+                locations={filteredLocations}
                 onSelectLocation={(location) => {
                   setSelectedLocation(location);
                   setLocationDropdownOpen(false);
@@ -145,7 +232,7 @@ function HeroSec(props: HeroSecProps) {
           <div ref={checkinRef} className={styles.checkoutdiv}>
             <div
               className={` w-[90%]   transition ${
-                checkinDate
+                checkinOpen
                   ? "bg-white bg-opacity-10"
                   : "hover:bg-white hover:bg-opacity-10"
               }`}
@@ -185,7 +272,7 @@ function HeroSec(props: HeroSecProps) {
           <div ref={checkoutRef} className={styles.checkoutdiv}>
             <div
               className={` w-[90%] transition ${
-                checkoutDate
+                checkoutOpen
                   ? "bg-white bg-opacity-10"
                   : "hover:bg-white hover:bg-opacity-10"
               }`}
@@ -277,6 +364,7 @@ function HeroSec(props: HeroSecProps) {
               image="/images/search-outline.png"
               imageWidth={20}
               height={20}
+              onClick={handleSearch}
             >
               Search
             </Button>{" "}

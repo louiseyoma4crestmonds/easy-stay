@@ -72,7 +72,15 @@ function PropertyCard(props: PropertyCardProps) {
       : "/images/filled-heart.png" // normal saved → red
     : "/images/heart-outline.png"; // not saved → outline
 
-  // {...handlers}
+  const handleSigninClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signin");
+  };
+
+  const handleSignupClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signup");
+  };
 
   return (
     <div
@@ -81,23 +89,7 @@ function PropertyCard(props: PropertyCardProps) {
       }`}
     >
       {/* Image / carousel area */}
-      <div
-        className="relative cursor-pointer"
-        role="button"
-        tabIndex={0}
-        onKeyDown={() => {
-          Router.push({
-            pathname: "/guest/property-details",
-            query: { propertyId: id },
-          });
-        }}
-        onClick={() => {
-          Router.push({
-            pathname: "/guest/property-details",
-            query: { propertyId: id },
-          });
-        }}
-      >
+      <div className="relative cursor-pointer">
         <img
           src={arr[currentIndex]}
           alt={`${name} - ${currentIndex + 1}`}
@@ -171,7 +163,23 @@ function PropertyCard(props: PropertyCardProps) {
       </div>
 
       {/* Property details */}
-      <div className="px-4 py-3 space-y-2">
+      <div
+        className="px-4 py-3 space-y-2 cursor-pointer "
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        onClick={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+      >
         <p className="text-sm font-medium text-gray-800 leading-tight">
           {name}
         </p>
@@ -209,15 +217,25 @@ function PropertyCard(props: PropertyCardProps) {
           modalcontent={styles.modalContent3}
         >
           <div>
-            <p className="text-gray-500 text-sm py-7 ">
+            <p className="text-gray-500 text-sm py-5 px-8 text-center ">
               Loving what you see? Sign in or sign up below to save this to your
               wishlist and keep track of your favorites!
             </p>
-            <div className="flex justify-center items-center gap-5 ">
-              <Button variant="profile" onClick={() => setShowAuthModal(false)}>
+            <div className="flex justify-center items-center mb-4 gap-5 px-4 ">
+              <Button
+                variant="profile"
+                width="full"
+                onClick={handleSigninClick}
+              >
                 Sign In
               </Button>
-              <Button variant="primary">Sign Up</Button>
+              <Button
+                variant="primary"
+                width="full"
+                onClick={handleSignupClick}
+              >
+                Sign Up
+              </Button>
             </div>
           </div>
         </Modal>

@@ -7,11 +7,12 @@ import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 import { RightsideContentProps } from "./RightsideContent.types";
 import Button from "@/atoms/Button";
 import Modal from "../Modal";
-import StarIcon from "@/atoms/Icons/StarIcon";
 import BookingModal from "../BookingModal";
 import Calendar from "../Calendar";
+import { useRouter } from "next/router";
 
-function RightsideContent({ guests }: RightsideContentProps) {
+function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
+  const router = useRouter();
   const checkinRef = useRef<HTMLDivElement>(null);
   const checkoutRef = useRef<HTMLDivElement>(null);
   const guestRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,7 @@ function RightsideContent({ guests }: RightsideContentProps) {
   const [guestDropdownOpen, setGuestDropdownOpen] = useState(false);
   const [showBookingSummary, setShowBookingSummary] = useState(false);
   const [bookingSuccessModal, setBookingSuccessModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const [guestCounts, setGuestCounts] = useState<GuestCounts>({
     adults: 0,
     children: 0,
@@ -59,9 +61,30 @@ function RightsideContent({ guests }: RightsideContentProps) {
     };
   }, []);
 
+  // const handleBookNow = () => {
+  //   // MAKE API CAL
+  //   setShowBookingSummary(true);
+  // };
+
   const handleBookNow = () => {
     // MAKE API CAL
+    if (!isLoggedIn) {
+      setShowAuthModal(true); // show sign-in/sign-up modal
+      return; // stop here, don’t proceed to booking
+    }
+
+    // Proceed with booking if logged in
     setShowBookingSummary(true);
+  };
+
+  const handleSigninClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signin");
+  };
+
+  const handleSignupClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signup");
   };
 
   return (
@@ -241,6 +264,40 @@ function RightsideContent({ guests }: RightsideContentProps) {
           modalcontent={styles.modalContent2}
         >
           <div className="pt-3 "> Booking Successful</div>
+        </Modal>
+      )}
+
+      {showAuthModal && (
+        <Modal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          imageUrl="/images/house-info.png"
+          width={96}
+          height={96}
+          modalcontent={styles.modalContent3}
+        >
+          <div>
+            <p className="text-gray-500 text-sm py-5 px-8 text-center ">
+              Your new apartment awaits! Sign in or sign up to complete your
+              booking.
+            </p>
+            <div className="flex justify-center items-center mb-4 gap-5 px-4 ">
+              <Button
+                variant="profile"
+                width="full"
+                onClick={handleSigninClick}
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="primary"
+                width="full"
+                onClick={handleSignupClick}
+              >
+                Sign Up
+              </Button>
+            </div>
+          </div>
         </Modal>
       )}
     </div>

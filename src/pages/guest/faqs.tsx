@@ -30,7 +30,7 @@ export default function Faqs() {
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroBanner
-        backgroundImg="/images/hero-one.png"
+        backgroundImg="/images/img.png"
         primaryText="Frequently Asked Questions"
         secondaryText="Need something cleared up? Here are our most frequently asked questions."
         isLoggedIn={isLoggedIn}

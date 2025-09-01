@@ -24,34 +24,68 @@ function Home(): JSX.Element {
   const [propertiesNearby, setPropertiesNearby] = useState<property[]>([]);
   const [popularProperties, setPopularProperties] = useState<property[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [thisPageLoads, setThisPageLoads] = useState(true);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
 
   // GET CITIES
+  // useEffect(() => {
+  //   const usersLattitude: any = localStorage.getItem("usersLattitude");
+  //   const usersLongitude: any = localStorage.getItem("usersLongitude");
+
+  //   getLocations().then((response) => {
+  //     setCities(response.data.data);
+  //   });
+
+  //   getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
+  //     setPropertiesNearby(response.data.data);
+  //   });
+
+  //   getPopularProperties().then((response) => {
+  //     setPopularProperties(response.data.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     const usersLattitude: any = localStorage.getItem("usersLattitude");
     const usersLongitude: any = localStorage.getItem("usersLongitude");
-    getLocations().then((response) => {
-      setCities(response.data.data);
-    });
 
-    getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
-      setPropertiesNearby(response.data.data);
-    });
+    setThisPageLoads(true);
 
-    getPopularProperties().then((response) => {
-      setPopularProperties(response.data.data);
+    Promise.allSettled([
+      getLocations(),
+      getPropertiesNearby(usersLattitude, usersLongitude),
+      getPopularProperties(),
+    ]).then((results) => {
+      // locations
+      if (results[0].status === "fulfilled") {
+        console.log("results", results);
+        setCities(results[0].value.data.data);
+      }
+
+      // nearby
+      if (results[1].status === "fulfilled") {
+        setPropertiesNearby(results[1].value.data.data);
+      }
+
+      // popular
+      if (results[2].status === "fulfilled") {
+        setPopularProperties(results[2].value.data.data);
+      }
+
+      setThisPageLoads(false); // ✅ hide skeleton no matter what
     });
   }, []);
 
   const isLoggedIn = status === "authenticated";
 
+  // const isLoading = !mounted || status === "loading" || thisPageLoads;
   const isLoading = !mounted || status === "loading";
 
   if (isLoading) return <PageSkeletons />;
 
   const points = 100;
-
+  console.log("cities", cities);
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroSec
@@ -78,9 +112,10 @@ function Home(): JSX.Element {
 
       {/* available near me */}
       <CarouselComp
-        title="Available near me"
+        title="Available Near Me"
         itemsPerPage={3}
         items={propertiesNearby}
+        className="mt-16 pb-8 "
         renderItem={(listings) => (
           <PropertyCard
             photo={listings?.photo}
@@ -164,7 +199,7 @@ function Home(): JSX.Element {
         title="Popular Apartments in Lagos"
         itemsPerPage={3}
         items={popularProperties}
-        className="mb-24"
+        className="mb-28 "
         renderItem={(listings) => (
           <PropertyCard
             photo={listings?.photo}

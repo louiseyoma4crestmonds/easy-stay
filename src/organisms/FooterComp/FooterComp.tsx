@@ -27,9 +27,11 @@ function FooterComp({ data }: Props) {
   >(currencyOptions[0]);
 
   const features = [
-    { id: 1, icon: "/images/home-outline-2.png" },
-    { id: 2, icon: "/images/home-outline-3.png" },
-    { id: 3, icon: "/images/home-outline.png" },
+    { id: 1, icon: "/images/home-outline-2.png", bgColor: "#EDEBFE" },
+    { id: 2, icon: "/images/home-outline-3.png", bgColor: "#E1EFFE" },
+    { id: 3, icon: "/images/home-outline.png", bgColor: "#DEF7EC" },
+    { id: 4, icon: "/images/sokt.png", bgColor: "#FCE8F3" },
+    { id: 5, icon: "/images/cal.png", bgColor: "#FEECDC" },
     // add more icons matching the ids from your endpoint
   ];
 
@@ -42,7 +44,9 @@ function FooterComp({ data }: Props) {
       <div className={styles.footerAboutDiv}>
         {data.map((item, index) => {
           // find icon for this id
-          const featureIcon = features.find((f) => f.id === item.id)?.icon;
+          // const featureIcon = features.find((f) => f.id === item.id)?.icon;
+          const featureIconData = features.find((f) => f.id === item.id);
+          const featureIcon = featureIconData?.icon;
 
           return (
             <div
@@ -64,7 +68,12 @@ function FooterComp({ data }: Props) {
             >
               <div className="flex items-center gap-3 ">
                 {featureIcon && (
-                  <div className={styles.footerAbout}>
+                  <div
+                    className={styles.footerAbout}
+                    style={{
+                      backgroundColor: featureIconData?.bgColor || "#1f1f1f", // fallback if no color
+                    }}
+                  >
                     <Image
                       src={featureIcon}
                       alt={item.name}
