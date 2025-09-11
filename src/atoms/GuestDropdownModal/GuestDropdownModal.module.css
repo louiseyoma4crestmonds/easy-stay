@@ -1,5 +1,5 @@
 .modaldiv {
-  @apply absolute  z-50 w-full  mt-2 top-full bg-white rounded-lg shadow-xl;
+  @apply absolute  z-50 w-full mt-8  md:mt-6 top-2 md:top-14 bg-white rounded-lg shadow-xl;
 }
 .guestType {
   @apply flex justify-between items-center cursor-pointer;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./SearchFilter.module.css";
 import {
   Amenity,
@@ -15,8 +15,10 @@ interface SearchFilterProps {
   amenities: Amenity[];
   ratings: Rating[];
   pricing: Pricing;
+  variant?: "panel" | "dropdown";
   onApply: (filters: any) => void; // callback with selected filters
   defaultSelectedLocation?: string | undefined;
+  onClose?: () => void;
 }
 
 function SearchFilter(props: SearchFilterProps) {
@@ -27,6 +29,8 @@ function SearchFilter(props: SearchFilterProps) {
     ratings,
     pricing,
     onApply,
+    variant = "panel",
+    onClose,
     defaultSelectedLocation,
   } = props;
   // State for filters
@@ -61,6 +65,25 @@ function SearchFilter(props: SearchFilterProps) {
     }
   };
 
+  // const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // // close dropdown if clicked outside
+  // useEffect(() => {
+  //   if (variant !== "dropdown") return;
+
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       onClose?.(); // ✅ will close dropdown from parent
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, [variant, onClose]);
+
   const handleReset = () => {
     setSelectedLocations([]);
     setSelectedApartmentTypes([]);
@@ -77,10 +100,11 @@ function SearchFilter(props: SearchFilterProps) {
       rating: selectedRating,
       priceRange,
     });
+    onClose?.();
   };
 
-  return (
-    <div className="bg-white p-2 space-y-4  w-full max-w-md ">
+  const content = (
+    <div className="space-y-4  ">
       {/* Locations */}
       <div className="border-b border-gray-200 pb-6">
         <h3 className={styles.P1}>Location</h3>
@@ -460,20 +484,44 @@ function SearchFilter(props: SearchFilterProps) {
           />
         </div>
       </div>
+    </div>
+  );
 
-      {/* Buttons */}
-      <div className="flex justify-between gap-4 ">
-        <button
-          onClick={handleReset}
-          className="bg-transparent border border-gray-200 text-gray-700 px-5 py-2.5 w-full rounded-lg "
-        >
-          Reset
-        </button>
+  const footerButtons = (
+    <div className="flex justify-between gap-4 mt-6">
+      <button
+        onClick={handleReset}
+        className="bg-transparent border border-gray-200 text-gray-700 px-5 py-2.5 w-full rounded-lg"
+      >
+        Reset
+      </button>
+      <Button variant="primary" width="full" onClick={handleApply}>
+        Apply
+      </Button>
+    </div>
+  );
 
-        <Button variant="primary" width="full" onClick={handleApply}>
-          Apply
-        </Button>
+  /* ---------- Render: dropdown wrapper only gets dropdown classes & ref ---------- */
+
+  if (variant === "dropdown") {
+    return (
+      <div className="absolute top-full mt-2 right-0 z-50 w-80 max-h-[70vh] rounded-lg shadow-lg bg-white flex flex-col">
+        {/* Header */}
+        <p className="text-gray-500 text-base p-4 ">Filter</p>
+
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto p-4">{content}</div>
+
+        {/* Fixed footer */}
+        <div className="p-4 -mt-4 rounded-lg bg-white">{footerButtons}</div>
       </div>
+    );
+  }
+
+  // panel (inline) - original sizing/styling preserved
+  return (
+    <div className="bg-white p-2 space-y-4 w-full max-w-md">
+      {content} {footerButtons}{" "}
     </div>
   );
 }

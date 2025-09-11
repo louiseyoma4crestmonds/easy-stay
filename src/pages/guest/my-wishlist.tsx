@@ -6,6 +6,7 @@ import WishListGrid from "@/molecules/WishListGrid";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { isMonthDisabled } from "react-datepicker/dist/date_utils";
 
 export default function MyWishList() {
   const router = useRouter();
@@ -17,10 +18,20 @@ export default function MyWishList() {
   const [savedApartments, setSavedApartments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  //  Show skeleton while NextAuth is checking
-  if (status === "loading") {
-    return <PageSkeletons />;
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
   }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   // Example: simulate fetching wishlist
   useEffect(() => {
@@ -104,6 +115,11 @@ export default function MyWishList() {
     setSavedApartments((prev) => prev.filter((item) => item.id !== id));
   };
 
+  //  Show skeleton while NextAuth is checking
+  if (status === "loading") {
+    return <PageSkeletons />;
+  }
+
   console.log("savedApartment", savedApartments);
 
   return (
@@ -114,10 +130,11 @@ export default function MyWishList() {
         firstName={firstName}
         leftIcon="/images/menu-white.png"
         defaultTextColor="text-gray-500"
+        isMobile={isMobile}
       />
 
       {/* Wishlist title with count */}
-      <div className=" w-[80%] flex flex-col mx-auto mt-8  ">
+      <div className="w-[90%] md:w-[80%] flex flex-col mx-auto mt-8  ">
         {!loading && (
           <p className=" text-base font-medium text-gray-800 mt-6 flex justify-start ">
             Wishlist ({savedApartments.length})

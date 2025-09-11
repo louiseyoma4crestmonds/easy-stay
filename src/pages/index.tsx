@@ -28,6 +28,21 @@ function Home(): JSX.Element {
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
 
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
   // GET CITIES
   // useEffect(() => {
   //   const usersLattitude: any = localStorage.getItem("usersLattitude");
@@ -93,100 +108,130 @@ function Home(): JSX.Element {
         firstName={firstName}
         lastName={lastName}
         points={points}
+        isMobile={isMobile}
       />
 
       {/* city card section */}
-      <section className="overflow-x-auto  ">
-        <div className="flex  md:flex-row w-max md:w-full ">
+      <section className="overflow-x-auto md:overflow-x-hidden ">
+        <div className="flex flex-row w-max md:w-full md:flex-wrap ">
           {cities?.map((city: location) => (
-            <CityCard
+            <div
               key={city.id}
-              id={city.id}
-              primaryText={city.name}
-              secondaryText={city.cover_text}
-              image={city.image_cover}
-            />
+              className="min-w-[320px] sm:min-w-[370px] md:min-w-0 md:flex-1"
+            >
+              <CityCard
+                key={city.id}
+                id={city.id}
+                primaryText={city.name}
+                secondaryText={city.cover_text}
+                image={city.image_cover}
+              />{" "}
+            </div>
           ))}
         </div>
       </section>
 
       {/* available near me */}
-      <CarouselComp
-        title="Available Near Me"
-        itemsPerPage={3}
-        items={propertiesNearby}
-        className="mt-16 pb-8 "
-        renderItem={(listings) => (
-          <PropertyCard
-            photo={listings?.photo}
-            name={listings?.name}
-            neighbourhood={listings?.neighbourhood.name}
-            rate={listings?.rate}
-            rating={listings?.rating}
-            rooms={listings?.rooms.name}
-            id={listings?.id}
-          />
-        )}
-      />
+      <section className=" w-[90%] md:w-[80%] flex justify-center items-center mx-auto ">
+        <CarouselComp
+          title="Available Near Me"
+          itemsPerPage={3}
+          items={propertiesNearby}
+          className="md:my-20  "
+          renderItem={(listings) => (
+            <PropertyCard
+              photo={listings?.photo}
+              name={listings?.name}
+              neighbourhood={listings?.neighbourhood.name}
+              rate={listings?.rate}
+              rating={listings?.rating}
+              rooms={listings?.rooms.name}
+              id={listings?.id}
+            />
+          )}
+        />
+      </section>
 
       {/* /////// section */}
-      <section className="relative w-full mb-6 overflow-hidden">
-        <img
+      <section className="relative w-full mb-6 md:py-5  overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/bg-img.png"
+            alt="section background"
+            className="w-full h-full object-cover"
+          />
+          {/* Blue Overlay */}
+          <div className="absolute inset-0 bg-blue-900 bg-opacity-50" />
+        </div>
+        {/* <img
           src="/images/bg-img.png"
           alt="section img"
           className="w-full object-cover "
         />
-        {/* Blue Overlay */}
-        <div className="absolute inset-0 bg-blue-900 bg-opacity-50" />
+       
+        <div className="absolute inset-0 bg-blue-900 bg-opacity-50" /> */}
 
         {/* Top Text */}
-        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center text-white px-4">
-          <p className="text-4xl text-gray-50 font-bold mb-2">
+        <div className="relative text-center text-white pt-8 px-4">
+          <p className="md:text-4xl text-gray-50 font-bold mb-0 md:mb-2">
             Find Your Perfect Stay
           </p>
-          <p className="text-2xl text-gray-50 font-normal w-[90%] text-center mx-auto ">
+          <p className="text-sm md:text-2xl mt-0.5 md:mt-2 text-gray-50 font-normal w-[90%] text-center mx-auto ">
             Your Perfect Home Away From Home Awaits
           </p>
         </div>
 
         {/* Center Containers */}
-        <div className="absolute  top-[40%] left-0 right-0 flex items-center justify-center">
-          <div className="flex  items-center gap-6 w-[120%] justify-center">
+        <div className="relative py-10  flex items-center justify-center">
+          <div className="flex  items-center gap-2 md:gap-6 w-[120%] justify-center">
             {/* Left card (partially outside) */}
-            <div className=" border border-white bg-[#FFFFFF4D] opacity-75 rounded-2xl backdrop-blur-lg shadow-lg flex flex-col items-center  px-4 py-8 -ml-16 ">
+            <div className=" border border-white bg-[#FFFFFF4D] opacity-75 rounded-lg md:rounded-2xl backdrop-blur-lg shadow-lg flex flex-col items-center p-2  md:px-4 md:py-8 -ml-16 ">
               <div className="flex items-center justify-center">
-                <img src="/images/E3.png" alt=" img" width={64} height={64} />
+                <img
+                  src="/images/E3.png"
+                  alt=" img"
+                  className="w-4 h-4  md:w-16 md:h-16 object-contain "
+                />
               </div>
-              <p className="font-bold text-gray-50 text-xl mt-6 ">
+              <p className="font-bold text-gray-50 text-[5px] md:text-xl mt-1 md:mt-6 ">
                 Instant Booking
               </p>
-              <p className="text-base font-normal text-gray-200 text-center mt-2 ">
+              <p className="text-[4px] md:text-base font-normal text-gray-200 text-center mt-2 ">
                 Book immediately with our streamlined reservation system
               </p>
             </div>
 
             {/* Middle card (prominent) */}
-            <div className=" bg-[#FFFFFF4D] border-4 border-white rounded-2xl shadow-xl backdrop-blur-xl flex flex-col items-center justify-center text-center px-10 py-8 ">
+            <div className=" bg-[#FFFFFF4D] border-2 md:border-4 border-white rounded-lg md:rounded-2xl shadow-xl backdrop-blur-xl flex flex-col items-center justify-center text-center px-2 md:px-10 py-2 md:py-14 ">
               <div className="flex items-center justify-center">
-                <img src="/images/E1.png" alt=" img" width={97} height={97} />
+                <img
+                  src="/images/E1.png"
+                  alt=" img"
+                  className="w-6 h-6  md:w-24 md:h-24 object-contain "
+                />
               </div>
-              <p className="font-bold text-gray-50 text-3xl mt-6 ">
+              <p className="font-bold text-gray-50 text-[8px] md:text-3xl mt-2 md:mt-10 ">
                 5 Star Apartments
               </p>
-              <p className="text-2xl font-normal text-gray-200  mt-2 ">
+              <p className="text-[6px] md:text-2xl font-normal text-gray-200 w-[70%]  mt-2 ">
                 High-speed WiFi, fully equipped kitchen, premium bedding & more
               </p>
             </div>
 
             {/* Right card (partially outside) */}
-            <div className=" border border-white bg-[#FFFFFF4D] opacity-75 backdrop-blur-lg rounded-2xl shadow-lg flex flex-col items-center  px-4 py-8 -mr-16">
+            <div className=" border border-white bg-[#FFFFFF4D] opacity-75 backdrop-blur-lg rounded-lg md:rounded-2xl shadow-lg flex flex-col items-center p-2  md:px-4  md:py-8 -mr-16">
               <div className="flex items-center justify-center">
-                <img src="/images/E2.png" alt=" img" width={64} height={64} />
+                <img
+                  src="/images/E2.png"
+                  alt=" img"
+                  className="w-4 h-4  md:w-16 md:h-16 object-contain "
+                />
               </div>
-              <p className="font-bold text-gray-50 text-xl mt-6 ">
+              <p className="font-bold text-gray-50 text-[5px] md:text-xl mt-1 md:mt-6 ">
                 Superhost Quality
               </p>
-              <p className="text-base font-normal text-center text-gray-200 w-full mt-2 ">
+              <p className="text-[4px] md:text-base font-normal text-center text-gray-200 w-full mt-2 ">
                 Consistently rated 5-stars by guests for exceptional service
               </p>
             </div>
@@ -195,23 +240,25 @@ function Home(): JSX.Element {
       </section>
 
       {/* popular apartments */}
-      <CarouselComp
-        title="Popular Apartments in Lagos"
-        itemsPerPage={3}
-        items={popularProperties}
-        className="mb-28 "
-        renderItem={(listings) => (
-          <PropertyCard
-            photo={listings?.photo}
-            name={listings?.name}
-            neighbourhood={listings?.neighbourhood.name}
-            rate={listings?.rate}
-            rating={listings?.rating}
-            rooms={listings?.rooms.name}
-            id={listings?.id}
-          />
-        )}
-      />
+      <section className="w-[90%] md:w-[80%] flex justify-center items-center mx-auto ">
+        <CarouselComp
+          title="Popular Apartments in Lagos"
+          itemsPerPage={3}
+          items={popularProperties}
+          className=" md:mb-28 "
+          renderItem={(listings) => (
+            <PropertyCard
+              photo={listings?.photo}
+              name={listings?.name}
+              neighbourhood={listings?.neighbourhood.name}
+              rate={listings?.rate}
+              rating={listings?.rating}
+              rooms={listings?.rooms.name}
+              id={listings?.id}
+            />
+          )}
+        />{" "}
+      </section>
 
       {/*gift section*/}
       <BottomHero
@@ -226,7 +273,7 @@ function Home(): JSX.Element {
             variant: "explore",
           },
         ]}
-        divClass="items-start"
+        divClass="items-center md:items-start"
       />
 
       <FooterComp data={cities} />

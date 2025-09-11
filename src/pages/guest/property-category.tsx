@@ -33,9 +33,25 @@ function PropertyCategory() {
   const [selectedLocation, setSelectedLocation] = useState<string | undefined>(
     undefined
   );
+  const [headingText, setHeadingText] = useState<string>("No Apartments Found");
 
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
+
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   // GET CITIES
   useEffect(() => {
@@ -55,6 +71,7 @@ function PropertyCategory() {
     getPropertiesNearby(usersLattitude, usersLongitude).then((response) => {
       setProperties(response.data.data);
       console.log("near-me", response.data.data);
+      setHeadingText("Apartments Near Me");
       setThisPageLoads(false);
     });
   }, [category]);
@@ -78,6 +95,7 @@ function PropertyCategory() {
       setProperties(response.data.data);
       console.log("properties in lagos", response.data.data);
       setSelectedLocation("Lagos");
+      setHeadingText("Apartments in Lagos");
       setThisPageLoads(false);
     });
   }, [category, cities]);
@@ -102,10 +120,22 @@ function PropertyCategory() {
 
           setProperties(filtered);
           setThisPageLoads(true);
-          // ✅ Set selectedLocation immediately from API result
+
+          //  Set selectedLocation immediately from API result
           if (filtered.length > 0) {
             const parentCity = filtered[0]?.location?.name;
+            const neighborhoodName = filtered[0]?.neighbourhood?.name;
             if (parentCity) setSelectedLocation(parentCity);
+            // 🟢 build heading with both
+            if (neighborhoodName && parentCity) {
+              setHeadingText(
+                `Apartments in ${neighborhoodName}, ${parentCity}`
+              );
+            } else if (parentCity) {
+              setHeadingText(`Apartments in ${parentCity}`);
+            } else {
+              setHeadingText("No Apartments Found");
+            }
           }
         })
         .finally(() => setThisPageLoads(false));
@@ -118,37 +148,26 @@ function PropertyCategory() {
     setSavedApartments((prev) => prev.filter((item) => item.id !== id));
   };
 
-  let headingText = "";
-
-  if (category === "popular-lagos") {
-    headingText = "Apartments in Lagos";
-  } else if (category === "near-me") {
-    headingText = "Apartments Near Me";
-  } else if (selectedLocation) {
-    headingText = `Apartments in ${selectedLocation}`;
-  } else {
-    headingText = "No Apartments Found";
-  }
-
   const isLoggedIn = status === "authenticated";
 
   const isLoading = !mounted || status === "loading" || thisPageLoads;
 
   if (isLoading) return <PageSkeletons />;
+  console.log("locs", selectedLocation);
   // if (!mounted) return null; // hydration guard only
   // if (status === "loading" || thisPageLoads) return <PageSkeletons />;
 
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen flex flex-col ">
       <HeroSec
         isLoggedIn={isLoggedIn}
         firstName={firstName}
         lastName={lastName}
-
+        isMobile={isMobile}
         // points={points}
       />
 
-      <section className="w-[80%]  mx-auto mt-16 mb-32 ">
+      <section className="w-[90%] md:w-[80%]  mx-auto mt-8 md:mt-16 mb-32 ">
         <SearchComp
           properties={properties}
           onRemove={handleRemove}
@@ -172,7 +191,7 @@ function PropertyCategory() {
             variant: "explore",
           },
         ]}
-        divClass="items-start"
+        divClass="items-center md:items-start"
       />
 
       <FooterComp data={cities} />

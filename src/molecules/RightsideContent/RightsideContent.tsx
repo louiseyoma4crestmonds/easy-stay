@@ -11,7 +11,11 @@ import BookingModal from "../BookingModal";
 import Calendar from "../Calendar";
 import { useRouter } from "next/router";
 
-function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
+function RightsideContent({
+  guests,
+  isLoggedIn,
+  isMobile,
+}: RightsideContentProps) {
   const router = useRouter();
   const checkinRef = useRef<HTMLDivElement>(null);
   const checkoutRef = useRef<HTMLDivElement>(null);
@@ -89,13 +93,14 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
 
   return (
     <div className=" w-full">
-      <div className="bg-white rounded-lg py-5  flex flex-col space-y-6 ">
+      <div className="  bg-white rounded-lg py-5  flex flex-col space-y-6 ">
         {/*CHECKIN*/}
         <div ref={checkinRef} className={styles.checkindiv}>
           <div
             className="flex flex-col"
             onClick={() => {
-              setCheckinOpen(true);
+              setCheckinOpen((prev) => !prev);
+              // setCheckinOpen(true);
               setCheckoutOpen(false);
             }}
           >
@@ -130,7 +135,8 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
           <div
             className="flex flex-col"
             onClick={() => {
-              setCheckoutOpen(true);
+              setCheckoutOpen((prev) => !prev);
+              // setCheckinOpen(true);
               setCheckinOpen(false);
             }}
           >
@@ -173,7 +179,7 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
           >
             <p className={styles.text}>Guests</p>
 
-            <div className={`${styles.seconddiv} w-full`}>
+            <div className={`${styles.seconddiv} py-10 w-full`}>
               <span className="text-base text-gray-400 font-normal">
                 {guestCounts.adults === 0 &&
                 guestCounts.children === 0 &&
@@ -207,7 +213,7 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
             />
           )}
         </div>
-        <div className="px-5 ">
+        <div className="px-5  ">
           <Button
             variant="primary"
             width="full"
@@ -225,7 +231,7 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
           <p className="font-bold text-sm text-primary-600 ">₦70,000/Night</p>
         </div>
       </div>
-      <div className=" relative mt-6 ">
+      <div className="hidden md:block relative mt-6 ">
         <Image src="/images/0.png" alt="bg-img" width={322} height={344} />
         <div className={styles.giftdiv}>
           <Image
@@ -251,6 +257,7 @@ function RightsideContent({ guests, isLoggedIn }: RightsideContentProps) {
           setShowBookingSummary={setShowBookingSummary}
           showBookingSummary={showBookingSummary}
           setBookingSuccessModal={setBookingSuccessModal}
+          isMobile={isMobile}
         />
       )}
 

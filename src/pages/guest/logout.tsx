@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 
 function logout() {
   if (process.browser) {
-    Router.replace("/guest");
+    Router.replace("/");
     localStorage.clear();
     sessionStorage.clear();
     signOut();

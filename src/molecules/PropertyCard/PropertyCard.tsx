@@ -84,7 +84,7 @@ function PropertyCard(props: PropertyCardProps) {
 
   return (
     <div
-      className={`w-full  rounded-lg shadow-md overflow-hidden border border-gray-200 bg-white ${
+      className={`w-full  rounded-lg  overflow-hidden border border-gray-200 hover:border-primary-600 bg-white hover:bg-primary-100 ${
         className || ""
       }`}
     >
@@ -164,7 +164,7 @@ function PropertyCard(props: PropertyCardProps) {
 
       {/* Property details */}
       <div
-        className="px-4 py-3 space-y-2 cursor-pointer "
+        className="px-4 py-3 space-y-2 cursor-pointer   "
         role="button"
         tabIndex={0}
         onKeyDown={() => {

@@ -1,0 +1,9 @@
+.btn1 {
+  @apply flex-1 py-2.5 px-4 border border-gray-300 rounded-l-lg flex justify-center gap-2 items-center  transition-colors;
+}
+.btn2 {
+  @apply flex-1 py-2.5 px-4 border border-gray-300 rounded-r-lg flex justify-center gap-2 items-center transition-colors;
+}
+.thirddiv {
+  @apply flex justify-center mx-auto   md:max-w-[280px] rounded-lg;
+}

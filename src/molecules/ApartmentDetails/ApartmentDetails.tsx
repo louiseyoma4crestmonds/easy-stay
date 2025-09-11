@@ -9,7 +9,7 @@ import RightsideContent from "../RightsideContent";
 import Modal from "../Modal";
 
 function ApartmentDetails(props: ApartmentDetailsProps) {
-  const { isLoggedIn, apartment } = props;
+  const { isLoggedIn, apartment, isMobile } = props;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -39,7 +39,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
     try {
       const link = `${window.location.origin}/property-details/${apartment.id}`; // or router.asPath
       await navigator.clipboard.writeText(link);
-      alert("Link copied to clipboard!"); // you can replace with toast
+      // alert("Link copied to clipboard!"); // you can replace with toast
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
@@ -47,8 +47,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
 
   return (
     <div className="bg-gray-50 pb-16 ">
-      <div className="flex flex-row justify-between items-center px-28 py-8 bg-white  ">
-        <p className="text-gray-800 font-medium text-2xl ">
+      <div className="flex flex-row justify-between items-center px-6 md:px-28 py-8 bg-white  ">
+        <p className="text-gray-800 font-medium text-sm md:text-2xl ">
           {" "}
           {apartment.name}{" "}
         </p>
@@ -72,8 +72,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
             <Image
               src="/images/filled-heart.png"
               alt="Unsave listing"
-              width={20}
-              height={20}
+              width={isMobile ? 13 : 20}
+              height={isMobile ? 13 : 20}
             />
           </button>
           <button
@@ -84,8 +84,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
             <Image
               src="/images/share-outline.png"
               alt={"share-icon"}
-              width={20}
-              height={20}
+              width={isMobile ? 13 : 20}
+              height={isMobile ? 13 : 20}
             />
           </button>
         </div>
@@ -110,8 +110,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
           <Image
             src="/images/angle-right.png"
             alt="Previous"
-            width={36}
-            height={36}
+            width={isMobile ? 14 : 36}
+            height={isMobile ? 14 : 36}
             className="transform -rotate-180"
           />
         </button>
@@ -124,15 +124,15 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
           <Image
             src="/images/angle-right.png"
             alt="Next"
-            width={36}
-            height={36}
+            width={isMobile ? 14 : 36}
+            height={isMobile ? 14 : 36}
           />
         </button>
 
         {/* Fullscreen Toggle */}
         <button
           onClick={() => setIsFullscreen(!isFullscreen)}
-          className="absolute bottom-4 right-4  "
+          className="hidden md:block absolute bottom-4 right-4  "
         >
           <Image
             src="/images/fullscreen.png"
@@ -147,34 +147,36 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
           {activeIndex + 1} / {photos.length}
         </div>
       </div>
-      <div className=" w-[80%] mx-auto mt-8  ">
+      <div className=" w-[90%] md:w-[80%] mx-auto mt-8  ">
         {/* Thumbnails */}
-        <div className="flex gap-2 mt-4 mb-8 overflow-x-auto">
-          {photos.map((img, index) => (
-            <div
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`relative w-28 h-28 rounded-lg overflow-hidden cursor-pointer border-4 transition-all duration-200 ${
-                activeIndex === index
-                  ? "border-primary-600"
-                  : "border-transparent"
-              }`}
-            >
-              <Image
-                src={img}
-                alt={`Thumbnail ${index + 1}`}
-                layout="fill"
-                className="object-cover"
-              />
-            </div>
-          ))}
+        <div className="flex gap-2 mt-4 mb-8 overflow-x-auto hide-scrollbar ">
+          <div className="flex gap-2 w-max md:w-auto">
+            {photos.map((img, index) => (
+              <div
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`relative w-16 h-16 md:w-28 md:h-28 rounded-lg overflow-hidden cursor-pointer border-2 md:border-4 transition-all duration-200 ${
+                  activeIndex === index
+                    ? "border-primary-600"
+                    : "border-transparent"
+                }`}
+              >
+                <Image
+                  src={img}
+                  alt={`Thumbnail ${index + 1}`}
+                  layout="fill"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
         {/* details */}
 
-        <div className="flex flex-row gap-4 mt-6 ">
-          <div className="w-[70%] ">
+        <div className="flex flex-col md:flex-row gap-4 mt-6 ">
+          <div className="w-full md:w-[70%] ">
             <div className="bg-white rounded-lg p-5 ">
-              <div className="flex flex-row justify-between items-center ">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center ">
                 <p className="font-bold text-2xl text-primary-600 ">
                   {apartment.rate}
                 </p>
@@ -197,24 +199,26 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                 {apartment.description}{" "}
               </p>
               <div className="flex flex-row items-center justify-between py-8 border-b w-full ">
-                <div className="flex flex-col justify-start w-[30%] ">
-                  <p className="text-gray-500 font-normal text-sm ">
+                <div className="flex flex-col justify-start md:w-[30%] ">
+                  <p className="text-gray-500 font-normal text-xs md:text-sm ">
                     Apartment Type
                   </p>
-                  <p className="bg-gray-100 px-3 w-[100px] mt-1 rounded-md text-gray-900 font-medium text-sm ">
+                  <p className="bg-gray-100 px-3 md:w-[100px] mt-1 rounded-md text-gray-900 font-medium text-sm ">
                     {" "}
                     {/* {apartment.apartmentType} Bedrooms */}
                     {apartment.rooms.name}
                   </p>
                 </div>
-                <div className="flex flex-col justify-start w-[30%] ">
-                  <p className="text-gray-500 font-normal text-sm ">Rooms </p>
-                  <p className=" text-gray-900 font-medium text-sm ">
+                <div className="flex flex-col justify-start md:w-[30%] ">
+                  <p className="text-gray-500 font-normal text-xs md:text-sm ">
+                    Rooms{" "}
+                  </p>
+                  <p className=" text-gray-900 font-medium text-xs md:text-sm ">
                     {apartment.rooms.number}{" "}
                   </p>
                 </div>
-                <div className="flex flex-col justify-start  w-[30%]  ">
-                  <p className="text-gray-500 font-normal text-sm ">
+                <div className="flex flex-col justify-start  md:w-[30%]  ">
+                  <p className="text-gray-500 font-normal text-xs md:text-sm ">
                     No of Guests{" "}
                   </p>
                   <p className=" text-gray-900 font-medium text-sm ">
@@ -251,6 +255,15 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
               </div>
             </div>
 
+            {/*THIS IS FOR JUST MOBILE*/}
+            <div className=" block mt-6 w-full md:hidden  ">
+              <RightsideContent
+                guests={apartment.number_off_allowed_guests}
+                isLoggedIn={isLoggedIn}
+                isMobile={isMobile}
+              />
+            </div>
+
             {/*AMENITIES*/}
             <div className=" bg-white rounded-lg p-5 mt-6 ">
               <p className="text-gray-500 font-normal text-sm ">Amenities </p>
@@ -278,6 +291,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
               rules={apartment.rules}
               checkinTime={apartment.expected_checkin_time}
               checkoutTime={apartment.expected_checkout_time}
+              isMobile={isMobile}
             />
 
             {/**REFUND POLICY*/}
@@ -312,10 +326,11 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
           </div>
 
           {/*RIGHTSIDE CONTENT*/}
-          <div className=" space-y-4 w-[30%]   ">
+          <div className=" hidden md:block space-y-4 w-full md:w-[30%]   ">
             <RightsideContent
               guests={apartment.number_off_allowed_guests}
               isLoggedIn={isLoggedIn}
+              isMobile={isMobile}
             />
           </div>
         </div>
@@ -335,8 +350,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                 <Image
                   src="/images/sample-image.png"
                   alt="sample-img"
-                  width={88}
-                  height={73}
+                  width={isMobile ? 363 : 88}
+                  height={isMobile ? 140 : 73}
                   className="rounded-lg"
                 />
               </div>
@@ -360,11 +375,11 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                   ₦100,000/Night
                 </div>
                 <div className="flex flex-row items-center gap-2 ">
-                  <p className="bg-gray-100 px-3 mt-1 rounded-md text-gray-900 font-medium text-sm ">
+                  <p className="bg-gray-100 px-3 mt-2 md:mt-1 rounded-md text-gray-900 font-medium text-sm ">
                     {" "}
                     2 Bedrooms
                   </p>
-                  <p className="bg-gray-100 px-3  mt-1 rounded-md text-gray-900 font-medium text-sm ">
+                  <p className="bg-gray-100 px-3 hidden md:block  mt-1 rounded-md text-gray-900 font-medium text-sm ">
                     {" "}
                     2 Guests
                   </p>

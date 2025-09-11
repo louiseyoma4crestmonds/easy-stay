@@ -27,6 +27,7 @@ export type Rating = {
 export type ApartmentDetailsProps = {
   isLoggedIn?: boolean;
   apartment: property;
+  isMobile?: boolean;
 
   // apartment: {
   //   id: number | string;

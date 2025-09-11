@@ -45,7 +45,7 @@ function Modal(props: ModalProps) {
       <div className={styles.frame}>
         <div className=" ">
           <div
-            className={`flex items-center ${title ? "justify-between border-b p-5 " : "justify-end p-4"}`}
+            className={`flex items-center ${title ? "justify-between border-b p-3 md:p-5 " : "justify-end p-4"}`}
           >
             {title && (
               <div className="flex items-center gap-2">
@@ -58,7 +58,9 @@ function Modal(props: ModalProps) {
                     height={18}
                   />
                 )}
-                <p className="text-gray-900 font-medium text-xl">{title}</p>
+                <p className="text-gray-900 font-medium text-base md:text-xl">
+                  {title}
+                </p>
               </div>
             )}
 

@@ -3,6 +3,7 @@ export type HeroSecProps = {
   firstName?: string;
   lastName?: string;
   points?: number;
+  isMobile?: boolean;
 
   // 👇 new optional props
   initialLocation?: string;

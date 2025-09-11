@@ -1,11 +1,12 @@
 import useSessionDetails from "@/hooks/useSessionDetails";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getLocations } from "../api/property";
+import { getLocations } from "./api/property";
 import PageSkeletons from "@/components/PageSkeletons";
 import HeroBanner from "@/organisms/HeroBanner";
 import BottomHero from "@/molecules/BottomHero";
 import FooterComp from "@/organisms/FooterComp";
+import FaqsSec from "@/molecules/FaqsSec";
 
 export default function Faqs() {
   const { status } = useSession();
@@ -15,6 +16,21 @@ export default function Faqs() {
   const [cities, setCities] = useState([]);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
+
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   // GET CITIES
   useEffect(() => {
@@ -35,11 +51,14 @@ export default function Faqs() {
         secondaryText="Need something cleared up? Here are our most frequently asked questions."
         isLoggedIn={isLoggedIn}
         firstName={firstName}
+        isMobile={isMobile}
       />
 
-      <section className="bg-gray-50 px-24 py-9">
-        <div className="border border-gray-100 shadow-lg bg-white rounded-lg p-10">
-          <div className="w-[70%]"> FAQs </div>
+      <section className="bg-gray-50 px-5 md:px-24 py-9">
+        <div className="border border-gray-100 shadow-lg bg-white rounded-lg ">
+          <div>
+            <FaqsSec />
+          </div>
         </div>
       </section>
 

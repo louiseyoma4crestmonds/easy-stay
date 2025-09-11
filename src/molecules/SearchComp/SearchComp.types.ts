@@ -7,4 +7,5 @@ export type SearchCompProps = {
   headingText?: string;
   popularProperties: property[];
   propertiesNearby: property[];
+  isMobile?: boolean;
 };

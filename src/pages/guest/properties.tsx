@@ -24,6 +24,21 @@ function Properties() {
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
 
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
   // GET CITIES
   useEffect(() => {
     getLocations().then((response) => {
@@ -73,12 +88,13 @@ function Properties() {
         isLoggedIn={isLoggedIn}
         firstName={firstName}
         lastName={lastName}
+        isMobile={isMobile}
       />
 
-      <section className="py-12 ">
-        <div className="flex flex-col justify-center items-center space-y-2 mt-6 ">
-          <div className="flex justify-center items-center space-x-2  ">
-            <p className="text-gray-800 text-2xl font-medium ">
+      <section className=" w-[90%] md:w-[80%] flex flex-col justify-center items-center py-12 mx-auto ">
+        <div className="flex flex-col justify-center items-center space-y-2 mt-1 md:mt-6  ">
+          <div className="flex justify-center items-center space-x-2   ">
+            <p className="text-gray-800 text-base md:text-2xl font-medium ">
               {" "}
               Explore Apartments in{" "}
               {selectedCity ? selectedCity.name : "this city"}
@@ -136,7 +152,7 @@ function Properties() {
             variant: "explore",
           },
         ]}
-        divClass="items-start"
+        divClass="items-center md:items-start"
       />
 
       <FooterComp data={cities} />

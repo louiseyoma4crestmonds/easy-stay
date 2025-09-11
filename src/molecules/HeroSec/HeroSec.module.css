@@ -2,16 +2,19 @@
   @apply w-full relative z-50;
 }
 .heromodal {
-  @apply absolute bottom-0 left-0 w-full  bg-black/10 h-1/2  backdrop-blur-2xl;
+  @apply relative  w-full  py-4 bg-black/10 h-1/2  backdrop-blur-sm;
 }
+/* .heromodal {
+  @apply absolute bottom-0 left-0 w-full  bg-black/10 h-1/2  backdrop-blur-sm;
+} */
 .heroP1 {
-  @apply font-normal text-base text-center text-white py-5;
+  @apply font-normal text-sm md:text-base text-center text-white py-5;
 }
 .heroSearchdiv {
-  @apply w-[80%]  mx-auto border border-gray-300 px-8 py-4  rounded-lg flex justify-between items-center shadow-lg bg-[#00000033];
+  @apply w-[90%] md:hidden mx-auto border border-gray-300 px-2 md:px-8 py-2 md:py-4  rounded-lg flex justify-between items-center shadow-lg bg-[#00000033];
 }
 .checkoutdiv {
-  @apply relative flex cursor-pointer flex-col w-[12%] border-r border-gray-300;
+  @apply hidden relative md:flex cursor-pointer flex-col w-[12%] border-r border-gray-300;
 }
 /* .checkindiv{
   @apply flex flex-col  w-[12%] border-r border-gray-300

@@ -42,7 +42,7 @@ function CityCard({
     >
       <div
         className={`absolute inset-0 border-8 border-transparent z-20 transition-colors duration-300 pointer-events-none ${
-          clickable ? "group-hover:border-white" : ""
+          clickable ? " md:group-hover:border-white" : ""
         }`}
       />
 
@@ -53,15 +53,19 @@ function CityCard({
       <div
         className={`absolute inset-0 bg-black z-10 transition-all duration-300 ${
           clickable
-            ? "bg-opacity-60 group-hover:bg-opacity-20"
+            ? "bg-opacity-60 md:group-hover:bg-opacity-20"
             : "bg-opacity-60"
         }`}
       />
 
       {/* Centered text */}
       <div className={styles.cityCardTextDiv}>
-        <p className="text-white text-3xl font-bold">{primaryText}</p>
-        <p className="text-gray-50 text-xl font-normal mt-1">{secondaryText}</p>
+        <p className="text-white text-xl md:text-3xl font-bold">
+          {primaryText}
+        </p>
+        <p className="text-gray-50 text-sm md:text-xl font-normal mt-1">
+          {secondaryText}
+        </p>
       </div>
     </div>
   );

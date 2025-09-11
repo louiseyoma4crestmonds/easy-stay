@@ -2,5 +2,8 @@
   @apply w-[66%]  grid grid-cols-2 gap-4;
 } */
 .maindiv {
-  @apply w-[70%];
+  @apply w-full md:w-[70%];
+}
+.mobileSearch {
+  @apply border border-gray-300 bg-gray-50 cursor-pointer text-gray-500 text-sm rounded-lg px-4 flex items-center justify-between py-3;
 }

@@ -31,44 +31,6 @@ export default function CarouselSection<T>({
 
   const router = useRouter();
 
-  // const handleTitleClick = () => {
-  //   if (items.length === 0) return;
-
-  //   let queryParam: string | null = null;
-  //   let locationId: number | null = null;
-
-  //   // Map title to query param
-  //   if (title.toLowerCase().includes("near me")) {
-  //     queryParam = "near-me";
-  //   } else if (title.toLowerCase().includes("popular")) {
-  //     queryParam = "popular-lagos"; // or dynamic based on first item location
-  //   } else {
-  //     // Default: use neighborhood or location ID from first item
-  //     const firstItem: any = items[0];
-  //     const neighborhoodId = firstItem?.[neighborhoodKey]?.id;
-  //     const neighborhoodName = firstItem?.[neighborhoodKey]?.name;
-  //     locationId = firstItem?.[locationKey]?.id;
-
-  //     if (neighborhoodId && neighborhoodName && locationId) {
-  //       // slugify name
-  //       const slug = neighborhoodName.toLowerCase().replace(/\s+/g, "-");
-  //       queryParam = `neighborhood-${neighborhoodId}-${slug}`;
-  //     } else if (locationId) {
-  //       queryParam = `location-${locationId}`;
-  //     }
-  //   }
-
-  //   if (!queryParam) return;
-
-  //   router.push({
-  //     pathname: "/guest/property-search",
-  //     query: {
-  //       category: queryParam,
-  //       locationId, // 👈 include parent locationId for filtering
-  //     },
-  //   });
-  // };
-
   const handleTitleClick = () => {
     if (items.length === 0) return;
 
@@ -111,12 +73,12 @@ export default function CarouselSection<T>({
   };
 
   return (
-    <section className={` my-8 w-full max-w-7xl mx-auto ${className}`}>
+    <section className={`my-8 w-full md:max-w-7xl mx-auto ${className}`}>
       {/* Header */}
       <div className="flex justify-between items-center px-3 mb-6">
         <div className="flex items-center gap-2">
           <p
-            className="font-medium text-base text-gray-800 cursor-pointer hover:underline "
+            className="font-medium  text-sm md:text-base text-gray-800 cursor-pointer hover:underline "
             onClick={handleTitleClick}
           >
             {title}
@@ -130,7 +92,7 @@ export default function CarouselSection<T>({
           />
         </div>
         {showArrows !== false && (
-          <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <button
               aria-label="Previous items"
               onClick={handlePrev}
@@ -165,15 +127,18 @@ export default function CarouselSection<T>({
       </div>
 
       {/* Items */}
-      <div className="flex flex-nowrap  gap-2">
-        {visibleItems.map((item, index) => (
-          <div
-            key={index}
-            className={`px-2 ${showArrows === false ? "w-1/2" : "w-1/3"}`}
-          >
-            {renderItem(item)}
-          </div>
-        ))}
+      <div className="overflow-x-auto md:overflow-x-hidden hide-scrollbar ">
+        <div className="flex flex-nowrap  gap-x-2">
+          {visibleItems.map((item, index) => (
+            <div
+              key={index}
+              // className="w-1/3 "
+              className={`shrink-0 md:shrink  px-2 ${showArrows === false ? "w-[90%] md:w-1/2 " : " w-full md:w-1/3"}`}
+            >
+              {renderItem(item)}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

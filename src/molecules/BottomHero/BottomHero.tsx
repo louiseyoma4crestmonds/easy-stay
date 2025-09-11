@@ -29,22 +29,24 @@ function BottomHero({
   const router = useRouter();
   return (
     <section className="relative w-full">
-      <img
-        src={backgroundImage}
-        alt="section bg"
-        className="w-full object-cover "
-      />
+      <div className="absolute inset-0">
+        <img
+          src={backgroundImage}
+          alt="section bg"
+          className="w-full h-full object-cover "
+        />
 
-      {hasOverlay && (
-        <div className="absolute inset-0 bg-blue-900 bg-opacity-50" />
-      )}
+        {hasOverlay && (
+          <div className="absolute inset-0 bg-blue-900 bg-opacity-50" />
+        )}
+      </div>
 
       <div className={styles.firstdiv}>
         {leftImage && (
           <img
             src={leftImage}
             alt="side visual"
-            className="w-[200px] h-[200px] "
+            className=" w-12 h-12 md:w-[200px] md:h-[200px] object-contain "
           />
         )}
         <div className={`flex flex-col ${divClass} `}>
@@ -53,11 +55,12 @@ function BottomHero({
           {/* <div className="pt-3">
             <Button variant="explore">Explore Apartments</Button>
           </div> */}
-          <div className="pt-3">
+          <div className="pt-3 w-full flex md:w-auto  ">
             {(buttons ?? []).map((btn, idx) => (
               <Button
                 key={idx}
                 type="button"
+                width="full"
                 variant={btn.variant as any}
                 onClick={() => {
                   if (btn.onClick) btn.onClick();

@@ -20,6 +20,7 @@ function Button(props: ButtonProps) {
   const btnClassName = classNames({
     [styles.btn]: true,
     [styles.btnFull]: width === "full",
+    [styles.btnWidthAccent]: width === "widthaccent",
     [styles.btnPrimary]: variant === "primary",
     [styles.btnPrimaryWithImg]: variant === "primaryWithImg",
     [styles.btnSecondary]: variant === "secondary",

@@ -50,7 +50,20 @@ function PropertySearch() {
     infants: Number(infants || 0),
     pets: Number(pets || 0),
   };
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
 
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
 
@@ -144,7 +157,7 @@ function PropertySearch() {
   // if (status === "loading" || thisPageLoads) return <PageSkeletons />;
 
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen flex flex-col  ">
       <HeroSec
         isLoggedIn={isLoggedIn}
         firstName={firstName}
@@ -153,10 +166,11 @@ function PropertySearch() {
         initialCheckin={checkin ? new Date(checkin as string) : null}
         initialCheckout={checkout ? new Date(checkout as string) : null}
         initialGuests={initialGuests}
+        isMobile={isMobile}
         // points={points}
       />
 
-      <section className="w-[80%]  mx-auto mt-16 mb-32 ">
+      <section className="w-[90%] md:w-[80%]  mx-auto mt-8 md:mt-16 mb-16 md:mb-32 ">
         <SearchComp
           properties={properties}
           onRemove={handleRemove}
@@ -164,6 +178,7 @@ function PropertySearch() {
           headingText={headingText}
           propertiesNearby={propertiesNearby}
           popularProperties={popularProperties}
+          isMobile={isMobile}
         />
       </section>
 
@@ -180,7 +195,7 @@ function PropertySearch() {
             variant: "explore",
           },
         ]}
-        divClass="items-start"
+        divClass="items-center md:items-start"
       />
 
       <FooterComp data={cities} />

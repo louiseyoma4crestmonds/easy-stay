@@ -18,6 +18,21 @@ function PropertyDetails() {
   const { firstName } = useSessionDetails();
   const isLoggedIn = status === "authenticated";
 
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
   //  Show skeleton while NextAuth is checking
   // if (status === "loading") {
   //   return <PageSkeletons />;
@@ -41,7 +56,7 @@ function PropertyDetails() {
   console.log("property", property);
 
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen flex flex-col  ">
       {status === "loading" ? (
         <PageSkeletons />
       ) : (
@@ -52,10 +67,15 @@ function PropertyDetails() {
             firstName={firstName}
             leftIcon="/images/menu-white.png"
             defaultTextColor="text-gray-500"
+            isMobile={isMobile}
           />
 
           {property && (
-            <ApartmentDetails apartment={property} isLoggedIn={isLoggedIn} />
+            <ApartmentDetails
+              apartment={property}
+              isLoggedIn={isLoggedIn}
+              isMobile={isMobile}
+            />
           )}
 
           <FooterComp data={cities} />

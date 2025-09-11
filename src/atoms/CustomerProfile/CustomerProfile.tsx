@@ -83,7 +83,7 @@ function CustomerProfile({
 
         {/* First name */}
         <span
-          className={`font-normal text-base ${isOnImage ? "text-white" : "text-gray-800"} `}
+          className={` hidden md:block font-normal text-base ${isOnImage ? "text-white" : "text-gray-800"} `}
         >
           Hi, {firstName}
         </span>
@@ -154,7 +154,7 @@ function CustomerProfile({
             <p className="text-gray-500 text-sm pb-6 ">
               Are you sure you want to logout?
             </p>
-            <div className="flex justify-center items-center gap-5 ">
+            <div className="flex justify-center items-center gap-5 md:pb-6 ">
               <Button
                 variant="profile"
                 onClick={() => setShowLogoutModal(false)}

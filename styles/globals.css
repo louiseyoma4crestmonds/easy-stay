@@ -88,3 +88,11 @@
 .range-thumb::-moz-range-thumb:hover {
   transform: scale(1.08);
 }
+/* Hide scrollbar globally for elements with this class */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
