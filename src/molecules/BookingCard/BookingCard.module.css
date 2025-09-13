@@ -1,0 +1,15 @@
+.btndiv {
+  @apply w-full flex items-center  font-normal;
+}
+/* .dropdowndiv {
+  @apply absolute right-3 top-8 z-50  w-full text-gray-800 text-sm bg-white border border-gray-200 rounded shadow-lg;
+} */
+
+/* .dropdowndiv {
+  @apply absolute -top-2 right-full mr-2 z-50 w-40 text-gray-800 text-sm bg-white border border-gray-200 rounded shadow;
+} */
+.dropdowndiv {
+  @apply absolute bottom-full mb-2 md:right-0 z-50 w-40 
+         text-gray-800 text-sm bg-white border border-gray-200 
+         rounded shadow;
+}

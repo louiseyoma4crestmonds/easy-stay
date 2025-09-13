@@ -179,13 +179,15 @@ function ProfileTab() {
     <div className={styles.maindiv}>
       <p className={styles.title}>My Profile</p>
 
-      <div className="px-8 py-5 border-b ">
-        <div className=" relative w-full">
-          <img
-            src="/images/profile-frame.png"
-            alt="Profile-grame"
-            className="w-full h-full "
-          />
+      <div className="px-4 md:px-8 py-5 border-b ">
+        <div className=" relative w-full py-5 md:py-0 ">
+          <div className="absolute inset-0 ">
+            <img
+              src="/images/profile-frame.png"
+              alt="Profile-grame"
+              className="w-full h-full "
+            />{" "}
+          </div>
           <div
             className={styles.seconddiv}
             onClick={() => setShowPointsModal(true)}
@@ -196,8 +198,10 @@ function ProfileTab() {
                 alt="gift box"
                 className="w-20 h-20 "
               />
-              <div className="flex flex-col ">
-                <p className="text-white text-xl font-bold ">100 Points</p>
+              <div className="flex flex-col pb-4 md:pb-0 ">
+                <p className="text-white text-xl font-bold text-center md:text-left ">
+                  100 Points
+                </p>
                 <p className="text-gray-300 font-normal text-sm ">
                   Book more and earn more points
                 </p>

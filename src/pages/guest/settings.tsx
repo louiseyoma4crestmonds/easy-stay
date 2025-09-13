@@ -11,15 +11,10 @@ import { useEffect, useState } from "react";
 
 export type SettingsTab =
   | "my Profile"
+  | "Profile"
   | "password"
   | "notifications"
   | "support";
-const SETTINGS_TABS: SettingsTab[] = [
-  "my Profile",
-  "password",
-  "notifications",
-  "support",
-];
 
 export default function Settings() {
   const router = useRouter();
@@ -29,6 +24,28 @@ export default function Settings() {
 
   const [activeTab, setActiveTab] = useState<SettingsTab>("my Profile");
 
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  const SETTINGS_TABS: SettingsTab[] = [
+    (isMobile ? "Profile" : "my Profile") as SettingsTab,
+    "password",
+    "notifications",
+    "support",
+  ];
+
   useEffect(() => {
     if (!router.isReady) return;
     const raw = router.query.tab;
@@ -36,9 +53,9 @@ export default function Settings() {
     if (typeof val === "string" && SETTINGS_TABS.includes(val as SettingsTab)) {
       setActiveTab(val as SettingsTab);
     } else {
-      setActiveTab("my Profile");
+      setActiveTab(isMobile ? "Profile" : "my Profile");
     }
-  }, [router.isReady, router.query.tab]);
+  }, [router.isReady, router.query.tab, isMobile]);
 
   const points = 100;
 
@@ -51,14 +68,16 @@ export default function Settings() {
         lastName={lastName}
         leftIcon="/images/menu-white.png"
         defaultTextColor="text-gray-500"
+        isMobile={isMobile}
       />
-      <div className="flex w-[90%] justify-center mt-12 gap-6 mx-auto ">
+      <div className="flex flex-col md:flex-row w-[90%] justify-center mt-12 gap-6 mx-auto ">
         <CustomerSidebar
           activeTab={activeTab}
           onChange={(t) => setActiveTab(t)}
           tabs={SETTINGS_TABS}
         />
         {activeTab === "my Profile" && <ProfileTab />}
+        {activeTab === "Profile" && <ProfileTab />}
         {activeTab === "password" && <ChangePwdTab />}
         {activeTab === "support" && <SupportTab />}
         {activeTab === "notifications" && <NotificationTab />}

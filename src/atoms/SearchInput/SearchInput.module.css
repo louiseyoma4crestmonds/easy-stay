@@ -1,0 +1,6 @@
+.inputdiv {
+  @apply w-full rounded-lg border border-gray-300 bg-gray-50 px-5 py-2 pl-10 text-sm text-gray-500 outline-none;
+}
+.imgdiv {
+  @apply absolute left-3 top-[60%] -translate-y-1/2;
+}

@@ -3,6 +3,13 @@ export type HeroSecProps = {
   firstName?: string;
   lastName?: string;
   points?: number;
+  isMobile?: boolean;
+
+  // 👇 new optional props
+  initialLocation?: string;
+  initialCheckin?: Date | null;
+  initialCheckout?: Date | null;
+  initialGuests?: GuestCounts;
 };
 
 export type GuestCounts = {

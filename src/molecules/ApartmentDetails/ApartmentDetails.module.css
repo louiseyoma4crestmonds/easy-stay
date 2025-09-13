@@ -1,17 +1,17 @@
 .heartborder {
-  @apply bg-transparent border flex justify-center items-center border-gray-200 h-10 w-10 rounded-full;
+  @apply bg-transparent border flex justify-center items-center border-gray-200 h-6 w-6 md:h-10 md:w-10 rounded-full;
 }
 .rightarrow {
-  @apply flex absolute right-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center w-16 h-16 rounded-full;
+  @apply flex absolute right-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center w-6 h-6 md:w-16 md:h-16 rounded-full;
 }
 .leftarrow {
-  @apply flex absolute left-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center  w-16 h-16 rounded-full;
+  @apply flex absolute left-2 top-1/2 -translate-y-1/2 bg-[#FFFFFF80] justify-center items-center  w-6 h-6 md:w-16 md:h-16 rounded-full;
 }
 .modalContent {
-  @apply w-[590px] flex flex-col justify-center py-6  items-center  overflow-y-auto;
+  @apply w-[360px] md:w-[590px] flex flex-col justify-center py-6  items-center  overflow-y-auto;
 }
 .firstdiv {
-  @apply flex flex-row items-center  border rounded-lg mb-5 py-2 px-3 border-gray-200  gap-4;
+  @apply flex flex-col w-full md:flex-row md:items-center  border rounded-lg mb-5 py-4 md:py-2 px-3 border-gray-200  gap-4;
 }
 .btndiv {
   @apply border w-full border-gray-200 rounded-lg px-5 py-3 text-gray-800 font-medium text-base flex justify-center items-center gap-2;

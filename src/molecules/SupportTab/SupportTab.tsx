@@ -59,7 +59,7 @@ function SupportTab() {
   };
 
   return (
-    <div className="w-[70%] ">
+    <div className="w-full md:w-[70%] ">
       <div className={styles.maindiv1}>
         <div className="flex flex-row gap-4 items-center w-[45%] border-r ">
           <img src="/images/otp-icon.png" width={48} height={48} />
@@ -72,7 +72,7 @@ function SupportTab() {
         </div>
         <div className="flex flex-row gap-4 items-center w-[55%] pl-5 ">
           <img src="/images/telephone-icon.png" width={48} height={48} />
-          <div className="flex flex-col  ">
+          <div className="flex flex-row md:flex-col  ">
             <p className="text-gray-500 font-normal text-sm ">Call us on</p>
             <div className="flex gap-6 ">
               <p className="text-gray-800 text-base font-semibold border-r pr-3 ">
@@ -83,6 +83,32 @@ function SupportTab() {
           </div>
         </div>
       </div>
+
+      {/*FOR MOBILE*/}
+      <div className={styles.maindivMobile}>
+        <div className="flex flex-row gap-3 items-center border-b py-3 ">
+          <img src="/images/otp-icon.png" width={32} height={32} />
+          <div className="flex flex-col  ">
+            <p className="text-gray-500 font-normal text-xs ">
+              Send us an email
+            </p>
+            <p className={styles.text}>info@easystay.com</p>
+          </div>
+        </div>
+        <div className="flex flex-row py-3 gap-4 items-center  ">
+          <img src="/images/telephone-icon.png" width={32} height={32} />
+          <div className="flex flex-col  ">
+            <p className="text-gray-500 font-normal text-xs ">Call us on</p>
+            <div className="flex flex-row items-center gap-2 ">
+              <p className="text-gray-800 text-sm font-semibold border-r pr-3 ">
+                +234 703 126 7197
+              </p>
+              <p className={styles.text}>+234 703 126 7197</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className={styles.maindiv2}>
         <p className={styles.title}> Raise a ticket</p>
         <div className="flex flex-col border-b ">

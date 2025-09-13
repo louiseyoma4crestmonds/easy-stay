@@ -9,7 +9,7 @@ export default function PageSkeletons() {
       <section className="relative h-[400px] w-full bg-gray-100 flex flex-col justify-center items-center">
         <Skeleton className="h-10 w-2/3 mb-4" />
         <Skeleton className="h-6 w-1/2 mb-8" />
-        <div className="flex gap-4">
+        <div className="flex flex-col justify-center md:flex-row gap-4">
           <Skeleton className="h-10 w-40" />
           <Skeleton className="h-10 w-52" />
         </div>

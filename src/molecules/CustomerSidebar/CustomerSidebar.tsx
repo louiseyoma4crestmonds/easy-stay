@@ -14,7 +14,7 @@ export default function CustomerSidebar({
   const router = useRouter();
 
   return (
-    <nav className={styles.maindiv}>
+    <nav className={`${styles.maindiv} hide-scrollbar `}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab;
         const activeClasses = "bg-primary-50 text-primary-600 font-semibold ";
@@ -33,7 +33,7 @@ export default function CustomerSidebar({
               );
             }}
             aria-current={isActive ? "page" : undefined}
-            className={`text-left px-3 py-2 rounded-md text-sm font-normal transition-colors ${
+            className={`text-left px-2 md:px-3 py-2 rounded-md text-sm font-normal transition-colors ${
               isActive ? activeClasses : inactiveClasses
             }`}
           >

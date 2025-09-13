@@ -1,0 +1,15 @@
+.iddiv {
+  @apply text-gray-900 font-medium text-base md:text-xl;
+}
+.P1 {
+  @apply text-gray-500 font-normal text-sm md:text-base;
+}
+.P2 {
+  @apply font-medium text-sm md:text-base text-gray-800;
+}
+.btn1 {
+  @apply border flex items-center gap-2 border-gray-200 rounded-lg bg-transparent px-5 py-2.5 text-sm text-gray-800 font-medium;
+}
+.btn2 {
+  @apply border flex items-center gap-2 border-gray-200 rounded-lg bg-transparent px-5 py-2.5 text-sm text-red-600 font-medium;
+}

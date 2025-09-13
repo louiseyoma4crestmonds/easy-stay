@@ -1,17 +1,17 @@
 .modalContent {
-  @apply w-[700px] flex flex-col justify-center py-4  items-center h-[520px] overflow-y-auto;
+  @apply max-w-xs md:max-w-3xl md:w-[700px] flex flex-col justify-center py-4  items-center h-[520px] overflow-y-auto;
 }
 .firstdiv {
-  @apply flex flex-row items-center  border rounded-lg mb-5 py-2 px-3 border-gray-200  gap-4;
+  @apply flex flex-col md:flex-row items-start md:items-center  border rounded-lg mb-5 py-2 px-2 md:px-3 border-gray-200  gap-4;
 }
 .text {
-  @apply text-gray-500 font-normal text-sm;
+  @apply text-gray-500 font-normal text-xs md:text-sm;
 }
 .text2 {
-  @apply text-gray-800 font-medium text-sm;
+  @apply text-gray-800 font-medium text-xs md:text-sm;
 }
 .text3 {
-  @apply text-gray-800 font-semibold text-xl;
+  @apply text-gray-800 font-semibold text-base md:text-xl;
 }
 .btn {
   @apply border border-gray-200 rounded-lg py-2 px-3 text-gray-800 font-medium text-sm;

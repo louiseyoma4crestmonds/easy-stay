@@ -1,5 +1,5 @@
 .seconddiv {
-  @apply absolute inset-0  flex flex-col items-center justify-center text-center w-[60%] mx-auto;
+  @apply relative   flex flex-col items-center justify-center text-center py-9 md:py-0 w-[90%] md:w-[60%] mx-auto;
 }
 .header {
   @apply flex justify-between items-center px-12 py-6;
@@ -8,10 +8,10 @@
   @apply flex justify-between items-center gap-2;
 }
 .P1 {
-  @apply text-white font-semibold text-4xl  mb-8;
+  @apply text-white font-semibold text-xl md:text-4xl mb-4  md:mb-8;
 }
 .P2 {
-  @apply text-gray-200 text-xl font-normal  mb-4;
+  @apply text-gray-200 text-sm md:text-xl font-normal  mb-4;
 }
 /* .btndiv {
   @apply border border-gray-200 rounded-lg bg-transparent p-[10px] cursor-pointer w-full flex flex-row items-center justify-center text-sm font-medium text-white;

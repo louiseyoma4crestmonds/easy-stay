@@ -29,7 +29,7 @@ export default function Calendar(props: CalendarProps) {
   const [tempDate, setTempDate] = useState<Date | null>(initialDate);
 
   return (
-    <div className="absolute top-full max-w-4xl w-[284px] left-0 mt-2 bg-white rounded-lg shadow-lg px-4 py-5 z-50">
+    <div className="absolute top-full max-w-4xl w-[284px] -mt-[100px]  left-0 md:mt-2 bg-white rounded-lg shadow-lg px-4 py-5 z-50">
       <div className="">
         <CalendarHeader
           currentDate={currentDate}
@@ -45,13 +45,24 @@ export default function Calendar(props: CalendarProps) {
         <div className="flex justify-between gap-2 mt-3">
           <button
             className="border border-gray-200 text-gray-800 text-sm font-medium rounded-lg w-full  "
-            onClick={() => onConfirm(null)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ stop bubbling
+              onConfirm(null);
+            }}
+            // onClick={() => onConfirm(null)}
           >
             Cancel
           </button>
           <button
             className="bg-primary-600 px-3 py-2 text-white rounded-lg text-sm font-medium w-full "
-            onClick={() => onConfirm(tempDate)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ stop bubbling
+              onConfirm(tempDate);
+            }}
+
+            // onClick={() => onConfirm(tempDate)}
           >
             Ok
           </button>

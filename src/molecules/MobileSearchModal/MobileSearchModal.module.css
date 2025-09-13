@@ -1,0 +1,15 @@
+.modaldiv {
+  @apply absolute  z-50 w-full  mt-2 top-full bg-white rounded-lg shadow-xl p-4;
+}
+.checkoutdiv {
+  @apply flex cursor-pointer pb-3 flex-col w-full border-b my-3 border-gray-300;
+}
+/* .checkindiv{
+  @apply flex flex-col  w-[12%] border-r border-gray-300
+} */
+.text {
+  @apply font-medium text-sm text-gray-900;
+}
+.seconddiv {
+  @apply flex flex-row items-center gap-1;
+}
