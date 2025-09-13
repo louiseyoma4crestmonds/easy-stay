@@ -179,6 +179,7 @@ function PropertyCard(props: PropertyCardProps) {
             query: { propertyId: id },
           });
         }}
+        className="px-4 py-3 space-y-2"
       >
         <p className="text-sm font-medium text-gray-800 leading-tight">
           {name}

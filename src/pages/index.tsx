@@ -240,6 +240,7 @@ function Home(): JSX.Element {
       </section>
 
       {/* popular apartments */}
+
       <section className="w-[90%] md:w-[80%] flex justify-center items-center mx-auto ">
         <CarouselComp
           title="Popular Apartments in Lagos"
@@ -259,6 +260,7 @@ function Home(): JSX.Element {
           )}
         />{" "}
       </section>
+
 
       {/*gift section*/}
       <BottomHero
