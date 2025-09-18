@@ -1,14 +1,14 @@
 .maindiv {
-  @apply bg-gray-900 w-full py-6 px-12;
+  @apply bg-gray-900 w-full md:py-6 px-2 md:px-12;
 }
 .footerExploreText {
-  @apply text-gray-50 font-medium text-xl text-center mt-14 mb-10;
+  @apply text-gray-50 font-medium text-xl text-center mt-10 md:mt-14 mb-3 md:mb-10;
 }
 .footerborder {
   @apply flex items-center justify-between p-4 border border-gray-600 rounded-lg cursor-pointer;
 }
 .footerAboutDiv {
-  @apply w-[80%] mx-auto my-5 grid grid-cols-2 gap-x-6 gap-y-6;
+  @apply w-[90%] md:w-[80%] mx-auto md:my-5 grid md:grid-cols-2 gap-x-6 gap-y-3 md:gap-y-6;
 }
 .footerAbout {
   @apply w-[48px] h-[48px] bg-purple-100 rounded-lg flex justify-center items-center;
@@ -17,10 +17,10 @@
   @apply text-gray-50 text-base font-medium;
 }
 .footerP2 {
-  @apply text-gray-400 text-sm font-normal;
+  @apply text-gray-400 truncate text-sm font-normal;
 }
 .btndiv {
-  @apply w-full p-2 border flex flex-row items-center justify-center text-sm font-medium text-white bg-[#1F2A37]  border-gray-50 rounded-lg;
+  @apply w-full p-2 border flex flex-row items-center justify-between md:justify-center text-sm font-medium text-white bg-[#1F2A37]  border-gray-50 rounded-lg;
 }
 .dropdowndiv {
   @apply absolute bottom-full z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg;
@@ -32,5 +32,8 @@
   @apply space-y-2 text-gray-50 font-medium text-base;
 }
 .quicklinkdiv {
-  @apply grid grid-cols-1 md:grid-cols-4 gap-8 mx-auto;
+  @apply px-5 md:px-0 grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mx-auto;
+}
+.modalContent4 {
+  @apply max-w-sm flex flex-col justify-center px-4 py-5 items-center -mt-6;
 }

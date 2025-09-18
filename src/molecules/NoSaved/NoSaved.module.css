@@ -5,5 +5,5 @@
   @apply text-gray-800 text-xl font-semibold mt-8;
 }
 .P1 {
-  @apply text-gray-500 font-normal text-base w-[40%] text-center mb-6 mt-2;
+  @apply text-gray-500 font-normal text-sm md:text-base w-full md:w-[40%] text-center mb-6 mt-2;
 }

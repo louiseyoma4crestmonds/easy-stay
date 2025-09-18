@@ -6,6 +6,7 @@ export interface DropdownOption {
   label?: string; // Optional general fallback label
   value?: string; // Optional value
   link?: string;
+  action?: () => void;
 }
 
 export interface CustomDropdownProps {
@@ -19,4 +20,6 @@ export interface CustomDropdownProps {
   leftIcon?: string;
   spanClassName?: string;
   ImgClass?: string;
+  hideButtonLabel?: boolean;
+  toggleLabel?: string;
 }

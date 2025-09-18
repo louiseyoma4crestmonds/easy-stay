@@ -19,5 +19,8 @@
   @apply text-gray-300 font-normal text-sm text-center pt-1;
 }
 .modalContent2 {
-  @apply max-w-md w-[400px]  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-6;
+  @apply max-w-xs md:max-w-md md:w-[400px]  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-7;
+}
+.modalContent3 {
+  @apply max-w-xs md:max-w-3xl md:w-[400px] flex flex-col justify-center px-2 py-3 items-center -mt-6;
 }

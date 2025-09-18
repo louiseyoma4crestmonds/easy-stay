@@ -245,7 +245,9 @@ function ReportanIssue(props: ReportanIssueProps) {
         </div>
 
         <div className={styles.formButtonDiv}>
-          <Button variant="primary">Submit</Button>
+          <Button variant="primary" width="widthaccent">
+            Submit
+          </Button>
         </div>
       </form>
     </Modal>

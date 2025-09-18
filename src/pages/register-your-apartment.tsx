@@ -5,7 +5,7 @@ import FooterComp from "@/organisms/FooterComp";
 import HeroBanner from "@/organisms/HeroBanner";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getLocations } from "../api/property";
+import { getLocations } from "./api/property";
 
 export default function RegisterYourApartment() {
   const { status } = useSession();
@@ -15,6 +15,21 @@ export default function RegisterYourApartment() {
   const [cities, setCities] = useState([]);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
+
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   // GET CITIES
   useEffect(() => {
@@ -43,12 +58,13 @@ export default function RegisterYourApartment() {
         isLoggedIn={isLoggedIn}
         firstName={firstName}
         lastName={lastName}
+        isMobile={isMobile}
       />
 
       {/* TEXT SECTION */}
-      <section className="bg-gray-50 px-24 py-9">
-        <div className="border border-gray-100 shadow-lg bg-white rounded-lg p-10">
-          <div className="w-[70%]">
+      <section className="bg-gray-50 px-5 md:px-24 py-9">
+        <div className="border border-gray-100 shadow-lg bg-white rounded-lg p-5 md:p-10">
+          <div className="w-full md:w-[70%]">
             <p className="text-gray-800 font-bold text-base mb-6">
               Become a Host with Easy Stay
             </p>

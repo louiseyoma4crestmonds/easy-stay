@@ -6,7 +6,7 @@ function NoSaved() {
   const router = useRouter();
 
   const exploreApartments = () => {
-    router.push("/");
+    router.push("/guest/properties?location=1");
   };
 
   return (

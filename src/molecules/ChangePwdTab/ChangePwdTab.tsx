@@ -87,7 +87,7 @@ function ChangePwdTab() {
       <p className={styles.title}>Change Password</p>
 
       <form onSubmit={handleSaveChanges}>
-        <div className="my-5 w-[50%] px-8  ">
+        <div className="my-5 w-full md:w-[50%] px-4 md:px-8  ">
           <label className={styles.formLabel}>Old Password</label>
           <div className="relative">
             <img
@@ -119,7 +119,7 @@ function ChangePwdTab() {
             />
           </div>
         </div>
-        <div className="mb-4 w-[50%] px-8 ">
+        <div className="mb-4 w-full md:w-[50%] px-4 md:px-8 ">
           <label className={styles.formLabel}>New Password</label>
           <div className="relative">
             <img
@@ -154,7 +154,7 @@ function ChangePwdTab() {
             Must contain number or symbol, at least 8 characters.
           </p>
         </div>
-        <div className="mb-7 w-[50%] px-8  ">
+        <div className="mb-7 w-full md:w-[50%] px-4 md:px-8  ">
           <label className={styles.formLabel}>Confirm Password</label>
           <div className="relative">
             <img
@@ -188,7 +188,9 @@ function ChangePwdTab() {
         </div>
         <hr />
         {/* Error Message */}
-        {errors && <p className="text-red-600 text-sm mt-4 px-8">{errors}</p>}
+        {errors && (
+          <p className="text-red-600 text-sm mt-4 px-4 md:px-8">{errors}</p>
+        )}
         <div className={styles.formButtonDiv}>
           <Button variant="primary">Save Changes</Button>
         </div>
@@ -260,7 +262,10 @@ function ChangePwdTab() {
           height={48}
           modalcontent={styles.modalContent2}
         >
-          <div className="pt-3 "> Password Changed Successfully</div>
+          <div className="pt-3  text-center">
+            {" "}
+            Password Changed Successfully
+          </div>
         </Modal>
       )}
     </div>

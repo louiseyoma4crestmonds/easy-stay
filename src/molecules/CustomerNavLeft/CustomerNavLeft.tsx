@@ -46,7 +46,7 @@ function CustomerNavLeft({
   return (
     <div className={styles.maindiv}>
       {/* Support Icon */}
-      <div onClick={goToSupport} className="cursor-pointer ">
+      <div onClick={goToSupport} className="cursor-pointer hidden md:block ">
         <img
           src={
             isOnImage

@@ -68,10 +68,10 @@ function NotificationTab() {
   };
 
   return (
-    <div className="w-[70%] ">
+    <div className="w-full md:w-[70%] ">
       <div className={styles.maindiv1}>
         <p className={styles.title}>Email Notifications</p>
-        <div className="px-8 py-5">
+        <div className="px-4 md:px-8 py-5">
           {emailNotifications.map((n) => (
             <div key={n.id} className="flex items-center gap-4 py-2  ">
               <button
@@ -94,7 +94,7 @@ function NotificationTab() {
 
       <div className={styles.maindiv2}>
         <p className={styles.title}>Push Notifications</p>
-        <div className="px-8 py-5">
+        <div className="px-4 md:px-8 py-5">
           {pushNotifications.map((n) => (
             <div key={n.id} className="flex items-center gap-4 py-2  ">
               <button

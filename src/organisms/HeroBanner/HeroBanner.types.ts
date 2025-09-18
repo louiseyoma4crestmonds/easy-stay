@@ -12,4 +12,5 @@ export type HeroBannerProps = {
   firstName?: string;
   lastName?: string;
   points?: number;
+  isMobile?: boolean;
 };

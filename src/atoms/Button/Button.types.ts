@@ -12,7 +12,7 @@ export type ButtonVariant =
   | "profile"
   | "delete";
 
-export type ButtonWidth = "normal" | "full";
+export type ButtonWidth = "normal" | "full" | "widthaccent";
 
 export type ButtonProps = {
   variant?: ButtonVariant;
