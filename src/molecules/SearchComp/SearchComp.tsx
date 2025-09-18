@@ -4,8 +4,12 @@ import SearchFilter from "../SearchFilter";
 import styles from "./SearchComp.module.css";
 import { SearchCompProps } from "./SearchComp.types";
 import { useEffect, useRef, useState } from "react";
-import { property } from "src/helpers/dataTypes";
+import { property, PropertyType } from "src/helpers/dataTypes";
 import NoSearchResults from "../NoSearchResults";
+import {
+  getApartmentTypes,
+  searchWithFilterParameters,
+} from "src/pages/api/property";
 
 // utils/filters.ts
 export function flattenFilters(
@@ -54,6 +58,7 @@ function SearchComp(props: SearchCompProps) {
     propertiesNearby,
     popularProperties,
     isMobile,
+    setProperties,
   } = props;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -75,28 +80,13 @@ function SearchComp(props: SearchCompProps) {
   //   { name: "Port Harcourt", count: 5 },
   // ];
 
-  const apartmentTypes = [
-    { name: "1 Bedroom", count: 7 },
-    { name: "2 Bedroom", count: 5 },
-    { name: "Miniflat", count: 4 },
-    { name: "Studio", count: 3 },
-    { name: "Duplex", count: 2 },
-  ];
+  const [apartmentTypess, setApartmentTypes] = useState([]);
 
-  const amenities = [
-    { name: "Pool", count: 6 },
-    { name: "Gym", count: 5 },
-    { name: "Wi-Fi", count: 8 },
-    { name: "Parking", count: 4 },
-  ];
-
-  const ratings = [
-    { stars: 5, count: 10 },
-    { stars: 4, count: 7 },
-    { stars: 3, count: 5 },
-    { stars: 2, count: 2 },
-    { stars: 1, count: 1 },
-  ];
+  useEffect(() => {
+    getApartmentTypes().then((response: any) => {
+      setApartmentTypes(response.data.data);
+    });
+  }, []);
 
   // build location counts dynamically
   type LocationCount = { name: string; count: number };
@@ -113,21 +103,17 @@ function SearchComp(props: SearchCompProps) {
 
     return Object.entries(counts).map(([name, count]) => ({ name, count }));
   };
+
   const locations = getLocations(properties);
-  console.log("locations", locations);
-  console.log("properties", properties);
-
-  console.log("loacations", locations);
   const pricing = { min: 0, max: 500000 };
-
-  // remove a single filter chip
-  // const handleRemoveFilter = (filter: string) => {
-  //   setSelectedFilters((prev) => prev.filter((f) => f !== filter));
-  // };
 
   const handleApplyFilters = (filters: any) => {
     console.log("Applied Filters:", filters);
     // Call your API or filter your data here
+    searchWithFilterParameters(filters).then((response: any) => {
+      console.log("Manu: ", response.data.data);
+      setProperties(response.data.data);
+    });
 
     // for mobile chips
     setSelectedFilters(flattenFilters(filters));
@@ -157,10 +143,6 @@ function SearchComp(props: SearchCompProps) {
     <div className="w-full flex flex-col md:flex-row   md:gap-6  mx-auto  ">
       <div className=" hidden md:flex w-[27%]  ">
         <SearchFilter
-          locations={locations}
-          apartmentTypes={apartmentTypes}
-          amenities={amenities}
-          ratings={ratings}
           pricing={pricing}
           onApply={handleApplyFilters}
           defaultSelectedLocation={selectedLocation}
@@ -234,10 +216,6 @@ function SearchComp(props: SearchCompProps) {
         {showFilter && (
           <SearchFilter
             variant="dropdown"
-            locations={locations}
-            apartmentTypes={apartmentTypes}
-            amenities={amenities}
-            ratings={ratings}
             pricing={pricing}
             onApply={handleApplyFilters}
             defaultSelectedLocation={selectedLocation}

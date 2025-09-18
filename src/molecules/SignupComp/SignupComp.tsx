@@ -369,7 +369,7 @@ function SignupComp({
         </div>
         <div className={styles.formButtonDiv}>
           <Button variant="primary" width="full">
-            Create Account
+            <button type="submit">Create Account</button>
           </Button>
           <Button
             type="button"

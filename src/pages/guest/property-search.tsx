@@ -133,8 +133,6 @@ function PropertySearch() {
     router.isReady,
   ]);
 
-  console.log("selectedloc", selectedLocation);
-
   const handleRemove = (id: string | number) => {
     setSavedApartments((prev) => prev.filter((item) => item.id !== id));
   };
@@ -179,6 +177,7 @@ function PropertySearch() {
           propertiesNearby={propertiesNearby}
           popularProperties={popularProperties}
           isMobile={isMobile}
+          setProperties={setProperties}
         />
       </section>
 

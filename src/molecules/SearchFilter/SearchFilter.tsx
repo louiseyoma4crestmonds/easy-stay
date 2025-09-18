@@ -1,19 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SearchFilter.module.css";
 import {
   Amenity,
-  ApartmentType,
+  PropertyType,
   LocationType,
   Pricing,
   Rating,
+  PropertyTypeFilter,
+  AmenitiezFilter,
+  RatingzFilter,
+  LocationzFilter,
 } from "src/helpers/dataTypes";
 import Button from "@/atoms/Button";
 
+import {
+  getAmenitiezFilterParameters,
+  getLocationFilterParameters,
+  getPropertyTypesFilterParameters,
+  getRatingsFilterParameters,
+} from "src/pages/api/property";
+import Router from "next/router";
+
 interface SearchFilterProps {
-  locations: LocationType[];
-  apartmentTypes: ApartmentType[];
-  amenities: Amenity[];
-  ratings: Rating[];
   pricing: Pricing;
   variant?: "panel" | "dropdown";
   onApply: (filters: any) => void; // callback with selected filters
@@ -23,22 +31,17 @@ interface SearchFilterProps {
 
 function SearchFilter(props: SearchFilterProps) {
   const {
-    locations,
-    apartmentTypes,
-    amenities,
-    ratings,
     pricing,
     onApply,
     variant = "panel",
     onClose,
     defaultSelectedLocation,
   } = props;
+
   // State for filters
-  // const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>(() =>
     defaultSelectedLocation ? [defaultSelectedLocation] : []
   );
-
   const [selectedApartmentTypes, setSelectedApartmentTypes] = useState<
     string[]
   >([]);
@@ -48,8 +51,8 @@ function SearchFilter(props: SearchFilterProps) {
     from: pricing.min,
     to: pricing.max,
   });
+
   // Example state
-  // const [priceRange, setPriceRange] = useState({ from: pricing.min, to: pricing.max });
   const [inputs, setInputs] = useState({ from: "", to: "" });
 
   // Handlers
@@ -65,24 +68,43 @@ function SearchFilter(props: SearchFilterProps) {
     }
   };
 
-  // const dropdownRef = useRef<HTMLDivElement>(null);
+  /* Louis code */
 
-  // // close dropdown if clicked outside
-  // useEffect(() => {
-  //   if (variant !== "dropdown") return;
+  const [propertyLocations, setPropertyLocations] = useState([]);
+  useEffect(() => {
+    getLocationFilterParameters().then((res: any) => {
+      setPropertyLocations(res.data.data);
+    });
+  }, []);
 
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       onClose?.(); // ✅ will close dropdown from parent
-  //     }
-  //   };
+  const [propertyTypes, setPropertyTypes] = useState([]);
+  useEffect(() => {
+    if (defaultSelectedLocation !== undefined) {
+      getPropertyTypesFilterParameters(defaultSelectedLocation).then(
+        (res: any) => {
+          setPropertyTypes(res.data.data);
+        }
+      );
+    }
+  }, []);
 
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, [variant, onClose]);
+  const [amenitiez, setAmenitiez] = useState([]);
+  useEffect(() => {
+    if (defaultSelectedLocation !== undefined) {
+      getAmenitiezFilterParameters(defaultSelectedLocation).then((res: any) => {
+        setAmenitiez(res.data.data);
+      });
+    }
+  }, []);
+
+  const [ratingz, setRatingz] = useState([]);
+  useEffect(() => {
+    if (defaultSelectedLocation !== undefined) {
+      getRatingsFilterParameters(defaultSelectedLocation).then((res: any) => {
+        setRatingz(res.data.data);
+      });
+    }
+  }, []);
 
   const handleReset = () => {
     setSelectedLocations([]);
@@ -109,12 +131,18 @@ function SearchFilter(props: SearchFilterProps) {
       <div className="border-b border-gray-200 pb-6">
         <h3 className={styles.P1}>Location</h3>
         <div className="space-y-3">
-          {locations.map((loc) => {
-            const isChecked = selectedLocations.includes(loc.name);
+          {propertyLocations.map((locationz: LocationzFilter) => {
+            const isChecked = selectedLocations.includes(locationz.location);
             return (
               <label
-                key={loc.name}
+                key={locationz.location}
                 className="flex justify-between items-center "
+                onClick={() => {
+                  Router.push({
+                    pathname: "/guest/property-search",
+                    query: { location: locationz.location },
+                  });
+                }}
               >
                 {/* Left side with custom checkbox + label */}
                 <div className="flex items-center gap-3">
@@ -124,7 +152,7 @@ function SearchFilter(props: SearchFilterProps) {
                     checked={isChecked}
                     onChange={() =>
                       toggleSelection(
-                        loc.name,
+                        locationz.location,
                         setSelectedLocations,
                         selectedLocations
                       )
@@ -156,11 +184,11 @@ function SearchFilter(props: SearchFilterProps) {
                   </span>
 
                   {/* Label */}
-                  <span className={styles.span}>{loc.name}</span>
+                  <span className={styles.span}>{locationz.location}</span>
                 </div>
 
                 {/* Count */}
-                <span className={styles.countDiv}>{loc.count}</span>
+                <span className={styles.countDiv}>{locationz.count}</span>
               </label>
             );
           })}
@@ -171,11 +199,13 @@ function SearchFilter(props: SearchFilterProps) {
       <div className="border-b border-gray-200 pb-6">
         <h3 className={styles.P1}>Apartment Type</h3>
         <div className="space-y-3">
-          {apartmentTypes.map((type) => {
-            const isChecked = selectedApartmentTypes.includes(type.name);
+          {propertyTypes.map((type: PropertyTypeFilter) => {
+            const isChecked = selectedApartmentTypes.includes(
+              type.property_type
+            );
             return (
               <label
-                key={type.name}
+                key={type.property_type}
                 className="flex justify-between items-center "
               >
                 {/* Left side with custom checkbox + label */}
@@ -186,7 +216,7 @@ function SearchFilter(props: SearchFilterProps) {
                     checked={isChecked}
                     onChange={() =>
                       toggleSelection(
-                        type.name,
+                        type.property_type,
                         setSelectedApartmentTypes,
                         selectedApartmentTypes
                       )
@@ -218,7 +248,7 @@ function SearchFilter(props: SearchFilterProps) {
                   </span>
 
                   {/* Label */}
-                  <span className={styles.span}>{type.name}</span>
+                  <span className={styles.span}>{type.property_type}</span>
                 </div>
 
                 {/* Count */}
@@ -233,11 +263,11 @@ function SearchFilter(props: SearchFilterProps) {
       <div className="border-b border-gray-200 pb-6">
         <h3 className={styles.P1}>Amenities</h3>
         <div className="space-y-3">
-          {amenities.map((amenity) => {
-            const isChecked = selectedAmenities.includes(amenity.name);
+          {amenitiez.map((amenity: AmenitiezFilter) => {
+            const isChecked = selectedAmenities.includes(amenity.amenity);
             return (
               <label
-                key={amenity.name}
+                key={amenity.amenity}
                 className="flex justify-between items-center "
               >
                 {/* Left side with custom checkbox + label */}
@@ -248,7 +278,7 @@ function SearchFilter(props: SearchFilterProps) {
                     checked={isChecked}
                     onChange={() =>
                       toggleSelection(
-                        amenity.name,
+                        amenity.amenity,
                         setSelectedAmenities,
                         selectedAmenities
                       )
@@ -280,7 +310,7 @@ function SearchFilter(props: SearchFilterProps) {
                   </span>
 
                   {/* Label */}
-                  <span className={styles.span}>{amenity.name}</span>
+                  <span className={styles.span}>{amenity.amenity}</span>
                 </div>
 
                 {/* Count */}
@@ -295,20 +325,20 @@ function SearchFilter(props: SearchFilterProps) {
       <div className="border-b border-gray-200 pb-6">
         <h3 className={styles.P1}>Guest Ratings</h3>
         <div className="space-y-3">
-          {ratings
-            .sort((a, b) => b.stars - a.stars)
-            .map((r) => (
+          {ratingz
+            .sort((a: RatingzFilter, b: RatingzFilter) => b.rating - a.rating)
+            .map((r: RatingzFilter) => (
               <div
-                key={r.stars}
+                key={r.rating}
                 className="flex items-center justify-between cursor-pointer  rounded"
-                onClick={() => setSelectedRating(r.stars)}
+                onClick={() => setSelectedRating(r.rating)}
               >
                 <div className="flex items-center ">
-                  {Array.from({ length: r.stars }).map((_, i) => (
+                  {Array.from({ length: r.rating }).map((_, i) => (
                     <svg
                       key={i}
                       className={`w-5 h-5 ${
-                        selectedRating === r.stars
+                        selectedRating === r.rating
                           ? "text-[#FACA15] "
                           : "text-gray-300"
                       }`}
@@ -324,48 +354,6 @@ function SearchFilter(props: SearchFilterProps) {
             ))}
         </div>
       </div>
-
-      {/* Pricing */}
-      {/* <div className="mb-6 ">
-        <h3 className={styles.P1}>Pricing</h3>
-        <input
-          type="range"
-          min={pricing.min}
-          max={pricing.max}
-          value={priceRange.to}
-          onChange={(e) =>
-            setPriceRange({ ...priceRange, to: Number(e.target.value) })
-          }
-          className="w-full mt-2 bg-gray-200 "
-        />
-        <div className="flex items-center w-full space-x-6 mb-1 ">
-          <p className={styles.PP2}>From</p>
-          <p className={styles.PP2}>To</p>
-        </div>
-        <div className="flex space-x-2 items-center">
-          <input
-            type="number"
-            value={priceRange.from}
-            onChange={(e) =>
-              setPriceRange({ ...priceRange, from: Number(e.target.value) })
-            }
-            className="w-1/2 border border-gray-300 rounded-lg py-2 px-4 bg-gray-50 focus:outline-none "
-            min={pricing.min}
-            max={priceRange.to}
-          />
-          <span>-</span>
-          <input
-            type="number"
-            value={priceRange.to}
-            onChange={(e) =>
-              setPriceRange({ ...priceRange, to: Number(e.target.value) })
-            }
-            className="w-1/2 border border-gray-300 rounded-lg py-2 px-4 bg-gray-50 focus:outline-none"
-            min={priceRange.from}
-            max={pricing.max}
-          />
-        </div>
-      </div> */}
 
       {/* Pricing */}
 
@@ -521,7 +509,7 @@ function SearchFilter(props: SearchFilterProps) {
   // panel (inline) - original sizing/styling preserved
   return (
     <div className="bg-white p-2 space-y-4 w-full max-w-md">
-      {content} {footerButtons}{" "}
+      {content} {footerButtons}
     </div>
   );
 }

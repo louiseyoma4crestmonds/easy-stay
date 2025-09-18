@@ -91,3 +91,11 @@ export async function validatePasswordResetToken(token: any) {
     .catch((err) => err.message);
   return response;
 }
+
+export async function revokeToken(email: any) {
+  const response = await axios
+    .get(`${endpointUrl}/user-account/logout/${email}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}

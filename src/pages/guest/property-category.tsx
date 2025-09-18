@@ -170,6 +170,7 @@ function PropertyCategory() {
       <section className="w-[90%] md:w-[80%]  mx-auto mt-8 md:mt-16 mb-32 ">
         <SearchComp
           properties={properties}
+          setProperties={setProperties}
           onRemove={handleRemove}
           selectedLocation={selectedLocation}
           headingText={headingText}

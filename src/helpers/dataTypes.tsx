@@ -41,9 +41,33 @@ export type LocationType = {
   count: number;
 };
 
-export type ApartmentType = {
-  name: string;
+export type PropertyTypeFilter = {
+  id: number;
+  property_type: string;
   count: number;
+};
+
+export type AmenitiezFilter = {
+  id: number;
+  amenity: string;
+  count: number;
+};
+
+export type RatingzFilter = {
+  id: number;
+  rating: number;
+  count: number;
+};
+
+export type LocationzFilter = {
+  id: number;
+  location: string;
+  count: number;
+};
+
+export type PropertyType = {
+  id: number;
+  name: string;
 };
 
 export type Amenity = {
