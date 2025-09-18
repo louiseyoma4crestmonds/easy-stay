@@ -1,4 +1,4 @@
-import { Booking } from "src/helpers/dataTypes";
+import { Booking, HostBooking } from "src/helpers/dataTypes";
 import Image from "next/image";
 import styles from "./BookingHeader.module.css";
 

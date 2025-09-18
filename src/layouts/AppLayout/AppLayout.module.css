@@ -1,13 +1,25 @@
-.appWrapper {
+/* .appWrapper {
   @apply flex flex-col px-4;
+} */
+
+.appWrapper {
+  @apply flex flex-col h-full min-h-screen ml-[257px];
+}
+.mainArea {
+  @apply flex flex-col sticky top-0  bg-white w-full;
 }
 
-@screen desktop {
+.navTop {
+  @apply z-20;
+}
+.pageContent {
+  @apply px-6 flex-1  bg-slate-50;
+}
+/* @screen desktop {
   .appWrapper {
     @apply h-full min-h-screen py-14 px-10;
-  }
+  } */
 
-  .appMainWrapperWithNavigation {
+/* .appMainWrapperWithNavigation {
     @apply lg:ml-[290px];
-  }
-}
+  } */

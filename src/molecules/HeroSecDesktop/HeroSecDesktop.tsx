@@ -83,13 +83,6 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
           onClick={() => {
             setLocationDropdownOpen((prev) => !prev);
           }}
-          //   onClick={() => {
-          //     setLocationDropdownOpen(true);
-          //     const input = locationRef.current?.querySelector(
-          //       "input"
-          //     ) as HTMLInputElement | null;
-          //     input?.focus();
-          //   }}
         >
           {/* icon (kept) */}
           <img
@@ -152,10 +145,6 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
             // setCheckinOpen(true);
             setCheckoutOpen(false);
           }}
-          //   onClick={() => {
-          //     setCheckinOpen(true);
-          //     setCheckoutOpen(false);
-          //   }}
         >
           <p className={styles.text}>Check In</p>
 

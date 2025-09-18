@@ -81,6 +81,19 @@ export type Booking = {
   numberOfDays: number;
 };
 
+export type HostBooking = {
+  id: string;
+  guestName: string;
+  apartmentType: string;
+  title: string;
+  location: string;
+  dateBooked: string; // ISO date
+  bookingDates: string;
+  status: BookingStatus;
+  ratePerNight: number;
+  numberOfDays: number;
+};
+
 // Define FAQs for Guests and Hosts
 export const guestFAQs: FAQ[] = [
   {
@@ -188,5 +201,68 @@ export const MOCK_BOOKINGS: Booking[] = [
     status: "active",
     imageUrl: "/images/sample-image.png",
     amount: 250000,
+  },
+];
+
+export const HOST_MOCK_BOOKINGS: HostBooking[] = [
+  {
+    id: "H1",
+    title: "Modern Loft in Lekki",
+    location: "Lekki, Lagos",
+    apartmentType: "studio",
+    dateBooked: "2025-09-15",
+    status: "upcoming",
+    guestName: "John Doe",
+    ratePerNight: 100000,
+    bookingDates: "07/02/2025 - 14/05/2025",
+    numberOfDays: 4,
+  },
+  {
+    id: "b2",
+    title: "Cozy Studio in VI",
+    location: "Victoria Island, Lagos",
+    apartmentType: "1 bedroom",
+    dateBooked: "2025-09-04",
+    bookingDates: "07/02/2025 - 24/05/2025",
+    status: "active",
+    guestName: "Jane Smith",
+    ratePerNight: 220000,
+    numberOfDays: 3,
+  },
+  {
+    id: "b3",
+    title: "Beachfront Apartment",
+    location: "Oniru, Lagos",
+    apartmentType: "studio",
+    dateBooked: "2025-07-05",
+    status: "past",
+    bookingDates: "07/02/2025 - 14/05/2025",
+    guestName: "Alice Johnson",
+    ratePerNight: 480000,
+    numberOfDays: 2,
+  },
+  {
+    id: "b4",
+    title: "Penthouse with City View",
+    location: "Ikoyi, Lagos",
+    apartmentType: "2 bedroom",
+    dateBooked: "2025-08-22",
+    bookingDates: "07/02/2025 - 14/05/2025",
+    status: "cancelled",
+    guestName: "Bob Brown",
+    ratePerNight: 0,
+    numberOfDays: 3,
+  },
+  {
+    id: "B44",
+    title: "Penthouse with City View",
+    location: "Ikeja, Lagos",
+    apartmentType: "2 bedroom",
+    dateBooked: "2025-08-22",
+    numberOfDays: 3,
+    bookingDates: "07/02/2025 - 14/05/2025",
+    status: "active",
+    guestName: "Charlie Davis",
+    ratePerNight: 250000,
   },
 ];

@@ -1,64 +1,50 @@
-import BookingHeader from "@/atoms/BookingHeader/BookingHeader";
-import { useEffect, useState } from "react";
-import { Booking, BookingStatus, MOCK_BOOKINGS } from "src/helpers/dataTypes";
-import styles from "./BookingComp.module.css";
-import SearchInput from "@/atoms/SearchInput";
 import Tabs from "@/atoms/Tabs";
-import BookingCard from "../BookingCard";
-import BookingList from "../BookingList";
-import BookingDrawer from "../BookingDrawer";
-import Modal from "../Modal";
-import Button from "@/atoms/Button";
-import StarRating from "@/atoms/StarRating";
+import styles from "./HostBookingComp.module.css";
+import {
+  BookingStatus,
+  HOST_MOCK_BOOKINGS,
+  HostBooking,
+} from "src/helpers/dataTypes";
+import { useEffect, useState } from "react";
 import NoBooking from "@/atoms/NoBooking";
+import HostBookingList from "../HostBookingList";
+import HostBookingDrawer from "../HostBookingDrawer";
+import Modal from "@/molecules/Modal";
+import Button from "@/atoms/Button";
 
-const statusLabel: Record<BookingStatus, string> = {
-  active: "Active",
-  upcoming: "Upcoming",
-  past: "Past",
-  cancelled: "Cancelled",
+type HostBookingCompProps = {
+  isMobile?: boolean;
+  activeTab: BookingStatus;
 };
 
 const Reasons = [
-  "Personal Emergency",
-  "Health Concerns",
-  "Work-Related Changes",
-  "External Factors",
+  "Emergency Repais",
+  "Pest Infestation",
+  "Breech of house rules",
+  "Suspicious booking",
 ];
 
-type BookingCompProps = {
-  isMobile?: boolean;
-};
-
-function BookingComp({ isMobile }: BookingCompProps) {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+function HostBookingComp({ isMobile, activeTab }: HostBookingCompProps) {
+  const [bookings, setBookings] = useState<HostBooking[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedBooking, setSelectedBooking] = useState<HostBooking | null>(
+    null
+  );
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [cancelStep, setCancelStep] = useState<
     "none" | "reason" | "confirm" | "success"
   >("none");
+  const [checkModal, setCheckModal] = useState<"none" | "in" | "out">("none");
   const [selectedReason, setSelectedReason] = useState("");
   const [additionalReason, setAdditionalReason] = useState("");
-  const [reviewStep, setReviewStep] = useState<"none" | "form" | "success">(
-    "none"
-  );
-  const [ratings, setRatings] = useState({
-    Cleanliness: 0,
-    checkin: 0,
-    Location: 0,
-    Value: 0,
-    Communication: 0,
-  });
-  const [reviewComment, setReviewComment] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  const [activeTab, setActiveTab] = useState<BookingStatus>("active");
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-
-  const tabs: BookingStatus[] = ["active", "upcoming", "past", "cancelled"];
+  const [actionType, setActionType] = useState<
+    "cancel" | "checkout" | "checkin" | null
+  >(null);
 
   useEffect(() => {
     // Simulated API response
-    setBookings(MOCK_BOOKINGS);
+    setBookings(HOST_MOCK_BOOKINGS);
   }, []);
 
   // Filtered bookings based on searchTerm
@@ -70,13 +56,13 @@ function BookingComp({ isMobile }: BookingCompProps) {
       b.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const onOpen = (b: Booking) => {
+  const onOpen = (b: HostBooking) => {
     setSelectedBooking(b);
     setDrawerOpen(true);
     console.log("booking", b);
   };
 
-  const handleCancel = (booking: Booking) => {
+  const handleCancel = (booking: HostBooking) => {
     setSelectedBooking(booking);
     setCancelStep("reason"); // open first modal
   };
@@ -107,7 +93,37 @@ function BookingComp({ isMobile }: BookingCompProps) {
       // await api.cancelBooking({ bookingId: selectedBooking?.id });
 
       console.log("Booking cancelled successfully!");
+      setActionType("cancel");
+      setCancelStep("success"); // show success modal
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+      // optionally show toast or error modal
+    }
+  };
 
+  const proceedCheckout = async () => {
+    try {
+      // Example API call
+      // await api.cancelBooking({ bookingId: selectedBooking?.id });
+
+      console.log("checkout successfully!");
+      setActionType("checkout");
+      setCheckModal("none");
+      setCancelStep("success"); // show success modal
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+      // optionally show toast or error modal
+    }
+  };
+
+  const proceedCheckin = async () => {
+    try {
+      // Example API call
+      // await api.cancelBooking({ bookingId: selectedBooking?.id });
+
+      console.log("checkin successfully!");
+      setActionType("checkin");
+      setCheckModal("none");
       setCancelStep("success"); // show success modal
     } catch (error) {
       console.error("Error cancelling booking:", error);
@@ -121,59 +137,28 @@ function BookingComp({ isMobile }: BookingCompProps) {
     setErrorMsg("");
   };
 
-  const SendReview = () => {
-    //API CALL
-
-    setReviewStep("success");
-  };
-
-  const showReviewModal = () => {
-    setReviewStep("form");
-  };
-
   return (
-    <div className="w-full">
-      <BookingHeader bookings={bookings} isMobile={isMobile} />
-
-      <div className={styles.bookingdiv}>
-        <div className=" flex flex-col w-full md:flex-row space-y-4 md:space-y-0 items-center justify-between px-4 ">
-          <SearchInput
-            value={searchTerm}
-            onChange={setSearchTerm}
-            placeholder="Search..."
-          />
-
-          {/* Tabs */}
-          <Tabs
-            tabs={tabs}
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            labels={statusLabel}
-            type="guest"
-          />
+    <div className={styles.bookingdiv}>
+      {filteredBookings.length > 0 ? (
+        <HostBookingList
+          bookings={filteredBookings}
+          onOpen={onOpen}
+          handleCancel={handleCancel}
+        />
+      ) : (
+        <div className="flex justify-center items-center h-full ">
+          <NoBooking isMobile={isMobile} type="host" />{" "}
         </div>
-
-        <div className="mt-6 ">
-          {filteredBookings.length > 0 ? (
-            <BookingList
-              bookings={filteredBookings}
-              searchTerm={searchTerm}
-              onOpen={onOpen}
-              handleCancel={handleCancel}
-            />
-          ) : (
-            <NoBooking isMobile={isMobile} type="guest" />
-          )}
-        </div>
-      </div>
+      )}
 
       {selectedBooking && (
-        <BookingDrawer
+        <HostBookingDrawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
           booking={selectedBooking}
           handleCancel={handleCancel}
-          showReviewModal={showReviewModal}
+          setCheckModal={setCheckModal}
+          //   showReviewModal={showReviewModal}
         />
       )}
 
@@ -279,9 +264,8 @@ function BookingComp({ isMobile }: BookingCompProps) {
             </p>
 
             <p className="text-gray-500 text-center text-sm px-2 md:px-8 pb-4">
-              Are you sure you want to cancel? This will result in a partial
-              refund based on refund host's refund policy, and this action
-              cannot be undone.
+              Are you sure you want to cancel? This will result in a refund for
+              the guest, and this action cannot be undone.
             </p>
             <div className="flex justify-center items-center py-4 gap-5 ">
               <Button variant="profile" onClick={() => setCancelStep("none")}>
@@ -305,79 +289,71 @@ function BookingComp({ isMobile }: BookingCompProps) {
           modalcontent={styles.modalContent2}
         >
           <div className="pt-3 pb-5 text-gray-900 text-lg font-semibold ">
-            {" "}
-            Cancelled Successfully
+            {actionType === "checkout"
+              ? "Checkout Successfully"
+              : actionType === "checkin"
+                ? "Checkin Successfully"
+                : "Cancelled Successfully"}
           </div>
         </Modal>
       )}
 
-      {reviewStep === "form" && (
+      {checkModal === "out" && (
         <Modal
           isOpen
-          onClose={() => setReviewStep("none")}
-          title="Review Apartment"
-          modalcontent={styles.modalContent3}
-        >
-          <div className=" py-4 ">
-            <div className="">
-              {Object.keys(ratings).map((key) => (
-                <div
-                  key={key}
-                  className="flex items-center space-x-4 py-2 px-5 "
-                >
-                  <p className="capitalize text-gray-500 text-sm md:text-base font-normal w-[60%] md:w-[30%] ">
-                    {key}
-                  </p>
-                  <StarRating
-                    value={ratings[key as keyof typeof ratings]}
-                    onChange={(val) =>
-                      setRatings((prev) => ({ ...prev, [key]: val }))
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="my-4 px-5 ">
-              <label className="text-gray-900 font-medium text-sm ">
-                Aditional comments (Optional){" "}
-              </label>
-              <textarea
-                rows={4}
-                cols={50}
-                className={styles.textarea}
-                placeholder="Additional details (optional)"
-                value={reviewComment}
-                onChange={(e) => {
-                  setReviewComment(e.target.value);
-                  setErrorMsg("");
-                }}
-              />
-            </div>
-
-            <div className="flex justify-end gap-3 p-3 md:p-5 border-t">
-              <Button variant="profile" onClick={() => setReviewStep("none")}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={SendReview}>
-                Submit
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
-
-      {reviewStep === "success" && (
-        <Modal
-          isOpen
-          onClose={() => setReviewStep("none")}
-          imageUrl="/images/success-icon.png"
+          onClose={() => setCheckModal("none")}
+          imageUrl="/images/delete-icon.png"
           width={48}
           height={48}
           modalcontent={styles.modalContent2}
         >
-          <div className="pt-3 pb-5 text-gray-900 text-lg font-semibold">
-            Submitted Successfully
+          <div>
+            <p className="text-gray-900 font-semibold text-lg text-center pt-5 pb-2 ">
+              {" "}
+              Check Out
+            </p>
+
+            <p className="text-gray-500 text-center text-sm px-2 md:px-8 pb-4">
+              Are you sure you want to checkout this guest?
+            </p>
+            <div className="flex justify-center items-center py-4 gap-5 ">
+              <Button variant="profile" onClick={() => setCheckModal("none")}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={proceedCheckout}>
+                Proceed
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {checkModal === "in" && (
+        <Modal
+          isOpen
+          onClose={() => setCheckModal("none")}
+          imageUrl="/images/delete-icon.png"
+          width={48}
+          height={48}
+          modalcontent={styles.modalContent2}
+        >
+          <div>
+            <p className="text-gray-900 font-semibold text-lg text-center pt-5 pb-2 ">
+              {" "}
+              Check In
+            </p>
+
+            <p className="text-gray-500 text-center text-sm px-2 md:px-8 pb-4">
+              Are you sure you want to checkin this guest?
+            </p>
+            <div className="flex justify-center items-center py-4 gap-5 ">
+              <Button variant="profile" onClick={() => setCheckModal("none")}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={proceedCheckin}>
+                Proceed
+              </Button>
+            </div>
           </div>
         </Modal>
       )}
@@ -385,4 +361,4 @@ function BookingComp({ isMobile }: BookingCompProps) {
   );
 }
 
-export default BookingComp;
+export default HostBookingComp;
