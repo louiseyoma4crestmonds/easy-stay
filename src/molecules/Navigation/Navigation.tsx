@@ -24,9 +24,17 @@ function Navigation({ isMobile }: NavigationProps) {
 
   const mainLinks = [
     { name: "Dashboard", href: "/host", Icon: DashboardIcon },
+    {
+      name: "Properties & Apartments",
+      href: "/host/properties",
+      Icon: PropertiesIcon,
+    },
     { name: "Bookings", href: "/host/bookings", Icon: BookingIcon },
-    { name: "Properties", href: "/host/properties", Icon: PropertiesIcon },
-    { name: "Payment", href: "/host/payment", Icon: PaymentsIcon },
+    {
+      name: "Payment & Commissions",
+      href: "/host/payments_and_commissions",
+      Icon: PaymentsIcon,
+    },
     { name: "Settings", href: "/host/settings", Icon: SettingsIcon },
   ];
 
@@ -47,7 +55,7 @@ function Navigation({ isMobile }: NavigationProps) {
 
       <aside
         className={`fixed top-0 left-0 h-full w-64 cursor-pointer bg-white text-base border-r border-gray-100 flex flex-col
-           p-5 transition-transform duration-300 z-40
+           p-3 transition-transform duration-300 z-40
           ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
         <div className={styles.imgdiv}>
@@ -66,7 +74,7 @@ function Navigation({ isMobile }: NavigationProps) {
             return (
               <Link key={name} href={href} onClick={() => setOpen(false)}>
                 <div
-                  className={`flex items-center gap-3 rounded-md px-4 py-2 transition-colors
+                  className={`flex items-center text-sm gap-3 rounded-md px-3 py-2 transition-colors
                     ${isActive ? "bg-primary-200" : "hover:bg-primary-50"}`}
                 >
                   <Icon
@@ -96,7 +104,7 @@ function Navigation({ isMobile }: NavigationProps) {
             return (
               <Link key={name} href={href} onClick={() => setOpen(false)}>
                 <div
-                  className={`flex items-center gap-3 rounded-md px-4 py-2 transition-colors
+                  className={`flex items-center gap-3 rounded-md text-sm px-3 py-2 transition-colors
                     ${isActive ? "bg-primary-200" : "hover:bg-primary-50"}`}
                 >
                   <Icon

@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./HostNavArea.module.css";
 import { HostNavAreaProps } from "./HostNavArea.types";
 import Link from "next/link";
-import SearchInput from "@/atoms/SearchInput";
 
 const profileOptions = [
   {

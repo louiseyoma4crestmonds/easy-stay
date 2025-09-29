@@ -5,9 +5,11 @@ import { useRouter } from "next/router";
 type NoBookingProps = {
   isMobile?: boolean;
   type?: "host" | "guest";
+  title?: string;
+  desc?: string;
 };
 
-function NoBooking({ isMobile, type }: NoBookingProps) {
+function NoBooking({ isMobile, type, title, desc }: NoBookingProps) {
   const router = useRouter();
 
   const goToHome = () => {
@@ -28,7 +30,7 @@ function NoBooking({ isMobile, type }: NoBookingProps) {
         />
       </div>
       <p className="text-gray-800 font-semibold text-base md:text-xl mt-6 ">
-        No bookings yet
+        {type === "guest" ? "No bookings yet" : title}
       </p>
       {type === "guest" ? (
         <p className="text-gray-500 text-sm md:text-base font-normal w-full md:w-[40%] text-center px-5 md:px-8 pt-1 pb-4 ">
@@ -37,8 +39,7 @@ function NoBooking({ isMobile, type }: NoBookingProps) {
         </p>
       ) : (
         <p className="text-gray-500 text-sm md:text-base font-normal w-full md:w-[60%] text-center px-5 md:px-8 pt-1 pb-4 ">
-          It looks like you have no booking yet. Ensure you have added an
-          apartment.
+          {desc}
         </p>
       )}
       {type === "guest" && (

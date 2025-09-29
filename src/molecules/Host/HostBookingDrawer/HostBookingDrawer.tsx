@@ -1,6 +1,9 @@
 import Image from "next/image";
 import styles from "./HostBookingDrawer.module.css";
 import { HostBooking } from "src/helpers/dataTypes";
+import { useState } from "react";
+import Tooltip from "@/atoms/Tooltip";
+import BookingActivity from "@/atoms/BookingActivity";
 
 type HostBookingDrawerProps = {
   open: boolean;
@@ -25,9 +28,11 @@ function HostBookingDrawer({
     cancelled: "bg-red-100 text-red-800",
   };
 
+  const [showActivity, setShowActivity] = useState(false);
+
   const content = () => {
     return (
-      <div className="flex md:h-[calc(100%-57px)] flex-col ">
+      <div className="flex md:h-[calc(100%-80px)] flex-col ">
         <div className="md:flex-1 md:overflow-y-auto  md:space-y-4 p-2 md:p-5">
           {/*GUEST INFOMATION*/}
           <div className="flex flex-col border-b py-3 ">
@@ -311,37 +316,77 @@ function HostBookingDrawer({
         role="dialog"
         aria-modal="true"
       >
-        <div className="hidden md:flex items-center justify-between border-b px-5 py-4">
-          <div className="flex gap-4 ">
-            <span className={styles.iddiv}>#{booking.id} </span>
-            <span
-              className={`px-2 md:px-3 py-0.5 flex items-center rounded-md text-xs md:text-sm font-normal uppercase ${
-                statusStyles[booking.status] || "bg-gray-100 text-gray-500"
-              }`}
-            >
-              {booking.status}
-            </span>
+        {!showActivity && (
+          <div className="hidden md:flex items-center justify-between border-b px-5 pt-8 pb-5">
+            <div className="flex gap-4 ">
+              <span className={styles.iddiv}>#{booking.id} </span>
+              <span
+                className={`px-2 md:px-3 py-0.5 flex items-center rounded-md text-xs md:text-sm font-normal uppercase ${
+                  statusStyles[booking.status] || "bg-gray-100 text-gray-500"
+                }`}
+              >
+                {booking.status}
+              </span>
+            </div>
+
+            <div className="flex flex-row items-center gap-x-3 ">
+              <Tooltip content="Activity History">
+                <div
+                  className={styles.tooltipDiv}
+                  onClick={() => setShowActivity(true)}
+                >
+                  <img
+                    src="/images/activity.png"
+                    alt="img"
+                    className="w-5 h-5 "
+                  />
+                </div>
+              </Tooltip>
+              <Tooltip content="">
+                <div
+                  className={styles.tooltipDiv}
+                  onClick={() => setShowActivity(true)}
+                >
+                  <img
+                    src="/images/printer-outline.png"
+                    alt="img"
+                    className="w-5 h-5 "
+                  />
+                </div>
+              </Tooltip>
+
+              <button
+                onClick={onClose}
+                className=" text-gray-500 hover:bg-gray-100"
+                aria-label="Close"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-          <button
-            onClick={onClose}
-            className="rounded-full p-2 text-gray-500 hover:bg-gray-100"
-            aria-label="Close"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-        {content()}
+        )}
+
+        {showActivity ? (
+          <BookingActivity
+            setShowActivity={setShowActivity}
+            onClose={onClose}
+            activities={booking.activities || []}
+          />
+        ) : (
+          content()
+        )}
+        {/* {content()} */}
       </div>
 
       {/* Modal for mobile (smaller than md) */}
@@ -396,12 +441,10 @@ function HostBookingDrawer({
             <button className={styles.btn1}>
               <Image src="/images/file.png" width={20} height={20} />
             </button>
-            {booking.status === "past" && (
-              <button className={styles.btn1}>Review Apartment</button>
-            )}
+
             {(booking.status === "active" || booking.status === "upcoming") && (
               <button
-                className={styles.btn2}
+                className={styles.btn1}
                 onClick={() => handleCancel(booking)}
               >
                 Cancel

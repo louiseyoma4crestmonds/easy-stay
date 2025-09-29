@@ -74,7 +74,6 @@ function Home(): JSX.Element {
     ]).then((results) => {
       // locations
       if (results[0].status === "fulfilled") {
-        console.log("results", results);
         setCities(results[0].value.data.data);
       }
 
@@ -88,19 +87,19 @@ function Home(): JSX.Element {
         setPopularProperties(results[2].value.data.data);
       }
 
-      setThisPageLoads(false); // ✅ hide skeleton no matter what
+      setThisPageLoads(false); //  hide skeleton no matter what
     });
   }, []);
 
   const isLoggedIn = status === "authenticated";
 
   // const isLoading = !mounted || status === "loading" || thisPageLoads;
-  const isLoading = !mounted || status === "loading";
+  const isLoading = !mounted || status === "loading" || thisPageLoads;
 
   if (isLoading) return <PageSkeletons />;
 
   const points = 100;
-  console.log("cities", cities);
+  console.log("isloggedin", isLoggedIn);
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroSec
@@ -142,6 +141,7 @@ function Home(): JSX.Element {
             <PropertyCard
               photo={listings?.photo}
               name={listings?.name}
+              description={listings.description}
               neighbourhood={listings?.neighbourhood.name}
               rate={listings?.rate}
               rating={listings?.rating}
@@ -164,13 +164,6 @@ function Home(): JSX.Element {
           {/* Blue Overlay */}
           <div className="absolute inset-0 bg-blue-900 bg-opacity-50" />
         </div>
-        {/* <img
-          src="/images/bg-img.png"
-          alt="section img"
-          className="w-full object-cover "
-        />
-       
-        <div className="absolute inset-0 bg-blue-900 bg-opacity-50" /> */}
 
         {/* Top Text */}
         <div className="relative text-center text-white pt-8 px-4">
@@ -251,6 +244,7 @@ function Home(): JSX.Element {
             <PropertyCard
               photo={listings?.photo}
               name={listings?.name}
+              description={listings.description}
               neighbourhood={listings?.neighbourhood.name}
               rate={listings?.rate}
               rating={listings?.rating}

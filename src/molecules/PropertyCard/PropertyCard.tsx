@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Router from "next/router";
-// import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Modal from "../Modal";
 import Button from "@/atoms/Button";
+import { useSession } from "next-auth/react";
 
 function PropertyCard(props: PropertyCardProps) {
   const {
@@ -18,11 +18,13 @@ function PropertyCard(props: PropertyCardProps) {
     rating,
     rooms,
     onSave,
+    description,
     className,
     isLoggedIn,
     isSaved: initialSaved = false,
     isWishlist = false,
   } = props;
+  const { status } = useSession();
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   // const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -45,16 +47,11 @@ function PropertyCard(props: PropertyCardProps) {
       arr.length > 0 ? (p === 0 ? arr.length - 1 : p - 1) : 0
     );
 
-  // const handlers = useSwipeable({
-  //   onSwipedLeft: nextImage,
-  //   onSwipedRight: prevImage,
-  //   // preventDefaultTouchmoveEvent: true,
-  //   trackMouse: true,
-  // });
-
   const toggleSave = () => {
-    if (!isLoggedIn) {
+    if (status === "unauthenticated") {
       setShowAuthModal(true); // Show modal if not logged in
+      console.log("STATUS", status);
+
       return;
     }
 
@@ -84,7 +81,7 @@ function PropertyCard(props: PropertyCardProps) {
 
   return (
     <div
-      className={`w-full  rounded-lg  overflow-hidden border border-gray-200 hover:border-primary-600 bg-white hover:bg-primary-100 ${
+      className={`w-full h-full  rounded-lg  overflow-hidden border border-gray-200 hover:border-primary-600 bg-white hover:bg-primary-100 ${
         className || ""
       }`}
     >
@@ -180,11 +177,14 @@ function PropertyCard(props: PropertyCardProps) {
           });
         }}
       >
-        <p className="text-sm font-medium text-gray-800 leading-tight">
+        <p className="text-base font-bold text-primary-600 leading-tight">
           {name}
         </p>
+        <p className="text-sm font-normal text-gray-500 leading-tight clamp-2">
+          {description}
+        </p>
         <div className="flex justify-between items-start">
-          <p className="font-bold text-xs text-primary-600">{rate}</p>
+          <p className="font-bold text-sm text-gray-800">{rate}</p>
           <div className="flex items-center gap-1 ">
             <Image
               src="/images/little-star.png"

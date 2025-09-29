@@ -42,6 +42,7 @@ function NoSearchResults({
           <PropertyCard
             photo={listings?.photo}
             name={listings?.name}
+            description={listings.description}
             neighbourhood={listings?.neighbourhood.name}
             rate={listings?.rate}
             rating={listings?.rating}
@@ -59,6 +60,7 @@ function NoSearchResults({
           <PropertyCard
             photo={listings?.photo}
             name={listings?.name}
+            description={listings.description}
             neighbourhood={listings?.neighbourhood.name}
             rate={listings?.rate}
             rating={listings?.rating}

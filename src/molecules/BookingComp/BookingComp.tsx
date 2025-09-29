@@ -1,4 +1,6 @@
-import BookingHeader from "@/atoms/BookingHeader/BookingHeader";
+import StatsCategory, {
+  CategoriesProp,
+} from "@/atoms/StatsCategory/StatsCategory";
 import { useEffect, useState } from "react";
 import { Booking, BookingStatus, MOCK_BOOKINGS } from "src/helpers/dataTypes";
 import styles from "./BookingComp.module.css";
@@ -55,6 +57,40 @@ function BookingComp({ isMobile }: BookingCompProps) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const tabs: BookingStatus[] = ["active", "upcoming", "past", "cancelled"];
+
+  const counts = {
+    active: bookings.filter((b) => b.status === "active").length,
+    upcoming: bookings.filter((b) => b.status === "upcoming").length,
+    past: bookings.filter((b) => b.status === "past").length,
+    cancelled: bookings.filter((b) => b.status === "cancelled").length,
+  };
+
+  const categories: CategoriesProp[] = [
+    {
+      label: "Active Bookings",
+      count: counts.active,
+      bg: "bg-primary-100",
+      image: "/images/active-img.png",
+    },
+    {
+      label: "Upcoming Bookings",
+      count: counts.upcoming,
+      bg: "bg-purple-100",
+      image: "/images/upcoming-booking.png",
+    },
+    {
+      label: "Past Bookings",
+      count: counts.past,
+      bg: "bg-green-100",
+      image: "/images/past.png",
+    },
+    {
+      label: "Cancelled Bookings",
+      count: counts.cancelled,
+      bg: "bg-red-100",
+      image: "/images/cancelled.png",
+    },
+  ];
 
   useEffect(() => {
     // Simulated API response
@@ -133,7 +169,7 @@ function BookingComp({ isMobile }: BookingCompProps) {
 
   return (
     <div className="w-full">
-      <BookingHeader bookings={bookings} isMobile={isMobile} />
+      <StatsCategory categories={categories} isMobile={isMobile} />
 
       <div className={styles.bookingdiv}>
         <div className=" flex flex-col w-full md:flex-row space-y-4 md:space-y-0 items-center justify-between px-4 ">

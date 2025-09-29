@@ -8,6 +8,7 @@ import { AppLayoutProps } from "./AppLayout.types";
 import styles from "./AppLayout.module.css";
 import Navigation from "@/molecules/Navigation";
 import HostNavArea from "@/molecules/Host/HostNavArea";
+import PendingNavArea from "@/atoms/Host/PendingNavArea";
 
 function AppLayout(props: AppLayoutProps): JSX.Element {
   const {
@@ -21,30 +22,55 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
     tabs,
     actionButtons,
   } = props;
+
+  const verificationPending = true;
   // const mainClassName = classNames({
   //   [styles.appMainWrapperWithNavigation]: !noNavigation,
   // });
   return (
-    <main className={styles.appWrapper}>
-      <Navigation isMobile={isMobile} />
+    <main
+      className={
+        verificationPending
+          ? styles.appWrapperNoSidebar //no sidebar margin
+          : styles.appWrapper
+      }
+    >
+      {!verificationPending && <Navigation isMobile={isMobile} />}
 
       {/* Main content area */}
-      <div className={styles.mainArea}>
+      <div
+        className={
+          verificationPending ? styles.mainAreaPending : styles.mainArea
+        }
+      >
         <div className={styles.navTop}>
-          <HostNavArea firstName="Lekan" lastName="Okeowo" />
+          {verificationPending ? (
+            <PendingNavArea
+              isMobile={isMobile}
+              firstName="Lekan"
+              lastName="Okeowo"
+            />
+          ) : (
+            <HostNavArea firstName="Lekan" lastName="Okeowo" />
+          )}
         </div>
+
         {/* Page title/subtitle + optional action buttons */}
-        <div className="flex items-center justify-between px-6 py-4">
-          <div>
-            {pageTitle && (
-              <p className="text-gray-800 font-medium text-base">{pageTitle}</p>
-            )}
-            {subTitle && <p className="text-gray-500 text-sm">{subTitle}</p>}
-          </div>
-          {actionButtons && <div className="flex gap-2">{actionButtons}</div>}
-        </div>
-        {/* Optional Tabs */}
-        {tabs && <div className="px-6 ">{tabs}</div>}{" "}
+        {!verificationPending && (
+          <>
+            <div className={styles.pageTitlediv}>
+              <div>
+                {pageTitle && <p className={styles.title}>{pageTitle}</p>}
+                {subTitle && <p className={styles.subtitle}>{subTitle}</p>}
+              </div>
+              {actionButtons && (
+                <div className="flex gap-2">{actionButtons}</div>
+              )}
+            </div>
+            {/* Optional Tabs */}
+            {tabs && <div className="px-6 ">{tabs}</div>}{" "}
+          </>
+        )}
       </div>
       {/* Page content */}
       <div className={styles.pageContent}>{children}</div>

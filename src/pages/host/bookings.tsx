@@ -45,7 +45,7 @@ function Bookings() {
         />
       }
     >
-      <div className="my-6 h-[calc(100vh-210px)]  ">
+      <div className="mt-5 h-[calc(100vh-210px)]  ">
         <HostBookingComp isMobile={isMobile} activeTab={activeTab} />
       </div>
     </AppLayout>

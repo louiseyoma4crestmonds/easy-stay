@@ -5,6 +5,7 @@ import styles from "./HostBookingList.module.css";
 import { HostBookingListProps } from "./HostBookingList.types";
 import HostBookingCard from "../HostBookingCard";
 import Calendar from "@/molecules/Calendar";
+import { createPortal } from "react-dom";
 
 function HostBookingList(props: HostBookingListProps) {
   const { bookings, onOpen, handleCancel } = props;
@@ -14,26 +15,43 @@ function HostBookingList(props: HostBookingListProps) {
   const [filterDateDropdown, setFilterDateDropdown] = useState(false);
 
   const filterDateDropdownRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const [portalPos, setPortalPos] = useState<{ top: number; left: number }>({
+    top: 0,
+    left: 0,
+  });
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
+    function handleClickOutside(e: MouseEvent) {
+      const t = e.target as Node;
+
+      const clickedOutsideFrom =
         filterDateDropdownRef.current &&
-        !filterDateDropdownRef.current.contains(event.target as Node)
-      ) {
-        setFilterDateDropdown(false);
-      }
+        !filterDateDropdownRef.current.contains(t) &&
+        (!calendarRef.current || !calendarRef.current.contains(t));
+
+      if (clickedOutsideFrom) setFilterDateDropdown(false);
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Position the portal under the trigger button
+  const toggleDropdown = () => {
+    if (filterDateDropdownRef.current) {
+      const rect = filterDateDropdownRef.current.getBoundingClientRect();
+      setPortalPos({
+        top: rect.bottom + window.scrollY + 4, // +4px gap
+        left: rect.left + window.scrollX - 180,
+      });
+    }
+    setFilterDateDropdown((prev) => !prev);
+  };
 
   return (
     <div>
-      <div className=" flex flex-col w-full md:flex-row space-y-4 md:space-y-0 items-center justify-between px-4 py-3 ">
+      <div className={styles.maindiv}>
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
@@ -41,12 +59,7 @@ function HostBookingList(props: HostBookingListProps) {
         />
 
         <div ref={filterDateDropdownRef} className={styles.checkoutdiv}>
-          <div
-            className=""
-            onClick={() => {
-              setFilterDateDropdown((prev) => !prev);
-            }}
-          >
+          <div className="" onClick={toggleDropdown}>
             <div className={styles.seconddiv}>
               <img
                 src="/images/calendar-day-outline.png"
@@ -58,54 +71,60 @@ function HostBookingList(props: HostBookingListProps) {
               </span>
             </div>
           </div>
-
-          {filterDateDropdown && (
-            <div className="absolute right-[270px] top-full ">
-              <Calendar
-                initialDate={filterDate}
-                onConfirm={(date) => {
-                  if (date) setFilterDate(date);
-                  setFilterDateDropdown(false);
-                }}
-              />{" "}
-            </div>
-          )}
         </div>
       </div>
 
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b h-12 text-left text-gray-500 text-xs font-semibold bg-gray-50">
-            <th className="  px-4">ID</th>
-            <th className=" ">GUEST NAME </th>
-            <th className=" ">APARTMENT NAME</th>
-            <th className="hidden md:table-cell ">DATE BOOKED</th>
-            <th className=" ">RATE/NIGHT</th>
-            <th className="hidden md:table-cell ">BOOKING DATES</th>
+      {filterDateDropdown && (
+        <div
+          ref={calendarRef}
+          className="fixed z-50"
+          style={{ top: portalPos.top, left: portalPos.left }}
+        >
+          <Calendar
+            initialDate={filterDate}
+            onConfirm={(date) => {
+              if (date) setFilterDate(date);
+              setFilterDateDropdown(false);
+            }}
+          />
+        </div>
+      )}
 
-            <th className="hidden md:table-cell w-[8%] ">NO OF DAYS</th>
-            <th className="hidden md:table-cell px-4 w-[6%] ">ACTION</th>
-          </tr>
-        </thead>
+      <div className=" flex-1 overflow-y-auto h-[calc(100vh-450px)]">
+        <table className="w-full border-collapse">
+          <thead className="sticky top-0 z-20 ">
+            <tr className="border-b h-12 text-left text-gray-500 text-xs font-semibold bg-gray-50">
+              <th className="  px-4">ID</th>
+              <th className=" ">GUEST NAME </th>
+              <th className=" ">APARTMENT NAME</th>
+              <th className="hidden md:table-cell ">DATE BOOKED</th>
+              <th className=" ">RATE/NIGHT</th>
+              <th className="hidden md:table-cell ">BOOKING DATES</th>
 
-        <tbody>
-          {searchTerm && bookings.length === 0 ? (
-            <tr>
-              <td colSpan={8} className="text-center py-4">
-                No search result found
-              </td>
+              <th className="hidden md:table-cell w-[8%] ">NO OF DAYS</th>
+              <th className="hidden md:table-cell px-4 w-[6%] ">ACTION</th>
             </tr>
-          ) : (
-            bookings.map((booking) => (
-              <HostBookingCard
-                key={booking.id}
-                booking={booking}
-                onOpen={onOpen}
-              />
-            ))
-          )}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {searchTerm && bookings.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="text-center py-4">
+                  No search result found
+                </td>
+              </tr>
+            ) : (
+              bookings.map((booking) => (
+                <HostBookingCard
+                  key={booking.id}
+                  booking={booking}
+                  onOpen={onOpen}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

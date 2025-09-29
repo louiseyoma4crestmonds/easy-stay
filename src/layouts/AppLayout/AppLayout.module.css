@@ -5,15 +5,33 @@
 .appWrapper {
   @apply flex flex-col h-full min-h-screen ml-[257px];
 }
+
+.appWrapperNoSidebar {
+  @apply flex flex-col h-full min-h-screen ml-0; /* 🔑 no left margin */
+}
+
 .mainArea {
-  @apply flex flex-col sticky top-0  bg-white w-full;
+  @apply flex flex-col top-0 bg-white w-full;
+}
+
+.mainAreaPending {
+  @apply flex flex-col top-0 bg-transparent w-full; /* 🔑 no white bg */
 }
 
 .navTop {
-  @apply z-20;
+  @apply relative z-50;
 }
 .pageContent {
   @apply px-6 flex-1  bg-slate-50;
+}
+.pageTitlediv {
+  @apply flex items-center justify-between px-6 py-4;
+}
+.title {
+  @apply text-gray-800 font-medium text-base;
+}
+.subtitle {
+  @apply text-gray-500 text-sm;
 }
 /* @screen desktop {
   .appWrapper {

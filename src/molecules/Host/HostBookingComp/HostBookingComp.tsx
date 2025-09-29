@@ -11,6 +11,7 @@ import HostBookingList from "../HostBookingList";
 import HostBookingDrawer from "../HostBookingDrawer";
 import Modal from "@/molecules/Modal";
 import Button from "@/atoms/Button";
+import Pagination from "@/organisms/Pagination";
 
 type HostBookingCompProps = {
   isMobile?: boolean;
@@ -26,6 +27,7 @@ const Reasons = [
 
 function HostBookingComp({ isMobile, activeTab }: HostBookingCompProps) {
   const [bookings, setBookings] = useState<HostBooking[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBooking, setSelectedBooking] = useState<HostBooking | null>(
     null
@@ -42,10 +44,9 @@ function HostBookingComp({ isMobile, activeTab }: HostBookingCompProps) {
     "cancel" | "checkout" | "checkin" | null
   >(null);
 
-  useEffect(() => {
-    // Simulated API response
-    setBookings(HOST_MOCK_BOOKINGS);
-  }, []);
+  const [currentPage, setCurrentPage] = useState(1);
+  // or whatever number you want per page
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   // Filtered bookings based on searchTerm
   // WILL CONSUME API FOR THIS
@@ -55,6 +56,20 @@ function HostBookingComp({ isMobile, activeTab }: HostBookingCompProps) {
       b.status === activeTab &&
       b.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // pagination slice
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentBookings = filteredBookings.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  useEffect(() => {
+    // Simulated API response
+    setBookings(HOST_MOCK_BOOKINGS);
+    setLoading(false);
+  }, []);
 
   const onOpen = (b: HostBooking) => {
     setSelectedBooking(b);
@@ -137,19 +152,85 @@ function HostBookingComp({ isMobile, activeTab }: HostBookingCompProps) {
     setErrorMsg("");
   };
 
+  //   useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [activeTab, searchTerm]);
+
+  if (loading) {
+    // FULL-PAGE loader (inside AppLayout but above all content)
+    return (
+      <div className="flex items-center justify-center h-full">
+        <img src="/icons/nobg-spinner.gif" alt="Loading..." />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.bookingdiv}>
-      {filteredBookings.length > 0 ? (
-        <HostBookingList
-          bookings={filteredBookings}
-          onOpen={onOpen}
-          handleCancel={handleCancel}
-        />
-      ) : (
-        <div className="flex justify-center items-center h-full ">
-          <NoBooking isMobile={isMobile} type="host" />{" "}
-        </div>
-      )}
+      <div className="relative h-full ">
+        {filteredBookings.length > 0 ? (
+          <div className=" ">
+            <HostBookingList
+              bookings={filteredBookings}
+              onOpen={onOpen}
+              handleCancel={handleCancel}
+            />{" "}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-full ">
+            <NoBooking
+              isMobile={isMobile}
+              type="host"
+              title="No bookings yet"
+              desc=" It looks like you have no booking yet. Ensure you have added an
+          apartment."
+            />{" "}
+          </div>
+        )}
+        {filteredBookings.length > 0 && (
+          <div className="absolute flex justify-between px-4 py-3 bottom-0 w-full ">
+            <div className="text-sm font-semibold ">
+              {filteredBookings.length > 0 && (
+                <>
+                  <span className="text-gray-500 ">Showing</span>{" "}
+                  <span className="text-gray-900 ">{indexOfFirstItem + 1}</span>
+                  –
+                  <span className="text-gray-900 ">
+                    {Math.min(indexOfLastItem, filteredBookings.length)}
+                  </span>{" "}
+                  <span className="text-gray-500">of</span>{" "}
+                  <span className="text-gray-900 ">
+                    {filteredBookings.length}
+                  </span>{" "}
+                </>
+              )}
+            </div>
+
+            <Pagination
+              listOfItems={currentBookings}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setItemsPerPage={setItemsPerPage}
+              prevButton={
+                <img
+                  src="/images/chevron-left.png"
+                  alt="Previous"
+                  className="w-5 h-5 "
+                />
+              }
+              nextButton={
+                <img
+                  src="/images/chevron-right-svg.svg"
+                  alt="next"
+                  className="w-5 h-5 "
+                />
+              }
+              paginationDivActiveClass="bg-primary-100 text-primary-600 "
+            />
+          </div>
+        )}{" "}
+      </div>
 
       {selectedBooking && (
         <HostBookingDrawer

@@ -13,7 +13,12 @@ export default function RecoverPassword() {
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* LEFT SIDE - IMAGE + MODAL */}
       <div className="hidden md:block w-full md:w-1/2 ">
-        <SignupLeftside text="Create an Account" onClick={handleSignupClick} />
+        <SignupLeftside
+          text="Create an Account"
+          onClick={handleSignupClick}
+          title=" Ready to find the perfect Short let"
+          subtitle="We've got you covered."
+        />
       </div>
 
       {/* RIGHT SIDE - FORM */}

@@ -1,3 +1,6 @@
+.maindiv {
+  @apply flex flex-col w-full md:flex-row space-y-4 md:space-y-0 items-center justify-between px-4 py-3;
+}
 .checkoutdiv {
   @apply hidden relative md:flex cursor-pointer flex-col  border border-gray-200 py-2 px-3 rounded-lg;
 }

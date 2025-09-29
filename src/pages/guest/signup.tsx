@@ -21,7 +21,12 @@ export default function SignupPage() {
       {/* LEFT SIDE - IMAGE + MODAL */}
       <div className="hidden md:block w-full md:w-1/2 ">
         {" "}
-        <SignupLeftside text="Sign In" onClick={handleSigninClick} />{" "}
+        <SignupLeftside
+          text="Sign In"
+          onClick={handleSigninClick}
+          title=" Ready to find the perfect Short let"
+          subtitle="We've got you covered."
+        />{" "}
       </div>
 
       {/* RIGHT SIDE - FORM */}

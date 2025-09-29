@@ -6,9 +6,16 @@ import styles from "./SignupLeftside.module.css";
 export type SignupLeftsideProps = {
   text?: string;
   onClick?: () => void;
+  title?: string;
+  subtitle?: string;
 };
 
-function SignupLeftside({ text, onClick }: SignupLeftsideProps) {
+function SignupLeftside({
+  text,
+  onClick,
+  title,
+  subtitle,
+}: SignupLeftsideProps) {
   return (
     <div className="h-full relative">
       {/* Background Image */}
@@ -24,10 +31,8 @@ function SignupLeftside({ text, onClick }: SignupLeftsideProps) {
       {/* Centered Transparent Modal */}
       <div className={styles.bgdiv}>
         <div className={styles.bgSecond}>
-          <h2 className={styles.reviewH2}>
-            Ready to find the perfect Short let
-          </h2>
-          <p className={styles.reviewP2}>We've got you covered.</p>
+          <h2 className={styles.reviewH2}>{title}</h2>
+          <p className={styles.reviewP2}> {subtitle} </p>
           <div className="flex justify-between gap-3 w-[78%] mt-7 mb-14">
             <div>
               <img
