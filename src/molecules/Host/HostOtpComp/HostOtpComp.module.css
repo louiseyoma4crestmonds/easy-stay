@@ -1,0 +1,25 @@
+.maindiv {
+  @apply flex flex-col min-h-screen  bg-white;
+}
+.secondDiv {
+  @apply w-full md:max-w-xs max-w-none px-5 md:px-0 mx-auto;
+}
+.otpP1 {
+  @apply md:text-2xl text-base font-semibold mb-2 text-center mt-8 text-gray-800;
+}
+.otpP2 {
+  @apply md:text-base text-sm font-normal mb-8 text-center text-gray-500;
+}
+.otpInput {
+  @apply w-14 h-14 text-center text-5xl text-gray-800 font-medium border border-gray-300 rounded-lg bg-white focus:outline-none;
+}
+.otpText {
+  @apply text-gray-500 text-sm mt-2 mb-6 text-center font-normal;
+}
+.otpModal {
+  @apply fixed rounded-md top-5 right-8 w-60 bg-green-50 shadow-lg p-4 
+    transition-transform duration-500 ease-in-out z-50 transform;
+}
+.otpDiv {
+  @apply flex items-center justify-center gap-4 mb-4;
+}

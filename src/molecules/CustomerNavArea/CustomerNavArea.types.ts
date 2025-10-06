@@ -7,4 +7,5 @@ export type CustomerNavAreaProps = {
   lastName?: string;
   points?: number;
   isMobile?: boolean;
+  isOtherPages?: boolean;
 };

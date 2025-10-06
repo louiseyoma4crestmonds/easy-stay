@@ -1,0 +1,6 @@
+.modalContent3 {
+  @apply max-w-sm md:max-w-3xl md:w-[400px] flex flex-col justify-center px-10  md:px-2 py-3 items-center -mt-7;
+}
+.btn1 {
+  @apply bg-transparent border border-gray-200 rounded-lg py-3 px-6 text-gray-900 font-medium text-base;
+}

@@ -1,5 +1,5 @@
 .maindiv {
-  @apply bg-white rounded-lg w-full py-8 flex flex-col justify-center items-center;
+  @apply bg-white rounded-lg w-full py-4 flex flex-col justify-center items-center;
 }
 .text {
   @apply text-gray-800 text-xl font-semibold mt-8;

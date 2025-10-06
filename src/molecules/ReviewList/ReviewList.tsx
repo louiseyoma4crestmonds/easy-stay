@@ -84,6 +84,7 @@ function ReviewList({ reviews }: ReviewListProps) {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           setItemsPerPage={setItemsPerPage}
+          paginationDivActiveClass="bg-primary-600 text-white "
           prevButton="Previous"
           nextButton="Next"
         />

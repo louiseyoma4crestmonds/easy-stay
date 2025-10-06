@@ -1,0 +1,3 @@
+.modalContent3 {
+  @apply max-w-xs md:max-w-md flex flex-col justify-center p-5 -mt-7 items-center;
+}

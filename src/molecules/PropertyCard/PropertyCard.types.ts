@@ -12,4 +12,5 @@ export type PropertyCardProps = {
   isSaved?: boolean;
   isWishlist?: boolean;
   isLoggedIn?: boolean;
+  description?: string;
 };

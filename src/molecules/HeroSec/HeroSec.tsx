@@ -1,15 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import Image from "next/future/image";
-import Button from "@/atoms/Button";
 import { GuestCounts, HeroSecProps } from "./HeroSec.types";
 import styles from "./HeroSec.module.css";
-import logo from "public/images/hero-img.png";
-import LocationDropdownModal from "@/atoms/LocationDropdownModal";
-import GuestDropdownModal from "@/atoms/GuestDropdownModal";
 import { useRouter } from "next/router";
-
 import CustomerNavArea from "../CustomerNavArea";
-import Calendar from "../Calendar";
 import HeroSecDesktop from "../HeroSecDesktop";
 import MobileSearchModal from "../MobileSearchModal";
 
@@ -41,11 +34,7 @@ function HeroSec(props: HeroSecProps) {
     initialCheckout
   );
   const [guestCounts, setGuestCounts] = useState<GuestCounts>(initialGuests);
-  // const guestRef = useRef<HTMLDivElement>(null);
 
-  // const locationRef = useRef<HTMLDivElement>(null);
-  // const checkinRef = useRef<HTMLDivElement>(null);
-  // const checkoutRef = useRef<HTMLDivElement>(null);
   const mobileModalRef = useRef<HTMLDivElement>(null);
 
   const locations = [
@@ -56,22 +45,6 @@ function HeroSec(props: HeroSecProps) {
     "Ikeja GRA, Lagos",
     "Maitama Abuja, Lagos",
   ];
-
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       mobileModalRef.current &&
-  //       !mobileModalRef.current.contains(event.target as Node)
-  //     ) {
-  //       setMobileModal(false);
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -87,6 +60,7 @@ function HeroSec(props: HeroSecProps) {
   }, [mobileModalRef, setMobileModal]);
 
   // 🔑 Handle search click
+
   const handleSearch = () => {
     const query: any = {};
 
@@ -116,31 +90,37 @@ function HeroSec(props: HeroSecProps) {
     <div className={styles.heroSection}>
       <div className="absolute inset-0">
         <img
-          src="/images/hero-img.png"
+          src="/images/Header.png"
           alt="section background"
           className="w-full h-full object-cover"
         />
-        {/* <Image src={logo} alt="hero section img" priority />{" "} */}
+        {/* <img
+          src="/images/hero-img.png"
+          alt="section background"
+          className="w-full h-full object-cover"
+        /> */}
       </div>
-      {/* <Image src={logo} alt="hero section img" priority />{" "} */}
+
       {/* top header section */}
-      <div className="relative pb-28 mt-3 md:mt-0 md:pb-40 ">
+      <div className="relative pb-16  mt-3 md:mt-0 md:pb-40 ">
         <CustomerNavArea
           firstName={firstName}
           lastName={lastName}
           points={points}
           isLoggedIn={isLoggedIn}
           isOnImage={true}
+          isOtherPages={false}
           isMobile={isMobile}
           leftIcon="/images/menu.png"
         />{" "}
       </div>
+
       {/* top header section */}
       <div className={styles.heromodal}>
         <p className={styles.heroP1}>
           Find Your Perfect Shortlet, Anytime, Anywhere.
         </p>
-        <div className="hidden md:block ">
+        <div className="hidden md:block mt-2 ">
           <HeroSecDesktop
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
@@ -164,17 +144,11 @@ function HeroSec(props: HeroSecProps) {
         </div>
 
         <div className={styles.heroSearchdiv}>
-          {/* location segment */}
           <div className="relative w-full cursor-pointer" ref={mobileModalRef}>
             <div
               className="flex flex-row items-center cursor-text"
               // clicking the wrapper should focus input and open the dropdown
               onClick={() => setMobileModal((prev) => !prev)}
-
-              // const input = mobileModalRef.current?.querySelector(
-              //   "input"
-              // ) as HTMLInputElement | null;
-              // input?.focus();
             >
               {/* icon (kept) */}
               <img

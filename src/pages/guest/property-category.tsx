@@ -176,6 +176,7 @@ function PropertyCategory() {
           headingText={headingText}
           propertiesNearby={propertiesNearby}
           popularProperties={popularProperties}
+          isLoggedIn={isLoggedIn}
         />
       </section>
 

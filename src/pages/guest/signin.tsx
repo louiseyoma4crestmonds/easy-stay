@@ -16,6 +16,8 @@ export default function Signin() {
         <SignupLeftside
           text="Create an Account"
           onClick={handleSignupClick}
+          title=" Ready to find the perfect Short let"
+          subtitle="We've got you covered."
         />{" "}
       </div>
 

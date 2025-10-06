@@ -32,7 +32,7 @@ function HeroBanner(props: HeroBannerProps) {
         isMobile={isMobile}
       />
 
-      <div className=" relative w-full">
+      <div className=" relative w-full py-2 md:py-8 ">
         {/**background image */}
         <div className="absolute inset-0">
           <img
