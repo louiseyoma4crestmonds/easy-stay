@@ -126,6 +126,7 @@ function Properties() {
                   <PropertyCard
                     key={listing.id}
                     photo={listing.photo}
+                    description={listing.description}
                     name={listing.name}
                     neighbourhood={listing.neighbourhood.name}
                     rate={listing.rate}

@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./SearchFilter.module.css";
 import {
-  Amenity,
-  PropertyType,
-  LocationType,
   Pricing,
-  Rating,
   PropertyTypeFilter,
   AmenitiezFilter,
   RatingzFilter,

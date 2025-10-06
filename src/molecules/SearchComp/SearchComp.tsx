@@ -4,12 +4,11 @@ import SearchFilter from "../SearchFilter";
 import styles from "./SearchComp.module.css";
 import { SearchCompProps } from "./SearchComp.types";
 import { useEffect, useRef, useState } from "react";
-import { property, PropertyType } from "src/helpers/dataTypes";
 import NoSearchResults from "../NoSearchResults";
-import {
-  getApartmentTypes,
-  searchWithFilterParameters,
-} from "src/pages/api/property";
+import { searchWithFilterParameters } from "src/pages/api/property";
+import ListIcon from "@/atoms/Icons/ListIcon";
+import GridIcon from "@/atoms/Icons/GridIcon";
+import ListView from "../ListView";
 
 // utils/filters.ts
 export function flattenFilters(
@@ -59,11 +58,13 @@ function SearchComp(props: SearchCompProps) {
     popularProperties,
     isMobile,
     setProperties,
+    isLoggedIn,
   } = props;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Calculate indices
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -74,37 +75,7 @@ function SearchComp(props: SearchCompProps) {
     { category: string; value: string }[]
   >([]);
 
-  // const locations = [
-  //   { name: "Lagos", count: 120 },
-  //   { name: "Abuja", count: 80 },
-  //   { name: "Port Harcourt", count: 5 },
-  // ];
-
-  const [apartmentTypess, setApartmentTypes] = useState([]);
-
-  useEffect(() => {
-    getApartmentTypes().then((response: any) => {
-      setApartmentTypes(response.data.data);
-    });
-  }, []);
-
-  // build location counts dynamically
-  type LocationCount = { name: string; count: number };
-
-  const getLocations = (properties: property[]): LocationCount[] => {
-    const counts: Record<string, number> = {};
-
-    properties.forEach((prop) => {
-      const locName = prop.location?.name; // parent city: Lagos, Abuja, etc
-      if (locName) {
-        counts[locName] = (counts[locName] || 0) + 1;
-      }
-    });
-
-    return Object.entries(counts).map(([name, count]) => ({ name, count }));
-  };
-
-  const locations = getLocations(properties);
+  // const locations = getLocations(properties);
   const pricing = { min: 0, max: 500000 };
 
   const handleApplyFilters = (filters: any) => {
@@ -112,6 +83,7 @@ function SearchComp(props: SearchCompProps) {
     // Call your API or filter your data here
     searchWithFilterParameters(filters).then((response: any) => {
       console.log("Manu: ", response.data.data);
+      console.log("filters", filters);
       setProperties(response.data.data);
     });
 
@@ -138,6 +110,11 @@ function SearchComp(props: SearchCompProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showFilter]);
+
+  const tabsIcon = [
+    { type: "grid", Icon: GridIcon },
+    { type: "list", Icon: ListIcon },
+  ];
 
   return (
     <div className="w-full flex flex-col md:flex-row   md:gap-6  mx-auto  ">
@@ -238,35 +215,88 @@ function SearchComp(props: SearchCompProps) {
           className={`${styles.maindiv} flex flex-col justify-between min-h-screen`}
         >
           <div>
-            <div className="flex justify-start items-center space-x-2 mb-4  ">
-              <p className="text-gray-800 text-base md:text-2xl font-medium ">
-                {" "}
-                {headingText}
-              </p>{" "}
-              <p className="bg-gray-100 py-0.5 px-2.5 rounded-full text-gray-900 text-xs font-normal md:mb-2 ">
-                {" "}
-                {properties.length}{" "}
-              </p>
+            <div className="flex items-center justify-between  ">
+              <div className="flex justify-start items-center space-x-1 mb-4  ">
+                <p className="text-gray-800 text-base md:text-2xl font-medium ">
+                  {" "}
+                  {headingText}
+                </p>{" "}
+                <p className="bg-gray-100 py-0.5 px-2.5 rounded-full text-gray-900 text-xs font-normal ">
+                  {" "}
+                  {properties.length}{" "}
+                </p>
+              </div>
+
+              <div className="hidden md:flex gap-2 items-center border rounded-lg p-[10px] border-gray-300 ">
+                {[...tabsIcon]
+                  // put the active one first
+                  .sort((a, b) =>
+                    a.type === viewMode ? -1 : b.type === viewMode ? 1 : 0
+                  )
+                  .map(({ type, Icon }) => (
+                    <button
+                      key={type}
+                      onClick={() => setViewMode(type as "grid" | "list")}
+                      className=""
+                    >
+                      <Icon
+                        className={`w-5 h-5 ${
+                          viewMode === type ? "text-blue-600" : "text-gray-800"
+                        }`}
+                      />
+                    </button>
+                  ))}
+              </div>
             </div>
-            <div className=" grid md:grid-cols-2 gap-4 mb-6 ">
-              {currentItems.map((apt) => (
-                <PropertyCard
-                  key={apt.id}
-                  photo={apt?.photo}
-                  name={apt?.name}
-                  neighbourhood={apt?.neighbourhood.name}
-                  rate={apt?.rate}
-                  rating={apt?.rating}
-                  rooms={apt?.rooms.name}
-                  id={apt?.id}
-                  onSave={(id, isSaved) => {
-                    if (!isSaved) {
-                      onRemove(id); // delegate removal to parent
-                    }
-                  }}
-                />
-              ))}{" "}
-            </div>{" "}
+            {viewMode === "grid" ? (
+              <div className=" grid md:grid-cols-2 gap-4 md:mt-4 mb-6 ">
+                {currentItems.map((apt) => (
+                  <PropertyCard
+                    key={apt.id}
+                    photo={apt?.photo}
+                    name={apt?.name}
+                    description={apt.description}
+                    neighbourhood={apt?.neighbourhood.name}
+                    rate={apt?.rate}
+                    rating={apt?.rating}
+                    rooms={apt?.rooms.name}
+                    id={apt?.id}
+                    onSave={(id, isSaved) => {
+                      if (!isSaved) {
+                        onRemove(id);
+                      }
+                    }}
+                  />
+                ))}{" "}
+              </div>
+            ) : (
+              <div className="md:mt-4 ">
+                <ListView
+                  properties={currentItems}
+                  isLoggedIn={isLoggedIn}
+                />{" "}
+              </div>
+              // <div className=" flex flex-col ">
+              //   {currentItems.map((apt) => (
+              //     <ListView
+              //       key={apt.id}
+              //       photo={apt?.photo}
+              //       name={apt?.name}
+              //       description={apt.description}
+              //       neighbourhood={apt?.neighbourhood.name}
+              //       rate={apt?.rate}
+              //       rating={apt?.rating}
+              //       rooms={apt?.rooms.name}
+              //       id={apt?.id}
+              //       onSave={(id, isSaved) => {
+              //         if (!isSaved) {
+              //           onRemove(id);
+              //         }
+              //       }}
+              //     />
+              //   ))}{" "}
+              // </div>
+            )}
           </div>
           <div className="w-full flex justify-center pt-6  ">
             <Pagination
@@ -275,6 +305,7 @@ function SearchComp(props: SearchCompProps) {
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               setItemsPerPage={setItemsPerPage}
+              paginationDivActiveClass="bg-primary-600 text-white "
               prevButton="Previous"
               nextButton="Next"
             />

@@ -9,4 +9,5 @@ export type SearchCompProps = {
   propertiesNearby: property[];
   isMobile?: boolean;
   setProperties: (properties: []) => void;
+  isLoggedIn?: boolean;
 };

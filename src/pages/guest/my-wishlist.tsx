@@ -134,7 +134,7 @@ export default function MyWishList() {
       />
 
       {/* Wishlist title with count */}
-      <div className="w-[90%] md:w-[80%] flex flex-col mx-auto mt-8  ">
+      <div className="w-[90%] md:w-[80%] flex flex-col mx-auto mt-7  ">
         {!loading && (
           <p className=" text-base font-medium text-gray-800 mt-6 flex justify-start ">
             Wishlist ({savedApartments.length})

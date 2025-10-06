@@ -1,0 +1,6 @@
+.seconddiv {
+  @apply rounded-lg bg-white  flex items-center justify-between  overflow-x-auto;
+}
+.line {
+  @apply h-10 border-r-2 border-gray-100;
+}
