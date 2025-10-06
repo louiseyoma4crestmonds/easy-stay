@@ -45,3 +45,76 @@ export async function getProperty(propertyId: any) {
     .catch((err) => err.message);
   return response;
 }
+
+export async function getApartmentTypes() {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/property-types`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getCountOfApartmentTypes(
+  typeId: number,
+  propertyLocation: string
+) {
+  const response = await axios
+    .get(
+      `${endpointUrl}/easystay/property-types/count/${propertyLocation}/${typeId}`
+    )
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getPropertyTypesFilterParameters(
+  propertyLocation: string
+) {
+  const response = await axios
+    .get(
+      `${endpointUrl}/easystay/property-types/filter-parameters/${propertyLocation}`
+    )
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getAmenitiezFilterParameters(propertyLocation: string) {
+  const response = await axios
+    .get(
+      `${endpointUrl}/easystay/amenities/filter-parameters/${propertyLocation}`
+    )
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getRatingsFilterParameters(propertyLocation: string) {
+  const response = await axios
+    .get(
+      `${endpointUrl}/easystay/ratings/filter-parameters/${propertyLocation}`
+    )
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getLocationFilterParameters() {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/locations/filter-parameters`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function searchWithFilterParameters(filterParameters: any) {
+  const data = {
+    filterParameters,
+  };
+
+  const response = await axios
+    .post(`${endpointUrl}/easystay/filter-parameters/search`, data)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}

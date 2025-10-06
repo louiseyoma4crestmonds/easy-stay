@@ -1,6 +1,0 @@
-.seconddiv {
-  @apply rounded-lg bg-white md:grid md:grid-cols-4 flex items-center justify-between  overflow-x-auto;
-}
-.line {
-  @apply absolute right-0 top-1/2 -translate-y-1/2 h-10 border-r-2 border-gray-100;
-}

@@ -1,0 +1,15 @@
+.initialsdiv {
+  @apply h-10 w-10  flex items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-base;
+}
+.label {
+  @apply block px-4 py-2 text-gray-700 text-sm font-normal hover:bg-gray-100;
+}
+.profilemodaldiv {
+  @apply absolute max-w-3xl w-56  z-50 top-full right-1  bg-white rounded-lg shadow-2xl;
+}
+.inputdiv {
+  @apply w-full rounded-lg  bg-gray-50 px-5 py-2 pl-10 text-sm text-gray-500 outline-none;
+}
+.imgdiv {
+  @apply absolute left-3 top-[60%] -translate-y-1/2;
+}

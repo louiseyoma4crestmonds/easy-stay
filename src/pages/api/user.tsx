@@ -14,7 +14,8 @@ export async function createNewUser(
   lastName: string,
   email: string,
   phone: string,
-  password: string
+  password: string,
+  isHost: boolean
 ) {
   const data = {
     firstName,
@@ -22,6 +23,7 @@ export async function createNewUser(
     email,
     phone,
     password,
+    isHost,
   };
 
   const response = await axios

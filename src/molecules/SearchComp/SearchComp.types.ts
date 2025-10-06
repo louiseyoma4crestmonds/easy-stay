@@ -8,4 +8,6 @@ export type SearchCompProps = {
   popularProperties: property[];
   propertiesNearby: property[];
   isMobile?: boolean;
+  setProperties: (properties: []) => void;
+  isLoggedIn?: boolean;
 };

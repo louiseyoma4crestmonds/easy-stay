@@ -1,0 +1,9 @@
+.btnBack {
+  @apply bg-white px-6 py-3.5 border border-gray-200 rounded-lg text-gray-800 font-medium text-base;
+}
+.btndiv {
+  @apply flex items-center justify-between py-6;
+}
+.btn3 {
+  @apply border border-gray-200 px-5 py-2.5 rounded-lg font-medium text-sm text-gray-800;
+}

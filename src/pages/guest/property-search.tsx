@@ -85,9 +85,7 @@ function PropertySearch() {
     });
   }, []);
 
-  // 🔑 Main fetch logic (combined categories + query params)
-  // destructure only what you need
-
+  //  Main fetch logic (combined categories + query params)
   useEffect(() => {
     if (!router.isReady || cities.length === 0) return;
 
@@ -133,19 +131,20 @@ function PropertySearch() {
     router.isReady,
   ]);
 
-  console.log("selectedloc", selectedLocation);
-
   const handleRemove = (id: string | number) => {
     setSavedApartments((prev) => prev.filter((item) => item.id !== id));
   };
+
+  console.log("loc", selectedLocation);
 
   // for the text
   let headingText = "";
 
   if (properties.length > 0) {
-    headingText = `Apartments in ${properties[0].neighbourhood?.name ?? ""}`;
+    // headingText = `Search Result in ${properties[0].neighbourhood?.name ?? ""}`;
+    headingText = `Search Result in ${selectedLocation ?? ""}`;
   } else {
-    headingText = "No Apartments Found";
+    headingText = "No Search Results Found";
   }
 
   const isLoggedIn = status === "authenticated";
@@ -167,7 +166,6 @@ function PropertySearch() {
         initialCheckout={checkout ? new Date(checkout as string) : null}
         initialGuests={initialGuests}
         isMobile={isMobile}
-        // points={points}
       />
 
       <section className="w-[90%] md:w-[80%]  mx-auto mt-8 md:mt-16 mb-16 md:mb-32 ">
@@ -179,6 +177,8 @@ function PropertySearch() {
           propertiesNearby={propertiesNearby}
           popularProperties={popularProperties}
           isMobile={isMobile}
+          setProperties={setProperties}
+          isLoggedIn={isLoggedIn}
         />
       </section>
 

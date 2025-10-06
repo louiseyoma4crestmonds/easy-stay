@@ -11,6 +11,7 @@ function Pagination(props: PaginationProps): JSX.Element {
     currentPage,
     prevButton,
     nextButton,
+    paginationDivActiveClass,
   } = props;
 
   const [pageNumberLimit] = useState(3);
@@ -133,7 +134,7 @@ function Pagination(props: PaginationProps): JSX.Element {
                 tabIndex={0}
                 className={`${
                   currentPage === pageNumber
-                    ? `${styles.paginationDivActive}`
+                    ? `${styles.paginationDivActive} ${paginationDivActiveClass}`
                     : `${styles.paginationDiv}`
                 } `}
               >
@@ -152,7 +153,7 @@ function Pagination(props: PaginationProps): JSX.Element {
             type="button"
             className={`${
               currentPage === pageLastNumber
-                ? `${styles.paginationDivActive}`
+                ? `${styles.paginationDivActive} ${paginationDivActiveClass}`
                 : `${styles.paginationDiv}`
             } `}
             id={pageLastNumber.toString()}
