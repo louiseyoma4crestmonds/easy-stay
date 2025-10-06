@@ -33,7 +33,11 @@ export default function SignupPage() {
       {showOtp ? (
         <div className="w-full md:w-1/2">
           {" "}
-          <OtpComp email={otpEmail} password={otpPassword} />{" "}
+          <OtpComp
+            email={otpEmail}
+            password={otpPassword}
+            isHost={false}
+          />{" "}
         </div>
       ) : (
         <div className="w-full md:w-1/2">
@@ -42,6 +46,7 @@ export default function SignupPage() {
             setShowOtp={setShowOtp}
             setOtpEmail={setOtpEmail}
             setOtpPassword={setOtpPassword}
+            isHost={false}
           />{" "}
         </div>
       )}
