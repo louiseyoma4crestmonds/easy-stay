@@ -4,6 +4,7 @@ import { getLocationFilterParameters } from "src/pages/api/property";
 import CustomDropdown from "@/molecules/CustomDropdown";
 import { DropdownOption } from "@/molecules/CustomDropdown/CustomDropdown.types";
 import Button from "@/atoms/Button";
+import Tooltip from "@/atoms/Tooltip";
 
 type Apartment = {
   id: number;
@@ -510,9 +511,69 @@ function Step1Property({
                         </div>
 
                         <div>
-                          <label className="block text-sm text-gray-900 font-medium pb-1">
-                            Property Photos
-                          </label>
+                          <div className="hidden md:flex items-center gap-1 pb-1">
+                            <label className="block text-sm text-gray-900 font-medium ">
+                              Property Photos
+                            </label>
+                            <Tooltip
+                              content={
+                                <div className="w-[450px] text-sm ">
+                                  <p className="font-medium text-gray-900 ">
+                                    Quick Guide to Apartment Photos
+                                  </p>
+                                  <p className="font-medium text-gray-900  mt-3">
+                                    Key Constraints:
+                                  </p>
+                                  <ul className="list-disc text-gray-600 ml-5  ">
+                                    <li>
+                                      Min [e.g., 5-8] / Max [e.g., 20-30]
+                                      photos.
+                                    </li>
+                                    <li>JPG/PNG, max [e.g., 5MB] per photo.</li>
+                                    <li>No watermarks.</li>
+                                  </ul>
+                                  <p className="font-medium text-gray-900  mt-3">
+                                    What to Shoot:
+                                  </p>
+                                  <ul className="list-disc text-gray-600 ml-5  ">
+                                    <li>
+                                      Every room (living, kitchen, bedrooms,
+                                      bathrooms) from a wide angle.
+                                    </li>
+                                    <li>
+                                      Exterior, compound, balcony (if
+                                      applicable).
+                                    </li>
+                                    <li>
+                                      Highlight key features like natural light,
+                                      storage, and amenities.
+                                    </li>
+                                  </ul>
+                                  <p className="font-medium text-gray-900  mt-3">
+                                    Tips for Best Results:
+                                  </p>
+                                  <ul className="list-disc text-gray-600 ml-5  ">
+                                    <li>
+                                      Brighten with natural light and turn on
+                                      all lights.
+                                    </li>
+                                    <li>Clean & declutter everything.</li>
+                                    <li>
+                                      Use wide shots and keep the camera level.
+                                    </li>
+                                  </ul>
+                                </div>
+                              }
+                            >
+                              <div className={styles.tooltipDiv}>
+                                <img
+                                  src="/images/info.png"
+                                  alt="img"
+                                  className="w-4 h-4 "
+                                />
+                              </div>
+                            </Tooltip>{" "}
+                          </div>
 
                           {/* Drop zone */}
                           <div

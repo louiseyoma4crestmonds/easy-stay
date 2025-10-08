@@ -49,7 +49,7 @@ function OnboardingComp() {
           ].map((label, i) => {
             const index = i + 1;
             const active = step === index;
-            const completed = step > index;
+            // const completed = step > index;
             const circleColor = active
               ? "border-blue-600 text-primary-600 "
               : "border-gray-500 text-gray-500";

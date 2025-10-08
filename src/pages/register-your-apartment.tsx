@@ -51,7 +51,7 @@ export default function RegisterYourApartment() {
         buttons={[
           {
             label: "Register Your Apartment Now",
-            link: "/",
+            link: "/host/signup",
             variant: "primary",
           },
         ]}

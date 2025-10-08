@@ -9,24 +9,32 @@ import { DropdownOption } from "@/molecules/CustomDropdown/CustomDropdown.types"
 type HostBookingCardProps = {
   booking: HostBooking;
   onOpen: (booking: HostBooking) => void;
+  handleCancel: (booking: HostBooking) => void;
 };
 
-function HostBookingCard({ booking, onOpen }: HostBookingCardProps) {
+function HostBookingCard({
+  booking,
+  handleCancel,
+  onOpen,
+}: HostBookingCardProps) {
   const [selectedOption, setSelectedOption] = useState<DropdownOption>();
 
   const showEllipsis = true;
 
-  const options = [
-    {
-      value: "view",
-      label: "View",
-      action: () => onOpen(booking),
-    },
-    {
-      value: "download",
-      label: "Download Invoice",
-    },
-  ];
+  const options: DropdownOption[] =
+    booking.status === "upcoming"
+      ? [
+          { value: "view", label: "View", action: () => onOpen(booking) },
+          {
+            value: "cancel",
+            label: "Cancel Booking",
+            action: () => handleCancel(booking),
+          },
+        ]
+      : [
+          { value: "view", label: "View", action: () => onOpen(booking) },
+          { value: "download", label: "Download Invoice" },
+        ];
 
   return (
     <tr className="border-b font-sm font-normal ">
