@@ -10,11 +10,12 @@ import { signIn } from "next-auth/react";
 export type OtpCompProps = {
   email: string;
   password: string;
+  isHost: boolean;
 };
 
 function OtpComp(props: OtpCompProps) {
   const router = useRouter();
-  const { email, password } = props;
+  const { email, password, isHost = false } = props;
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [showModal, setShowModal] = useState(false);
@@ -22,8 +23,11 @@ function OtpComp(props: OtpCompProps) {
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleSigninClick = () => {
-    console.log("Redirect to signin");
-    router.push("/guest/signin");
+    if (isHost) {
+      router.push("/host/signin");
+    } else {
+      router.push("/guest/signin");
+    }
   };
 
   // Focus first input on mount
@@ -85,8 +89,10 @@ function OtpComp(props: OtpCompProps) {
           password,
           redirect: false, // don't redirect yet
         });
-        console.log("loginRes", loginRes);
         if (loginRes?.status === 200) {
+          if (isHost) {
+            router.push({ pathname: "/host/onboarding" });
+          }
           // 🔄 Reset before triggering modal again
           setShowModal(false);
           setModalVisible(false);

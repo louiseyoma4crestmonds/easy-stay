@@ -21,12 +21,14 @@ export type SignupCompProps = {
   setShowOtp: (show: boolean) => void;
   setOtpEmail: (email: string) => void;
   setOtpPassword: (password: string) => void;
+  isHost: boolean;
 };
 
 function SignupComp({
   setShowOtp,
   setOtpPassword,
   setOtpEmail,
+  isHost = false,
 }: SignupCompProps) {
   const router = useRouter();
   const countries = [
@@ -53,7 +55,6 @@ function SignupComp({
   }
 
   const handleSigninClick = () => {
-    console.log("Redirect to signin");
     router.push("/guest/signin");
   };
 
@@ -104,7 +105,7 @@ function SignupComp({
 
     if (Object.keys(newErrors).length === 0) {
       // All validations passed
-      createNewUser(firstName, lastName, email, phone, password).then(
+      createNewUser(firstName, lastName, email, phone, password, isHost).then(
         (response: any) => {
           console.log("sign up response: ", response);
           if (response?.data?.code === 208) {
