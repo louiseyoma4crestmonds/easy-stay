@@ -3,11 +3,11 @@
 } */
 
 .appWrapper {
-  @apply flex flex-col h-full min-h-screen ml-[257px];
+  @apply flex flex-col h-full min-h-screen pl-64;
 }
 
 .appWrapperNoSidebar {
-  @apply flex flex-col h-full min-h-screen ml-0; /* 🔑 no left margin */
+  @apply flex flex-col h-full min-h-screen ml-0;
 }
 
 .mainArea {
@@ -15,7 +15,7 @@
 }
 
 .mainAreaPending {
-  @apply flex flex-col top-0 bg-transparent w-full; /* 🔑 no white bg */
+  @apply flex flex-col top-0 bg-transparent w-full;
 }
 
 .navTop {

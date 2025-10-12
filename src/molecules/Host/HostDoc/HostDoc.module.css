@@ -1,0 +1,6 @@
+.maindiv {
+  @apply bg-white rounded-lg w-full;
+}
+.title {
+  @apply text-gray-900 text-base font-medium sticky top-0 z-30 bg-white rounded-t-lg py-5 px-4 md:px-8 border-b;
+}
