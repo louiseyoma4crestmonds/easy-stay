@@ -119,6 +119,7 @@ function HostBookingList(props: HostBookingListProps) {
                   key={booking.id}
                   booking={booking}
                   onOpen={onOpen}
+                  handleCancel={handleCancel}
                 />
               ))
             )}

@@ -2,7 +2,7 @@
   @apply absolute inset-0 flex items-center justify-center;
 }
 .bgSecond {
-  @apply bg-white/10  backdrop-blur-2xl px-8 py-28 rounded-lg text-left max-w-lg;
+  @apply bg-white/10  backdrop-blur-2xl px-8 py-16 rounded-lg text-left max-w-lg;
 }
 .reviewH2 {
   @apply text-4xl font-bold mb-2 text-gray-50;

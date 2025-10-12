@@ -1,3 +1,6 @@
 .imgdiv {
-  @apply flex justify-center items-center mt-6;
+  @apply flex justify-center items-center mt-6 shrink-0;
+}
+.modalContent3 {
+  @apply max-w-sm md:max-w-3xl md:w-[400px] flex flex-col justify-center px-10  md:px-2 py-3 items-center -mt-7;
 }
