@@ -1,0 +1,9 @@
+.btndiv {
+  @apply w-full flex items-center  font-normal;
+}
+
+.dropdowndiv {
+  @apply absolute bottom-full mb-2 md:right-0 z-50 w-40 
+         text-gray-800 text-sm bg-white border border-gray-200 
+         rounded shadow;
+}

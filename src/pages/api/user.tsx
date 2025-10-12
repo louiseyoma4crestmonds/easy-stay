@@ -14,7 +14,8 @@ export async function createNewUser(
   lastName: string,
   email: string,
   phone: string,
-  password: string
+  password: string,
+  isHost: boolean
 ) {
   const data = {
     firstName,
@@ -22,6 +23,7 @@ export async function createNewUser(
     email,
     phone,
     password,
+    isHost,
   };
 
   const response = await axios
@@ -87,6 +89,14 @@ export async function createNewPassword(
 export async function validatePasswordResetToken(token: any) {
   const response = await axios
     .get(`${endpointUrl}/user-account/validate_password_reset_token/${token}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function revokeToken(email: any) {
+  const response = await axios
+    .get(`${endpointUrl}/user-account/logout/${email}`)
     .then((res) => res)
     .catch((err) => err.message);
   return response;

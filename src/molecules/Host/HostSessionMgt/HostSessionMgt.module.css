@@ -1,0 +1,12 @@
+.maindiv {
+  @apply bg-white rounded-lg w-full;
+}
+.title {
+  @apply text-gray-900 text-base font-medium sticky top-0 z-20 bg-white rounded-t-lg py-5 px-4 md:px-8 border-b;
+}
+.btndiv {
+  @apply border border-gray-200 px-3 py-2 rounded-lg text-gray-800 font-medium text-xs;
+}
+.modalContent2 {
+  @apply max-w-xs md:max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-10 py-8 -mt-8 items-center;
+}

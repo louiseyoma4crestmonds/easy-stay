@@ -7,8 +7,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 function BookingModal(props: BookingModalProps) {
-  const { showBookingSummary, setShowBookingSummary, setBookingSuccessModal } =
-    props;
+  const {
+    showBookingSummary,
+    setShowBookingSummary,
+    setBookingSuccessModal,
+    isMobile,
+  } = props;
 
   const [agreed, setAgreed] = useState(false);
 
@@ -33,13 +37,13 @@ function BookingModal(props: BookingModalProps) {
               <Image
                 src="/images/sample-image.png"
                 alt="sample-img"
-                width={88}
-                height={73}
+                width={isMobile ? 363 : 88}
+                height={isMobile ? 140 : 73}
                 className="rounded-lg"
               />
             </div>
             <div className="flex flex-col ">
-              <div className="flex flex-row items-center gap-2 ">
+              <div className="flex flex-row items-center gap-2 mb-1 md:mb-0">
                 <p className="text-gray-900 font-medium text-base ">
                   Luxury Suite, Lekki
                 </p>
@@ -53,7 +57,7 @@ function BookingModal(props: BookingModalProps) {
               <div className="text-primary-600 font-bold text-sm ">
                 ₦100,000/Night
               </div>
-              <div className="flex flex-row items-center gap-2 ">
+              <div className="flex flex-row items-center gap-2 my-1 md:my-0  ">
                 <p className="bg-gray-100 px-3 mt-1 rounded-md text-gray-900 font-medium text-sm ">
                   {" "}
                   2 Bedrooms
@@ -78,8 +82,8 @@ function BookingModal(props: BookingModalProps) {
               <Image
                 src="/images/checkin-icon.png"
                 alt="checkin-icon"
-                width={48}
-                height={48}
+                width={isMobile ? 32 : 48}
+                height={isMobile ? 32 : 48}
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Check In Time</p>
@@ -90,8 +94,8 @@ function BookingModal(props: BookingModalProps) {
               <Image
                 src="/images/checkout-icon.png"
                 alt="checkout-icon"
-                width={48}
-                height={48}
+                width={isMobile ? 32 : 48}
+                height={isMobile ? 32 : 48}
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Check Out Time</p>
@@ -105,8 +109,8 @@ function BookingModal(props: BookingModalProps) {
               <Image
                 src="/images/calendar3.png"
                 alt="calendar"
-                width={48}
-                height={48}
+                width={isMobile ? 32 : 48}
+                height={isMobile ? 32 : 48}
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Number of days</p>
@@ -139,8 +143,8 @@ function BookingModal(props: BookingModalProps) {
           <p className={styles.text3}>₦311,250</p>
         </div>
 
-        <div className="flex justify-between items-center py-4 px-5 ">
-          <label className="flex items-center gap-2 w-[70%] text-sm">
+        <div className="flex flex-col  md:flex-row justify-between items-center py-4 px-5 ">
+          <label className="flex items-center gap-2 w-full md:w-[70%] text-sm">
             <input
               type="checkbox"
               checked={agreed}
@@ -149,21 +153,30 @@ function BookingModal(props: BookingModalProps) {
             />
             <span>
               I have read and agree to EasyStay’s{" "}
-              <Link href="/guest/terms-and-conditions" target="_blank">
+              <Link href="/termsOfService" target="_blank">
                 <a className="text-blue-600 underline">Terms & Conditions</a>
+              </Link>
+              ,{" "}
+              <Link href="/privacy-policy" target="_blank">
+                <a className="text-primary-600 underline">Privacy Policy</a>
               </Link>{" "}
               and{" "}
-              <Link href="/guest/privacy-policy" target="_blank">
-                <a className="text-primary-600 underline">
-                  Privacy & Cookies Policy
-                </a>
+              <Link href="/cookies-policy" target="_blank">
+                <a className="text-primary-600 underline">Cookies Policy</a>
               </Link>
               .
             </span>
           </label>
-          <Button variant="primary" disabled={!agreed} onClick={handlePayNow}>
-            Pay Now
-          </Button>
+          <div className="w-full mt-2 md:mt-0 md:w-auto ">
+            <Button
+              variant="primary"
+              width="full"
+              disabled={!agreed}
+              onClick={handlePayNow}
+            >
+              Pay Now
+            </Button>{" "}
+          </div>
         </div>
       </div>
     </Modal>

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Router from "next/router";
-// import { useSwipeable } from "react-swipeable";
 import { PropertyCardProps } from "./PropertyCard.types";
 import styles from "./PropertyCard.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Modal from "../Modal";
 import Button from "@/atoms/Button";
+import { useSession } from "next-auth/react";
 
 function PropertyCard(props: PropertyCardProps) {
   const {
@@ -18,11 +18,13 @@ function PropertyCard(props: PropertyCardProps) {
     rating,
     rooms,
     onSave,
+    description,
     className,
     isLoggedIn,
     isSaved: initialSaved = false,
     isWishlist = false,
   } = props;
+  const { status } = useSession();
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   // const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -45,16 +47,11 @@ function PropertyCard(props: PropertyCardProps) {
       arr.length > 0 ? (p === 0 ? arr.length - 1 : p - 1) : 0
     );
 
-  // const handlers = useSwipeable({
-  //   onSwipedLeft: nextImage,
-  //   onSwipedRight: prevImage,
-  //   // preventDefaultTouchmoveEvent: true,
-  //   trackMouse: true,
-  // });
-
   const toggleSave = () => {
-    if (!isLoggedIn) {
+    if (status === "unauthenticated") {
       setShowAuthModal(true); // Show modal if not logged in
+      console.log("STATUS", status);
+
       return;
     }
 
@@ -72,32 +69,24 @@ function PropertyCard(props: PropertyCardProps) {
       : "/images/filled-heart.png" // normal saved → red
     : "/images/heart-outline.png"; // not saved → outline
 
-  // {...handlers}
+  const handleSigninClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signin");
+  };
+
+  const handleSignupClick = () => {
+    setShowAuthModal(false);
+    router.push("/guest/signup");
+  };
 
   return (
     <div
-      className={`w-full  rounded-lg shadow-md overflow-hidden border border-gray-200 bg-white ${
+      className={`w-full h-full  rounded-lg  overflow-hidden border border-gray-200 hover:border-primary-600 bg-white hover:bg-primary-100 ${
         className || ""
       }`}
     >
       {/* Image / carousel area */}
-      <div
-        className="relative cursor-pointer"
-        role="button"
-        tabIndex={0}
-        onKeyDown={() => {
-          Router.push({
-            pathname: "/guest/property-details",
-            query: { propertyId: id },
-          });
-        }}
-        onClick={() => {
-          Router.push({
-            pathname: "/guest/property-details",
-            query: { propertyId: id },
-          });
-        }}
-      >
+      <div className="relative cursor-pointer">
         <img
           src={arr[currentIndex]}
           alt={`${name} - ${currentIndex + 1}`}
@@ -171,12 +160,31 @@ function PropertyCard(props: PropertyCardProps) {
       </div>
 
       {/* Property details */}
-      <div className="px-4 py-3 space-y-2">
-        <p className="text-sm font-medium text-gray-800 leading-tight">
+      <div
+        className="px-4 py-3 space-y-2 cursor-pointer   "
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+        onClick={() => {
+          Router.push({
+            pathname: "/guest/property-details",
+            query: { propertyId: id },
+          });
+        }}
+      >
+        <p className="text-base font-bold text-primary-600 leading-tight">
           {name}
         </p>
+        <p className="text-sm font-normal text-gray-500 leading-tight clamp-2">
+          {description}
+        </p>
         <div className="flex justify-between items-start">
-          <p className="font-bold text-xs text-primary-600">{rate}</p>
+          <p className="font-bold text-sm text-gray-800">{rate}</p>
           <div className="flex items-center gap-1 ">
             <Image
               src="/images/little-star.png"
@@ -209,15 +217,25 @@ function PropertyCard(props: PropertyCardProps) {
           modalcontent={styles.modalContent3}
         >
           <div>
-            <p className="text-gray-500 text-sm py-7 ">
+            <p className="text-gray-500 text-sm py-5 px-8 text-center ">
               Loving what you see? Sign in or sign up below to save this to your
               wishlist and keep track of your favorites!
             </p>
-            <div className="flex justify-center items-center gap-5 ">
-              <Button variant="profile" onClick={() => setShowAuthModal(false)}>
+            <div className="flex justify-center items-center mb-4 gap-5 px-4 ">
+              <Button
+                variant="profile"
+                width="full"
+                onClick={handleSigninClick}
+              >
                 Sign In
               </Button>
-              <Button variant="primary">Sign Up</Button>
+              <Button
+                variant="primary"
+                width="full"
+                onClick={handleSignupClick}
+              >
+                Sign Up
+              </Button>
             </div>
           </div>
         </Modal>

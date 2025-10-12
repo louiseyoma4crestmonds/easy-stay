@@ -15,7 +15,7 @@ function LocationDropdownModal({
 
   // Your component logic here
   return (
-    <div className={styles.modaldiv}>
+    <div className={styles.modaldiv} onClick={(e) => e.stopPropagation()}>
       <p className={styles.modalP1}>Recent</p>
       {/* First 4 locations */}
       <div className="space-y-2">
@@ -23,7 +23,11 @@ function LocationDropdownModal({
           <div
             className={styles.modaldiv2}
             key={loc}
-            onClick={() => handleSelect(loc)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ stop bubbling
+              handleSelect(loc);
+            }}
           >
             <div className="flex items-center gap-2">
               <img
@@ -53,7 +57,13 @@ function LocationDropdownModal({
           <div
             className={styles.modaldiv2}
             key={loc}
-            onClick={() => handleSelect(loc)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ stop bubbling
+              handleSelect(loc);
+            }}
+
+            // onClick={() => handleSelect(loc)}
           >
             <div className="flex items-center gap-2">
               <img

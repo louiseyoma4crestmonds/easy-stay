@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 import { property } from "src/helpers/dataTypes";
 import { getLocations, getPropertiesByLocation } from "../api/property";
 import { useSession } from "next-auth/react";
@@ -15,13 +14,30 @@ import PageSkeletons from "@/components/PageSkeletons";
 function Properties() {
   const router = useRouter();
   const [properties, setProperties] = useState<property[]>([]);
-  const [cities, setCities] = useState([]);
+  const [cities, setCities] = useState<any[]>([]);
+
   const { status } = useSession();
   const { firstName, lastName } = useSessionDetails();
   const isLoggedIn = status === "authenticated";
   const [mounted, setMounted] = useState(false);
+  const [thisPageLoads, setThisPageLoads] = useState(true);
   // Prevent hydration flicker and cover cases where 'loading' is brief
   useEffect(() => setMounted(true), []);
+
+  const [width, setWidth] = useState<number>(0);
+  const isMobile = width <= 767;
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
   // GET CITIES
   useEffect(() => {
@@ -34,15 +50,11 @@ function Properties() {
     if (router.query.location !== undefined) {
       getPropertiesByLocation(router.query.location).then((response: any) => {
         setProperties(response.data.data);
+        setThisPageLoads(false);
+        console.log("properties by loc", response.data.data);
       });
     }
   }, [router.query.location]);
-
-  const isLoading = !mounted || status === "loading";
-
-  if (isLoading) return <PageSkeletons />;
-
-  console.log("properties", properties);
 
   const groupedByNeighborhood = properties.reduce(
     (acc, property) => {
@@ -61,48 +73,72 @@ function Properties() {
     {} as Record<string, typeof properties>
   );
 
+  // Find the clicked city name from cities list
+  const selectedCity = cities.find(
+    (city: any) => String(city.id) === String(router.query.location)
+  );
+
+  const isLoading = !mounted || status === "loading" || thisPageLoads;
+
+  if (isLoading) return <PageSkeletons />;
+
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroSec
         isLoggedIn={isLoggedIn}
         firstName={firstName}
         lastName={lastName}
+        isMobile={isMobile}
       />
-      <div className="flex justify-center items-center space-x-2 mt-12  ">
-        <p className="text-gray-800 text-2xl font-medium ">
-          {" "}
-          Explore Apartments in{" "}
-          {properties.length > 0 ? properties[0].location.name : ""}
-        </p>{" "}
-        <p className="bg-gray-100 py-0.5 px-2.5 rounded-full text-gray-900 text-xs font-normal ">
-          {" "}
-          {properties.length}{" "}
-        </p>
-      </div>
 
-      {Object.entries(groupedByNeighborhood).map(
-        ([neighborhood, properties]) =>
-          properties.length > 0 && ( // ✅ ensures at least 1 apartment
-            <CarouselComp
-              key={neighborhood}
-              title={`Apartments in ${neighborhood}`}
-              itemsPerPage={3}
-              items={properties}
-              renderItem={(listing) => (
-                <PropertyCard
-                  key={listing.id}
-                  photo={listing.photo}
-                  name={listing.name}
-                  neighbourhood={listing.neighbourhood.name}
-                  rate={listing.rate}
-                  rating={listing.rating}
-                  rooms={listing.rooms.name}
-                  id={listing.id}
-                />
-              )}
-            />
-          )
-      )}
+      <section className=" w-[90%] md:w-[80%] flex flex-col justify-center items-center py-12 mx-auto ">
+        <div className="flex flex-col justify-center items-center space-y-2 mt-1 md:mt-6  ">
+          <div className="flex justify-center items-center space-x-2   ">
+            <p className="text-gray-800 text-base md:text-2xl font-medium ">
+              {" "}
+              Explore Apartments in{" "}
+              {selectedCity ? selectedCity.name : "this city"}
+              {/* {properties.length > 0 ? properties[0].location.name : ""} */}
+            </p>{" "}
+            <p className="bg-gray-100 py-0.5 px-2.5 rounded-full text-gray-900 text-xs font-normal ">
+              {" "}
+              {properties.length}{" "}
+            </p>
+          </div>
+          {/* If no apartments in this city */}
+          {properties.length === 0 && (
+            <div className="text-center text-gray-800 text-lg mt-6">
+              No apartments available in{" "}
+              {selectedCity ? selectedCity.name : "this city"}.
+            </div>
+          )}
+        </div>
+
+        {Object.entries(groupedByNeighborhood).map(
+          ([neighborhood, properties]) =>
+            properties.length > 0 && ( // ensures at least 1 apartment
+              <CarouselComp
+                key={neighborhood}
+                title={`Apartments in ${neighborhood}`}
+                itemsPerPage={3}
+                items={properties}
+                renderItem={(listing) => (
+                  <PropertyCard
+                    key={listing.id}
+                    photo={listing.photo}
+                    description={listing.description}
+                    name={listing.name}
+                    neighbourhood={listing.neighbourhood.name}
+                    rate={listing.rate}
+                    rating={listing.rating}
+                    rooms={listing.rooms.name}
+                    id={listing.id}
+                  />
+                )}
+              />
+            )
+        )}
+      </section>
 
       {/*gift section*/}
       <BottomHero
@@ -117,7 +153,7 @@ function Properties() {
             variant: "explore",
           },
         ]}
-        divClass="items-start"
+        divClass="items-center md:items-start"
       />
 
       <FooterComp data={cities} />

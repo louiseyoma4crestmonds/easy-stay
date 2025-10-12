@@ -1,6 +1,8 @@
 // import { useRouter } from "next/router";
 import styles from "./CustomerProfile.module.css";
+import { signOut } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import { getSessionDetails, revokeToken } from "src/pages/api/user";
 import ProfileModal from "@/molecules/ProfileModal";
 import PointsModal from "@/molecules/PointsModal";
 import Modal from "@/molecules/Modal";
@@ -83,7 +85,7 @@ function CustomerProfile({
 
         {/* First name */}
         <span
-          className={`font-normal text-base ${isOnImage ? "text-white" : "text-gray-800"} `}
+          className={` hidden md:block font-normal text-base ${isOnImage ? "text-white" : "text-gray-800"} `}
         >
           Hi, {firstName}
         </span>
@@ -154,14 +156,24 @@ function CustomerProfile({
             <p className="text-gray-500 text-sm pb-6 ">
               Are you sure you want to logout?
             </p>
-            <div className="flex justify-center items-center gap-5 ">
+            <div className="flex justify-center items-center gap-5 md:pb-6 ">
               <Button
                 variant="profile"
                 onClick={() => setShowLogoutModal(false)}
               >
                 Cancel
               </Button>
-              <Button variant="delete">Logout</Button>
+              <Button
+                onClick={() => {
+                  getSessionDetails().then((response: any) => {
+                    revokeToken(response.user.user.token.token.email);
+                  });
+                  signOut();
+                }}
+                variant="delete"
+              >
+                Logout
+              </Button>
             </div>
           </div>
         </Modal>

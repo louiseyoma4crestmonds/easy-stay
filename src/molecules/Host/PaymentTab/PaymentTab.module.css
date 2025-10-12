@@ -1,0 +1,12 @@
+.bookingdiv {
+  @apply bg-white rounded-lg h-full flex flex-col flex-1 relative mt-2 md:mt-5;
+}
+.checkoutdiv {
+  @apply hidden relative md:flex cursor-pointer w-full flex-col  border bg-gray-50 border-gray-300 py-3.5 px-4 rounded-lg;
+}
+.seconddiv {
+  @apply flex flex-row items-center gap-1;
+}
+.modalContent3 {
+  @apply max-w-xs md:max-w-3xl md:w-[700px] flex flex-col justify-center p-5 -mt-7;
+}

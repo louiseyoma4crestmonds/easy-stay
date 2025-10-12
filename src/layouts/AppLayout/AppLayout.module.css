@@ -1,13 +1,43 @@
-.appWrapper {
+/* .appWrapper {
   @apply flex flex-col px-4;
+} */
+
+.appWrapper {
+  @apply flex flex-col h-full min-h-screen pl-64;
 }
 
-@screen desktop {
+.appWrapperNoSidebar {
+  @apply flex flex-col h-full min-h-screen ml-0;
+}
+
+.mainArea {
+  @apply flex flex-col top-0 bg-white w-full;
+}
+
+.mainAreaPending {
+  @apply flex flex-col top-0 bg-transparent w-full;
+}
+
+.navTop {
+  @apply relative z-50;
+}
+.pageContent {
+  @apply px-6 flex-1  bg-slate-50;
+}
+.pageTitlediv {
+  @apply flex items-center justify-between px-6 py-4;
+}
+.title {
+  @apply text-gray-800 font-medium text-base;
+}
+.subtitle {
+  @apply text-gray-500 text-sm;
+}
+/* @screen desktop {
   .appWrapper {
     @apply h-full min-h-screen py-14 px-10;
-  }
+  } */
 
-  .appMainWrapperWithNavigation {
+/* .appMainWrapperWithNavigation {
     @apply lg:ml-[290px];
-  }
-}
+  } */

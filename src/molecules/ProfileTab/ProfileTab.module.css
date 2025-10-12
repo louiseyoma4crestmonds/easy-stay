@@ -1,21 +1,21 @@
 .maindiv {
-  @apply bg-white rounded-lg w-[70%];
+  @apply bg-white rounded-lg w-full md:w-[70%];
 }
 .title {
-  @apply text-gray-900 text-base font-medium py-5 px-8 border-b;
+  @apply text-gray-900 text-base font-medium py-5 px-4 md:px-8 border-b;
 }
 
 .imgdiv {
-  @apply relative w-36 h-36 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center text-5xl font-medium text-gray-900;
+  @apply relative w-20 h-20 md:w-36 md:h-36 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center text-3xl md:text-5xl font-medium text-gray-900;
 }
 .labeldiv {
   @apply cursor-pointer flex gap-2 items-center border border-gray-200 px-5 py-2 rounded text-sm text-gray-800 font-medium;
 }
 .seconddiv {
-  @apply flex flex-row justify-between items-center  absolute inset-0 px-8 cursor-pointer;
+  @apply flex flex-col md:flex-row justify-between items-center  relative  px-8 cursor-pointer;
 }
 .thirddiv {
-  @apply flex flex-row gap-2 items-center cursor-pointer;
+  @apply flex flex-col md:flex-row gap-2 items-center cursor-pointer;
 }
 .formLabel {
   @apply block mb-1 text-gray-700 font-medium;
@@ -27,13 +27,13 @@
   @apply w-full p-3 bg-gray-50 border-t border-b border-r rounded-r-lg focus:outline-none;
 }
 .btndiv {
-  @apply w-full px-5 py-3 border flex flex-row items-center justify-center  border-gray-300 rounded-l-lg bg-gray-100;
+  @apply w-full px-4 md:px-5 py-3 border flex flex-row items-center justify-center  border-gray-300 rounded-l-lg bg-gray-100;
 }
 .dropdowndiv {
   @apply absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg;
 }
 .btndiv2 {
-  @apply flex justify-between items-center px-8 py-5;
+  @apply flex justify-between items-center px-4 md:px-8 py-5;
 }
 .modalContent {
   @apply max-w-xs flex flex-col justify-center p-5 -mt-8 items-center;
@@ -42,10 +42,10 @@
   @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-7;
 }
 .modalContent3 {
-  @apply max-w-md flex flex-col justify-center p-5 -mt-7 items-center;
+  @apply max-w-xs md:max-w-md flex flex-col justify-center p-5 -mt-7 items-center;
 }
 .modalContent4 {
-  @apply max-w-sm flex flex-col justify-center px-4 py-6 items-center -mt-6;
+  @apply max-w-xs md:max-w-sm flex flex-col justify-center px-4 py-6 items-center -mt-6;
 }
 .P1 {
   @apply text-gray-900 text-lg font-semibold text-center my-4;
@@ -57,7 +57,7 @@
   @apply flex items-center justify-center gap-4 my-4;
 }
 .otpInput {
-  @apply w-20 h-20 text-center text-5xl text-gray-600 font-medium border border-gray-300 rounded-lg bg-white focus:outline-none;
+  @apply w-14 h-14 md:w-20 md:h-20 text-center text-5xl text-gray-600 font-medium border border-gray-300 rounded-lg bg-white focus:outline-none;
 }
 .otpText {
   @apply text-gray-500 text-sm mt-2 mb-6 text-center font-normal;

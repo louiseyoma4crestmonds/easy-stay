@@ -6,4 +6,5 @@ export type PaginationProps = {
   setItemsPerPage: (arg: any) => void;
   prevButton?: React.ReactNode;
   nextButton?: React.ReactNode;
+  paginationDivActiveClass?: string;
 };

@@ -1,0 +1,19 @@
+.P1 {
+  @apply text-gray-800 font-medium text-sm mb-3;
+}
+
+.firstdiv {
+  @apply flex items-center justify-between text-gray-600 font-normal text-sm;
+}
+.inputspan {
+  @apply w-4 h-4 flex justify-center border items-center rounded cursor-pointer transition;
+}
+.countDiv {
+  @apply w-[32px] h-[22px] py-0.5 px-2.5 rounded-md bg-gray-100 text-gray-900 text-xs font-normal flex items-center justify-center;
+}
+.span {
+  @apply text-gray-600 text-sm font-normal;
+}
+.PP2 {
+  @apply text-gray-900 font-medium text-sm w-1/2;
+}

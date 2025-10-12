@@ -6,6 +6,6 @@ export type CustomerNavAreaProps = {
   firstName?: string;
   lastName?: string;
   points?: number;
-  userAuthenticated?: boolean;
-  userDetails?: { firstName: string; lastName: string };
+  isMobile?: boolean;
+  isOtherPages?: boolean;
 };

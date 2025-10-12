@@ -35,43 +35,43 @@ function NotificationTab() {
   );
 
   // Function to instantly update backend when toggle changes
-  const updatePreference = async (
-    category: "email" | "push",
-    id: string,
-    value: boolean
-  ) => {
-    try {
-      await fetch("/api/notifications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ category, id, value }),
-      });
-    } catch (err) {
-      console.error("Error updating preference", err);
-    }
-  };
+  // const updatePreference = async (
+  //   category: "email" | "push",
+  //   id: string,
+  //   value: boolean
+  // ) => {
+  //   try {
+  //     await fetch("/api/notifications", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ category, id, value }),
+  //     });
+  //   } catch (err) {
+  //     console.error("Error updating preference", err);
+  //   }
+  // };
 
   const handleToggle = (category: "email" | "push", id: string) => {
     if (category === "email") {
       setEmailSettings((prev) => {
         const updated = { ...prev, [id]: !prev[id] };
-        updatePreference("email", id, updated[id]); // auto-save
+        // updatePreference("email", id, updated[id]); // auto-save
         return updated;
       });
     } else {
       setPushSettings((prev) => {
         const updated = { ...prev, [id]: !prev[id] };
-        updatePreference("push", id, updated[id]); // auto-save
+        // updatePreference("push", id, updated[id]); // auto-save
         return updated;
       });
     }
   };
 
   return (
-    <div className="w-[70%] ">
+    <div className="w-full md:w-[70%] ">
       <div className={styles.maindiv1}>
         <p className={styles.title}>Email Notifications</p>
-        <div className="px-8 py-5">
+        <div className="px-4 md:px-8 py-5">
           {emailNotifications.map((n) => (
             <div key={n.id} className="flex items-center gap-4 py-2  ">
               <button
@@ -94,11 +94,11 @@ function NotificationTab() {
 
       <div className={styles.maindiv2}>
         <p className={styles.title}>Push Notifications</p>
-        <div className="px-8 py-5">
+        <div className="px-4 md:px-8 py-5">
           {pushNotifications.map((n) => (
             <div key={n.id} className="flex items-center gap-4 py-2  ">
               <button
-                onClick={() => handleToggle("email", n.id)}
+                onClick={() => handleToggle("push", n.id)}
                 className={`relative inline-flex h-5 w-11 items-center rounded-full transition ${
                   pushSettings[n.id] ? "bg-primary-600" : "bg-gray-300"
                 }`}

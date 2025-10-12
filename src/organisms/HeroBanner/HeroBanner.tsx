@@ -15,6 +15,7 @@ function HeroBanner(props: HeroBannerProps) {
     firstName,
     lastName,
     points,
+    isMobile,
   } = props;
   const router = useRouter();
 
@@ -28,21 +29,24 @@ function HeroBanner(props: HeroBannerProps) {
         isOnImage={false}
         leftIcon="/images/menu-white.png"
         defaultTextColor="text-gray-500"
+        isMobile={isMobile}
       />
 
-      <div className=" relative w-full">
+      <div className=" relative w-full py-2 md:py-8 ">
         {/**background image */}
-        <img
-          src={backgroundImg}
-          alt="Section img"
-          className=" h-full w-full  "
-        />
+        <div className="absolute inset-0">
+          <img
+            src={backgroundImg}
+            alt="Section img"
+            className=" h-full w-full  "
+          />
+        </div>
 
         <div className={styles.seconddiv}>
           {primaryText && <p className={styles.P1}>{primaryText}</p>}
           {secondaryText && <p className={styles.P2}>{secondaryText}</p>}
 
-          <div className="flex gap-4 pt-3">
+          <div className="flex flex-col w-full md:w-auto md:flex-row gap-4 pt-3">
             {(buttons ?? []).map((btn, idx) => (
               <Button
                 key={idx}

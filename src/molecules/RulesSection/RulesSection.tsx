@@ -5,13 +5,19 @@ type RulesSectionProps = {
   rules: string;
   checkinTime: string;
   checkoutTime: string;
+  isMobile?: boolean;
 };
 
-function RulesSection({ rules, checkinTime, checkoutTime }: RulesSectionProps) {
+function RulesSection({
+  rules,
+  isMobile,
+  checkinTime,
+  checkoutTime,
+}: RulesSectionProps) {
   return (
     <div className={styles.maindiv}>
       <p className={styles.text}>Rules </p>
-      <p className=" text-gray-800 font-normal text-sm pb-4 border-b mt-1 ">
+      <p className=" text-gray-800 font-normal text-xs md:text-sm pb-4 border-b mt-1 ">
         {rules}{" "}
       </p>
       <div className="flex flex-row justify-between items-center mt-6 ">
@@ -19,8 +25,8 @@ function RulesSection({ rules, checkinTime, checkoutTime }: RulesSectionProps) {
           <Image
             src="/images/checkin-icon.png"
             alt="checkin-icon"
-            width={48}
-            height={48}
+            width={isMobile ? 32 : 48}
+            height={isMobile ? 32 : 48}
           />
           <div className="flex flex-col ">
             <p className={styles.text}>Check In Time</p>
@@ -31,8 +37,8 @@ function RulesSection({ rules, checkinTime, checkoutTime }: RulesSectionProps) {
           <Image
             src="/images/checkout-icon.png"
             alt="checkout-icon"
-            width={48}
-            height={48}
+            width={isMobile ? 32 : 48}
+            height={isMobile ? 32 : 48}
           />
           <div className="flex flex-col ">
             <p className={styles.text}>Check Out Time</p>

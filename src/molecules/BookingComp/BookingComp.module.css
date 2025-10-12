@@ -1,0 +1,16 @@
+.bookingdiv {
+  @apply bg-white rounded-lg z-10 py-8  mt-10;
+}
+.modalContent3 {
+  @apply max-w-xs md:max-w-2xl md:w-[630px] flex flex-col;
+}
+.modalContent2 {
+  @apply max-w-xs md:max-w-sm md:w-[400px] flex flex-col justify-center p-5 -mt-7 items-center;
+}
+
+.textarea {
+  @apply w-full mt-1 border focus:outline-none rounded-md px-4 py-3.5 bg-gray-50 border-gray-300;
+}
+.inputSpan {
+  @apply w-4 h-4;
+}

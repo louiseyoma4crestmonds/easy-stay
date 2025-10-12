@@ -15,6 +15,8 @@ function CustomDropdown(props: CustomDropdownProps) {
     leftIcon,
     spanClassName,
     ImgClass,
+    hideButtonLabel,
+    toggleLabel,
   } = props;
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -38,7 +40,11 @@ function CustomDropdown(props: CustomDropdownProps) {
     onChange?.(option);
     setOpen(false);
 
-    // ✅ Direct navigation when an option has a `link` property
+    if (option.action) {
+      option.action(); // trigger modal or custom behavior
+    }
+
+    //  Direct navigation when an option has a `link` property
     if (option.link) {
       router.push(option.link);
     }
@@ -73,6 +79,9 @@ function CustomDropdown(props: CustomDropdownProps) {
           {leftIcon && (
             <img src={leftIcon} alt="Left icon" className={ImgClass} />
           )}
+
+          {toggleLabel && <span>{toggleLabel}</span>}
+
           {value?.flag && (
             <img
               src={value.flag}
@@ -85,16 +94,31 @@ function CustomDropdown(props: CustomDropdownProps) {
               {value.code}
             </span>
           )}
-          {!value?.flag && !value?.code && (
+          {!hideButtonLabel && !value?.flag && !value?.code && (
             <span>{value?.label ?? value?.name ?? placeholder}</span>
           )}
+          {/* {!value?.flag && !value?.code && (
+            <span>{value?.label ?? value?.name ?? placeholder}</span>
+          )} */}
         </span>
-        {toggleIcon && (
+        {/* {toggleIcon && (
           <img
             src={toggleIcon}
             alt="Toggle dropdown"
             className={`w-4 h-4 ml-6 transition-transform duration-300 ${
               open ? "rotate-180" : ""
+            }`}
+          />
+        )} */}
+        {toggleIcon && (
+          <img
+            src={toggleIcon}
+            alt="Toggle dropdown"
+            className={`w-4 h-4 ml-6 ${
+              toggleIcon.includes("ellipsis")
+                ? ""
+                : "transition-transform duration-300 " +
+                  (open ? "rotate-180" : "")
             }`}
           />
         )}

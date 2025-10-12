@@ -9,7 +9,7 @@
   @apply px-3 py-1.5 cursor-pointer bg-white font-medium text-sm border border-gray-300  text-gray-500;
 }
 .paginationDivActive {
-  @apply bg-primary-600 text-white px-3 py-1.5  cursor-pointer font-medium text-sm;
+  @apply px-3 py-1.5  cursor-pointer font-medium text-sm;
 }
 .paginationDivBtn {
   @apply cursor-pointer bg-white  px-3 py-1.5  text-gray-500 flex items-center;
