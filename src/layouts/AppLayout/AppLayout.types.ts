@@ -11,4 +11,5 @@ export type AppLayoutProps = {
   actionButtons?: React.ReactNode; // optional buttons beside title/subtitle
   tabs?: React.ReactNode;
   verificationPending?: boolean;
+  secondarySidebar?: React.ReactNode;
 };

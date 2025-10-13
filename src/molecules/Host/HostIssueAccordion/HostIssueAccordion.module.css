@@ -1,0 +1,18 @@
+.btn1 {
+  @apply border border-gray-200 bg-white rounded-lg px-3 py-2 text-sm font-medium text-gray-800;
+}
+.btn2 {
+  @apply bg-transparent border border-gray-200 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-800;
+}
+.maindiv {
+  @apply bg-white rounded-lg py-4 w-full;
+}
+.btn1 {
+  @apply border border-gray-200 bg-white rounded-lg px-5 py-3 text-base font-medium text-gray-800;
+}
+.modalContent3 {
+  @apply max-w-xs md:max-w-sm flex flex-col justify-center p-5 -mt-8 items-center;
+}
+.modalContent2 {
+  @apply max-w-md  text-gray-900 font-semibold text-lg flex flex-col justify-center px-14 py-8 items-center -mt-7;
+}

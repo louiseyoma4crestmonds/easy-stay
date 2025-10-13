@@ -10,7 +10,7 @@ type Step3PropVerificationProps = {
   onBack: () => void;
   properties: Property[];
   backToStep1: () => void;
-  setShowSuccess: (arg: boolean) => void;
+  setSaveProperty: (arg: boolean) => void;
   setShowModal: React.Dispatch<
     React.SetStateAction<"none" | "terms" | "quality" | "privacy">
   >;
@@ -20,7 +20,7 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
   const {
     onProceed,
     onBack,
-    setShowSuccess,
+    setSaveProperty,
     properties,
     backToStep1,
     setShowModal,
@@ -31,7 +31,7 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
   const payFees = () => {
     //CONSUME API
 
-    setShowSuccess(true);
+    setSaveProperty(true);
   };
 
   return (

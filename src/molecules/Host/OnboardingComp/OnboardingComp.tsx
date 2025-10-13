@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Step1Property from "../Step1Property";
 import { Property } from "../Step1Property/Step1Property";
 import Step2Identity from "../Step2Identity";
@@ -8,10 +8,17 @@ import Terms from "@/atoms/Host/Terms";
 import styles from "./OnboardingComp.module.css";
 import Quality from "@/atoms/Host/Quality";
 import Cookies from "@/atoms/Host/Cookies";
+import { registerProperty } from "src/pages/api/property";
 
-function OnboardingComp() {
+type componentProp = {
+  token: string;
+};
+
+function OnboardingComp(props: componentProp) {
+  const { token } = props;
   const [step, setStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [saveProperty, setSaveProperty] = useState(false);
   const [properties, setProperties] = useState<Property[]>([
     {
       id: 1,
@@ -35,6 +42,17 @@ function OnboardingComp() {
     setStep(1);
   };
 
+  useEffect(() => {
+    if (saveProperty) {
+      // Submit to properties data to server if it is successfull then show payment page.
+      registerProperty(properties, token).then((response: any) => {
+        if (response.status === 201) {
+          setShowSuccess(true);
+        }
+      });
+    }
+  }, [saveProperty]);
+
   return (
     <div
       className={` ${showSuccess ? "md:max-w-3xl" : "md:max-w-5xl"}  mx-auto p-6 space-y-8`}
@@ -49,7 +67,7 @@ function OnboardingComp() {
           ].map((label, i) => {
             const index = i + 1;
             const active = step === index;
-            const completed = step > index;
+            // const completed = step > index;
             const circleColor = active
               ? "border-blue-600 text-primary-600 "
               : "border-gray-500 text-gray-500";
@@ -101,7 +119,7 @@ function OnboardingComp() {
             onProceed={next}
             onBack={back}
             backToStep1={backToStep1}
-            setShowSuccess={setShowSuccess}
+            setSaveProperty={setSaveProperty}
             setShowModal={setShowModal}
           />
         )}

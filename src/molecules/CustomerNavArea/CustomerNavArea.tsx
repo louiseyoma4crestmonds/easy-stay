@@ -50,12 +50,11 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
   const router = useRouter();
   const [reportAnIssue, setReportAnIssue] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const handleSignupClick = () => router.push("/guest/signup");
+  const handleSignupClick = () => router.push("/signup");
   const goToHomepage = () => router.push("/");
 
-  const gotToHostSignup = () => {
-    console.log("Redirect to signin");
-    router.push("/host/signup");
+  const registerApartment = () => {
+    router.push("/register-your-apartment");
   };
 
   return (
@@ -125,7 +124,7 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
               menuOptions={guestMenuOptions}
             />
             {!isOtherPages && (
-              <button className={styles.btn1} onClick={gotToHostSignup}>
+              <button className={styles.btn1} onClick={registerApartment}>
                 Register Your Apartment
               </button>
             )}

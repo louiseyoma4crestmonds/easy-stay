@@ -39,7 +39,10 @@ function Tooltip({ content, children, position = "top" }: TooltipProps) {
           pointer-events-none
           transition-opacity duration-200
           group-hover:opacity-100
-          whitespace-nowrap
+          whitespace-normal
+         
+                   
+          overflow-y-auto 
           z-50
         `}
       >

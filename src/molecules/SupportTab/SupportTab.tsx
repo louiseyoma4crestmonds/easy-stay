@@ -41,7 +41,7 @@ function SupportTab() {
     //   });
 
     //   if (res.status === 200) {
-    //     setErrorMsg("✅ Ticket submitted successfully!");
+    //     setErrorMsg(" Ticket submitted successfully!");
     //     setSelectedIssue(undefined);
     //     setDescription("");
     //   } else {

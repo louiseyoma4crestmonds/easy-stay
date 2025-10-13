@@ -148,6 +148,14 @@ export type HostPayment = {
   }[];
 };
 
+export type HostDocs = {
+  id: number;
+  doc: string;
+  propertyId: number;
+  propertyAdd: string;
+  dateSub: string;
+};
+
 export type HostCommission = {
   id: string;
   comEarned: number;
@@ -156,6 +164,35 @@ export type HostCommission = {
   dateBooked?: string; // ISO date
   status: PaymentStatus;
 };
+
+export type HostRefundPercent = {
+  id: number;
+  hours: string;
+  refundType: string;
+  percentage: number;
+  date: string;
+};
+
+export type HostIssues = {
+  id: number;
+  message: string;
+  timing?: number;
+  property: {
+    id: number;
+    address: string;
+    status: "pending" | "approved" | "rejected";
+    number_of_aprts: number;
+    apartments?: {
+      id: number;
+      apartmentType: string;
+      status: "pending" | "approved" | "rejected";
+    }[];
+  };
+};
+
+const SHARED_ISSUE_MESSAGE =
+  "1 apartment and 1 property requires additional documentation before it can be approved. Please review and resubmit the required documents. within specified timing.";
+const SHARED_ISSUE_TIMING = 48;
 
 // Define FAQs for Guests and Hosts
 export const guestFAQs: FAQ[] = [
@@ -538,5 +575,141 @@ export const HOST_MOCK_COMMISSIONS: HostCommission[] = [
     status: "pending",
 
     bookingAmount: 250000,
+  },
+];
+
+export const HOST_MOCK_DOCS: HostDocs[] = [
+  {
+    id: 1,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of occupancy",
+    dateSub: "04/05/2025",
+  },
+  {
+    id: 2,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of occupancy",
+    dateSub: "04/05/2025",
+  },
+  {
+    id: 3,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of ownership",
+    dateSub: "04/05/2025",
+  },
+  {
+    id: 4,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of occupancy",
+    dateSub: "04/05/2025",
+  },
+  {
+    id: 5,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of occupancy",
+    dateSub: "04/05/2025",
+  },
+  {
+    id: 6,
+    propertyAdd: "17, Kaizen Road, Victoria Island, Lagos",
+    propertyId: 24,
+    doc: "Certificate of occupancy",
+    dateSub: "04/05/2025",
+  },
+];
+
+export const HOST_MOCK_REFUNDS_PERCENT: HostRefundPercent[] = [
+  {
+    id: 1,
+    hours: "2 hours",
+    refundType: "No Refund",
+    percentage: 0,
+    date: "04/05/2025",
+  },
+  {
+    id: 2,
+    hours: "8 hours",
+    refundType: "Partial Refund",
+    percentage: 20,
+    date: "04/05/2025",
+  },
+  {
+    id: 3,
+    hours: "24 hours",
+    refundType: "Partial Refund",
+    percentage: 50,
+    date: "04/05/2025",
+  },
+  {
+    id: 4,
+    hours: "48 hours above",
+    refundType: "Full Refund",
+    percentage: 90,
+    date: "04/05/2025",
+  },
+];
+
+export const HOST_MOCK_ISSUES: HostIssues[] = [
+  {
+    id: 1,
+    message: SHARED_ISSUE_MESSAGE,
+    timing: SHARED_ISSUE_TIMING,
+    property: {
+      id: 1,
+      address: "23 Lekki Phase 1, Lagos",
+      status: "approved",
+      number_of_aprts: 3,
+      apartments: [
+        {
+          id: 101,
+          apartmentType: "2 Bedroom Apartment",
+          status: "approved",
+        },
+        {
+          id: 102,
+          apartmentType: "Studio",
+          status: "rejected",
+        },
+        {
+          id: 103,
+          apartmentType: "1 Bedroom Apartment",
+          status: "approved",
+        },
+      ],
+    },
+  },
+  {
+    id: 2,
+    message: SHARED_ISSUE_MESSAGE,
+    timing: SHARED_ISSUE_TIMING,
+    property: {
+      id: 2,
+      address: "17 Kaizen Road, Victoria Island, Lagos",
+      status: "rejected",
+      number_of_aprts: 4,
+    },
+  },
+  {
+    id: 3,
+    message: SHARED_ISSUE_MESSAGE,
+    timing: SHARED_ISSUE_TIMING,
+    property: {
+      id: 3,
+      address: "10 Allen Avenue, Ikeja, Lagos",
+      status: "approved",
+      number_of_aprts: 2,
+      apartments: [
+        {
+          id: 202,
+          apartmentType: "Studio Apartment",
+          status: "rejected",
+        },
+      ],
+    },
   },
 ];

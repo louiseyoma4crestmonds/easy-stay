@@ -21,9 +21,10 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
     lastName,
     tabs,
     actionButtons,
+    secondarySidebar,
   } = props;
 
-  const verificationPending = true;
+  const verificationPending = false;
   // const mainClassName = classNames({
   //   [styles.appMainWrapperWithNavigation]: !noNavigation,
   // });
@@ -72,8 +73,15 @@ function AppLayout(props: AppLayoutProps): JSX.Element {
           </>
         )}
       </div>
+      {/*Content area with optional secondary sidebar UNDER the header */}
+      <div className="flex flex-1 w-full  ">
+        {secondarySidebar && (
+          <div className="hidden md:block w-48">{secondarySidebar}</div>
+        )}
+        <div className={styles.pageContent}>{children}</div>
+      </div>
       {/* Page content */}
-      <div className={styles.pageContent}>{children}</div>
+      {/* <div className={styles.pageContent}>{children}</div> */}
     </main>
   );
 }
