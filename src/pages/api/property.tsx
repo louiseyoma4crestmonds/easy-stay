@@ -118,3 +118,16 @@ export async function searchWithFilterParameters(filterParameters: any) {
     .catch((err) => err.message);
   return response;
 }
+
+export async function registerProperty(properties: any, token: string) {
+  const response = await axios
+    .post(`${endpointUrl}/easystay/register/properties`, properties, {
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => res);
+
+  return response;
+}

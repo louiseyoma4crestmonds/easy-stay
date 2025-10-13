@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./Step1Property.module.css";
-import { getLocationFilterParameters } from "src/pages/api/property";
+import {
+  getApartmentTypes,
+  getLocationFilterParameters,
+  getLocations,
+} from "src/pages/api/property";
 import CustomDropdown from "@/molecules/CustomDropdown";
 import { DropdownOption } from "@/molecules/CustomDropdown/CustomDropdown.types";
 import Button from "@/atoms/Button";
@@ -29,17 +33,6 @@ type Step1PropertyProps = {
   onProceed: () => void;
 };
 
-const locations = [
-  { name: "lagos", label: "Lagos" },
-  { name: "abuja", label: "Abuja" },
-  { name: "port harcourt", label: "Port Harcourt" },
-];
-const apartmentTypes = [
-  { name: "studio", label: "Studio" },
-  { name: "1-bedroom", label: "1-Bedroom" },
-  { name: "2-bedroom", label: "2-Bedroom" },
-];
-
 function Step1Property({
   properties,
   setProperties,
@@ -50,6 +43,19 @@ function Step1Property({
     getLocationFilterParameters().then((res: any) => {
       console.log("res", res.data.data.location);
       setPropertyLocations(res.data.data);
+    });
+  }, []);
+
+  const [availableLocations, setAvailableLocations] = useState<any>([]);
+  const [availableApartmentTypes, setAvailableApartmentTypes] = useState([]);
+
+  useEffect(() => {
+    getLocations().then((response: any) => {
+      setAvailableLocations(response.data.data);
+    });
+
+    getApartmentTypes().then((response: any) => {
+      setAvailableApartmentTypes(response.data.data);
     });
   }, []);
 
@@ -292,7 +298,7 @@ function Step1Property({
                       </label>
                       <CustomDropdown
                         placeholder="Select"
-                        options={locations}
+                        options={availableLocations}
                         value={property.location}
                         onChange={(option) =>
                           updatePropertyField(property.id, "location", option)
@@ -494,7 +500,7 @@ function Step1Property({
                           </label>
                           <CustomDropdown
                             placeholder="Select"
-                            options={apartmentTypes}
+                            options={availableApartmentTypes}
                             value={apt.type}
                             onChange={(option) =>
                               updateApartmentField(

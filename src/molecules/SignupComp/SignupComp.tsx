@@ -50,6 +50,8 @@ function SignupComp({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [emailExistError, setEmailAlreadyExistsError] = useState(false);
+
   interface Errors {
     [key: string]: string;
   }
@@ -110,7 +112,11 @@ function SignupComp({
           console.log("sign up response: ", response);
           if (response?.data?.code === 208) {
             // Show a mordal that says email already exists
-            newErrors.notExist = "Email already exists";
+            // newErrors.notExist = "Email already exists";
+            setEmailAlreadyExistsError(true);
+            setTimeout(() => {
+              setEmailAlreadyExistsError(false);
+            }, 2000);
           }
           if (response?.data?.code === 201) {
             // Show otp mordal
@@ -225,6 +231,11 @@ function SignupComp({
             />
           </div>
           {errors.email && <p className={styles.errMsg}>{errors.email}</p>}
+          {emailExistError ? (
+            <p className={styles.errMsg}>Email Already Exists</p>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="mb-4">

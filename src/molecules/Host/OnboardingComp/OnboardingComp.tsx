@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Step1Property from "../Step1Property";
 import { Property } from "../Step1Property/Step1Property";
 import Step2Identity from "../Step2Identity";
@@ -8,10 +8,17 @@ import Terms from "@/atoms/Host/Terms";
 import styles from "./OnboardingComp.module.css";
 import Quality from "@/atoms/Host/Quality";
 import Cookies from "@/atoms/Host/Cookies";
+import { registerProperty } from "src/pages/api/property";
 
-function OnboardingComp() {
+type componentProp = {
+  token: string;
+};
+
+function OnboardingComp(props: componentProp) {
+  const { token } = props;
   const [step, setStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [saveProperty, setSaveProperty] = useState(false);
   const [properties, setProperties] = useState<Property[]>([
     {
       id: 1,
@@ -34,6 +41,17 @@ function OnboardingComp() {
   const backToStep1 = () => {
     setStep(1);
   };
+
+  useEffect(() => {
+    if (saveProperty) {
+      // Submit to properties data to server if it is successfull then show payment page.
+      registerProperty(properties, token).then((response: any) => {
+        if (response.status === 201) {
+          setShowSuccess(true);
+        }
+      });
+    }
+  }, [saveProperty]);
 
   return (
     <div
@@ -101,7 +119,7 @@ function OnboardingComp() {
             onProceed={next}
             onBack={back}
             backToStep1={backToStep1}
-            setShowSuccess={setShowSuccess}
+            setSaveProperty={setSaveProperty}
             setShowModal={setShowModal}
           />
         )}

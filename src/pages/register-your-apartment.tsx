@@ -51,7 +51,7 @@ export default function RegisterYourApartment() {
         buttons={[
           {
             label: "Register Your Apartment Now",
-            link: "/host/signup",
+            link: "/host/onboarding",
             variant: "primary",
           },
         ]}
@@ -164,7 +164,7 @@ export default function RegisterYourApartment() {
         buttons={[
           {
             label: "Register Your Apartment Now!",
-            link: "/signup",
+            link: "/host/onboarding",
             variant: "primary",
           },
         ]}
