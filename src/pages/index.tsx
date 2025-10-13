@@ -99,7 +99,7 @@ function Home(): JSX.Element {
   if (isLoading) return <PageSkeletons />;
 
   const points = 100;
-  console.log("isloggedin", isLoggedIn);
+
   return (
     <main className="min-h-screen flex flex-col ">
       <HeroSec

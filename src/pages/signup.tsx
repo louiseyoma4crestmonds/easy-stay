@@ -12,7 +12,6 @@ export default function SignupPage() {
 
   const router = useRouter();
   const handleSigninClick = () => {
-    console.log("Redirect to signin");
     router.push("/guest/signin");
   };
 
@@ -22,10 +21,10 @@ export default function SignupPage() {
       <div className="hidden md:block w-full md:w-1/2 ">
         {" "}
         <SignupLeftside
-          text="Log In"
+          text="Sign In"
           onClick={handleSigninClick}
-          title=" Simplify Your Apartment Management Today!"
-          subtitle="Join our platform and effortlessly manage your apartments. From tenant communication to rent collection, we've got you covered."
+          title=" Ready to find the perfect Short let"
+          subtitle="We've got you covered."
         />{" "}
       </div>
 
@@ -33,7 +32,11 @@ export default function SignupPage() {
       {showOtp ? (
         <div className="w-full md:w-1/2">
           {" "}
-          <OtpComp email={otpEmail} password={otpPassword} isHost={true} />{" "}
+          <OtpComp
+            email={otpEmail}
+            password={otpPassword}
+            isHost={false}
+          />{" "}
         </div>
       ) : (
         <div className="w-full md:w-1/2">
@@ -42,7 +45,7 @@ export default function SignupPage() {
             setShowOtp={setShowOtp}
             setOtpEmail={setOtpEmail}
             setOtpPassword={setOtpPassword}
-            isHost={true}
+            isHost={false}
           />{" "}
         </div>
       )}

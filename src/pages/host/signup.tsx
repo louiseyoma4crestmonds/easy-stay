@@ -42,11 +42,6 @@ export default function SignupPage() {
       ) : (
         <div className="w-full md:w-1/2">
           {" "}
-          <HostSignupComp
-            setShowOtp={setShowOtp}
-            setOtpEmail={setOtpEmail}
-            setOtpPassword={setOtpPassword}
-          />{" "}
           <SignupComp
             setShowOtp={setShowOtp}
             setOtpEmail={setOtpEmail}

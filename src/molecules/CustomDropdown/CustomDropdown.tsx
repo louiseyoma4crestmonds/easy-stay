@@ -56,6 +56,7 @@ function CustomDropdown(props: CustomDropdownProps) {
     // const showName = option.name;
     const showCode = option.code;
     const showLabel = option.label;
+    const showName = option.name;
 
     return (
       <span className="flex items-center gap-2">
@@ -63,6 +64,7 @@ function CustomDropdown(props: CustomDropdownProps) {
         {/* {showName && <span>{option.name}</span>} */}
         {showCode && <span className="text-gray-500">{option.code}</span>}
         {showLabel && <span>{option.label}</span>}
+        {showName && <span>{option.name}</span>}
       </span>
     );
   };
