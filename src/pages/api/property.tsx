@@ -9,6 +9,14 @@ export async function getLocations() {
   return response;
 }
 
+export async function getLocationNeighbourhoods(locationId: any) {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/neighbourhood/${locationId}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
 export async function getPropertiesNearby(
   usersLattitude: string,
   usersLongitude: String
@@ -114,6 +122,18 @@ export async function searchWithFilterParameters(filterParameters: any) {
 
   const response = await axios
     .post(`${endpointUrl}/easystay/filter-parameters/search`, data)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function propertiesSearch(filterParameters: any) {
+  const data = {
+    filterParameters,
+  };
+
+  const response = await axios
+    .post(`${endpointUrl}/easystay/properties-search`, data)
     .then((res) => res)
     .catch((err) => err.message);
   return response;

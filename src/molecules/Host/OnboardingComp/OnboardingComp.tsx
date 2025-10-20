@@ -27,6 +27,7 @@ function OnboardingComp(props: componentProp) {
       deed: null,
       webLink: "",
       open: true,
+      neighbourhood: undefined,
       apartments: [{ id: 1, type: undefined, images: [], open: true }],
     },
   ]);
