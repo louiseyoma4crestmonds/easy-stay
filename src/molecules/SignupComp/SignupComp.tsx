@@ -132,7 +132,17 @@ function SignupComp({
   return (
     <div className={styles.maindiv}>
       {/* Logo at top center */}
-      <div className=" flex  mt-20 justify-center  ">
+      <div
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          router.push({ pathname: "/" });
+        }}
+        onClick={() => {
+          router.push({ pathname: "/" });
+        }}
+        className=" flex  mt-20 justify-center  "
+      >
         {" "}
         <Image
           src={logoText}
@@ -383,6 +393,7 @@ function SignupComp({
           <Button variant="primary" width="full">
             <button type="submit">Create Account</button>
           </Button>
+          {/*
           <Button
             type="button"
             variant="accentWithImg"
@@ -394,6 +405,7 @@ function SignupComp({
           >
             Sign up with Google
           </Button>
+          */}
         </div>
       </form>
 

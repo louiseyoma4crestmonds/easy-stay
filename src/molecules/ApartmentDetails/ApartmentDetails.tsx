@@ -1,12 +1,17 @@
 import Image from "next/image";
 import styles from "./ApartmentDetails.module.css";
 import { ApartmentDetailsProps } from "./ApartmentDetails.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Moment from "react-moment";
 import ReviewList from "../ReviewList";
 import RatingOverview from "../RatingOverview";
 import RulesSection from "../RulesSection";
 import RightsideContent from "../RightsideContent";
 import Modal from "../Modal";
+import {
+  getPropertyAmenities,
+  getPropertyReviews,
+} from "src/pages/api/property";
 
 function ApartmentDetails(props: ApartmentDetailsProps) {
   const { isLoggedIn, apartment, isMobile } = props;
@@ -14,6 +19,9 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+
+  const [reviews, setReviews] = useState<any>([]);
+  const [amenities, setAmenities] = useState<any>([]);
 
   // 🔥 Ensure apartment.photo is always an array
   let photos: string[] = [];
@@ -44,6 +52,16 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
       console.error("Failed to copy link:", err);
     }
   };
+
+  // Get Reviews
+  useEffect(() => {
+    getPropertyReviews(apartment.id).then((response: any) => {
+      setReviews(response.data.data);
+    });
+    getPropertyAmenities(apartment.id).then((response: any) => {
+      setAmenities(response.data.data);
+    });
+  }, [apartment.id]);
 
   return (
     <div className="bg-gray-50 pb-16 ">
@@ -178,7 +196,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
             <div className="bg-white rounded-lg p-5 ">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center ">
                 <p className="font-bold text-2xl text-primary-600 ">
-                  {apartment.rate}
+                  ₦{apartment.price}/Night
                 </p>
                 <div className="flex flex-row gap-2 font-normal text-gray-800 text-base ">
                   <div className="flex items-center gap-1 px-2 border-r   ">
@@ -191,7 +209,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
 
                     <span> {apartment.rating} </span>
                   </div>
-                  {/* <p>{apartment.numberOfReviews} Reviews </p>{" "} */}
+                  <p>{reviews.length} Reviews </p>{" "}
                 </div>
               </div>{" "}
               <p className="text-gray-600 font-normal text-sm py-7 border-b ">
@@ -206,7 +224,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                   <p className="bg-gray-100 px-3 md:w-[100px] mt-1 rounded-md text-gray-900 font-medium text-sm ">
                     {" "}
                     {/* {apartment.apartmentType} Bedrooms */}
-                    {apartment.rooms.name}
+                    {apartment.type.name}
                   </p>
                 </div>
                 <div className="flex flex-col justify-start md:w-[30%] ">
@@ -214,7 +232,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                     Rooms{" "}
                   </p>
                   <p className=" text-gray-900 font-medium text-xs md:text-sm ">
-                    {apartment.rooms.number}{" "}
+                    {apartment.rooms}{" "}
                   </p>
                 </div>
                 <div className="flex flex-col justify-start  md:w-[30%]  ">
@@ -222,7 +240,10 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                     No of Guests{" "}
                   </p>
                   <p className=" text-gray-900 font-medium text-sm ">
-                    {apartment.number_off_allowed_guests}{" "}
+                    {apartment.number_off_allowed_infants +
+                      apartment.number_off_allowed_adults +
+                      apartment.number_off_allowed_children +
+                      apartment.number_off_allowed_pets}{" "}
                   </p>
                 </div>
               </div>
@@ -258,8 +279,10 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
             {/*THIS IS FOR JUST MOBILE*/}
             <div className=" block mt-6 w-full md:hidden  ">
               <RightsideContent
+                apartment={apartment}
                 guests={apartment.number_off_allowed_guests}
                 isLoggedIn={isLoggedIn}
+                price={apartment.price}
                 isMobile={isMobile}
               />
             </div>
@@ -268,8 +291,8 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
             <div className=" bg-white rounded-lg p-5 mt-6 ">
               <p className="text-gray-500 font-normal text-sm ">Amenities </p>
 
-              {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-1 mt-4 gap-x-3">
-                {apartment.amenities?.map((amenity, index) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-1 mt-4 gap-x-3">
+                {amenities?.map((amenity: any, index: number) => (
                   <div
                     key={index}
                     className="flex items-center text-gray-800 text-sm font-medium"
@@ -280,10 +303,10 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                       width={24}
                       height={24}
                     />
-                    <span className="pl-2"> {amenity} </span>
+                    <span className="pl-2"> {amenity.amenity.name} </span>
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
 
             {/*RULES*/}
@@ -311,7 +334,15 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                 <p className="text-gray-500 font-normal text-sm ">
                   Date Available{" "}
                 </p>
-                <p>June 16 2025 - July 12, 2025</p>
+                <p>
+                  <Moment format="DD/M/YYYY">
+                    {apartment.from_date_available}
+                  </Moment>{" "}
+                  -{" "}
+                  <Moment format="DD/M/YYYY">
+                    {apartment.to_date_available}
+                  </Moment>
+                </p>
               </div>
             </div>
 
@@ -328,8 +359,10 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
           {/*RIGHTSIDE CONTENT*/}
           <div className=" hidden md:block space-y-4 w-full md:w-[30%]   ">
             <RightsideContent
+              apartment={apartment}
               guests={apartment.number_off_allowed_guests}
               isLoggedIn={isLoggedIn}
+              price={apartment.price}
               isMobile={isMobile}
             />
           </div>
@@ -358,7 +391,7 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
               <div className="flex flex-col ">
                 <div className="flex flex-row items-center gap-2 ">
                   <p className="text-gray-900 font-medium text-base ">
-                    Luxury Suite, Lekki
+                    {apartment.name}
                   </p>
                   <div>
                     <Image
@@ -367,21 +400,23 @@ function ApartmentDetails(props: ApartmentDetailsProps) {
                       height={16}
                     />
                     <span className="text-gray-400 ml-0.5 font-normal text-sm ">
-                      4.4
+                      {apartment.rating}
                     </span>
                   </div>
                 </div>
                 <div className="text-primary-600 font-bold text-sm ">
-                  ₦100,000/Night
+                  ₦{apartment.price}/Night
                 </div>
                 <div className="flex flex-row items-center gap-2 ">
                   <p className="bg-gray-100 px-3 mt-2 md:mt-1 rounded-md text-gray-900 font-medium text-sm ">
                     {" "}
-                    2 Bedrooms
+                    {apartment.type.name}
                   </p>
                   <p className="bg-gray-100 px-3 hidden md:block  mt-1 rounded-md text-gray-900 font-medium text-sm ">
-                    {" "}
-                    2 Guests
+                    {apartment.number_off_allowed_infants +
+                      apartment.number_off_allowed_adults +
+                      apartment.number_off_allowed_children +
+                      apartment.number_off_allowed_pets}
                   </p>
                 </div>
               </div>

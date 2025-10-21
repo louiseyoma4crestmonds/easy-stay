@@ -50,7 +50,7 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
   const router = useRouter();
   const [reportAnIssue, setReportAnIssue] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const handleSignupClick = () => router.push("/signup");
+  const handleSignupClick = () => router.push("/signin");
   const goToHomepage = () => router.push("/");
 
   const registerApartment = () => {
@@ -89,6 +89,9 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
 
         <div
           onClick={goToHomepage}
+          role="button"
+          tabIndex={0}
+          onKeyDown={goToHomepage}
           className=" flex items-center justify-center cursor-pointer   "
         >
           {" "}
@@ -101,6 +104,25 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
         </div>
 
         {isLoggedIn && <CustomerTabs defaultTextColor={defaultTextColor} />}
+        {!isMobile && (
+          <div className="flex justify-between items-center gap-2 ">
+            <MenuModal
+              buttonClassName={isOnImage ? styles.btndiv : styles.btndivBanner}
+              dropdownClassName={
+                isOnImage ? styles.dropdowndiv : styles.dropdowndivBanner
+              }
+              ImgClass="w-6 h-6 "
+              leftIcon={leftIcon}
+              onReportIssue={() => setReportAnIssue(true)}
+              menuOptions={guestMenuOptions}
+            />
+            {!isOtherPages && (
+              <button className={styles.btn1} onClick={registerApartment}>
+                Register Your Apartment
+              </button>
+            )}
+          </div>
+        )}
 
         {isLoggedIn && (
           <CustomerNavLeft

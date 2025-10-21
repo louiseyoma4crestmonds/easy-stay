@@ -21,7 +21,6 @@ function LoginComp() {
     })
       .then((res) => {
         if (res?.status === 200) {
-          console.log("login response", res);
           router.push({ pathname: "/" });
         } else if (res?.status === 401) {
           setError("Wrong Login credentials");
@@ -53,19 +52,27 @@ function LoginComp() {
   };
 
   const handleForgotPasswordClick = () => {
-    console.log("Redirect to forgot password");
-    router.push("/guest/recover-password");
+    router.push("/recover-password");
   };
 
   const handleSignupClick = () => {
-    console.log("Redirect to signup");
-    router.push("/guest/signup");
+    router.push("/signup");
   };
 
   return (
     <div className={styles.maindiv}>
       {/* Logo at top center */}
-      <div className=" flex  mt-24 justify-center  ">
+      <div
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {
+          router.push({ pathname: "/" });
+        }}
+        onClick={() => {
+          router.push({ pathname: "/" });
+        }}
+        className=" flex  mt-24 justify-center  "
+      >
         {" "}
         <Image
           src={logoText}
@@ -168,6 +175,7 @@ function LoginComp() {
           <Button type="submit" variant="primary" width="full">
             Log in
           </Button>
+          {/*
 
           <Button
             variant="accentWithImg"
@@ -180,6 +188,7 @@ function LoginComp() {
           >
             Sign in with Google
           </Button>
+          */}
         </div>
       </form>
 

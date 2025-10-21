@@ -21,7 +21,15 @@ export type property = {
   latitude: number;
   rating: number;
   rate: string;
-  rooms: { id: number; name: string; number: number };
+  price: number;
+  rooms: number;
+  to_date_available: any;
+  from_date_available: any;
+  number_off_allowed_adults: number;
+  number_off_allowed_infants: number;
+  number_off_allowed_pets: number;
+  number_off_allowed_children: number;
+  type: { id: number; name: string };
   status: { id: number; name: string };
   photo: string;
   address: string;

@@ -2,7 +2,7 @@ import Button from "@/atoms/Button";
 import styles from "./Step3PropVerification.module.css";
 import { Property } from "../Step1Property/Step1Property";
 import Properties from "src/pages/guest/properties";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Terms from "@/atoms/Host/Terms";
 
 type Step3PropVerificationProps = {
@@ -27,12 +27,23 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
   } = props;
 
   const [agreed, setAgreed] = useState(false);
+  const [totalApartments, setTotalApartments] = useState<number>(0);
 
   const payFees = () => {
     //CONSUME API
 
     setSaveProperty(true);
   };
+
+  useEffect(() => {
+    let apt_count = 0;
+    for (let i = 0; i < properties.length; i += 1) {
+      if (properties[i].apartments.length > 0) {
+        apt_count += properties[i].apartments.length;
+        setTotalApartments(apt_count);
+      }
+    }
+  }, [properties]);
 
   return (
     <div>
@@ -83,7 +94,9 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
               <p className="text-gray-500 font-normal text-sm ">
                 Properties Registered
               </p>
-              <p className="font-semibold text-xl text-gray-800 ">3</p>
+              <p className="font-semibold text-xl text-gray-800 ">
+                {properties?.length}
+              </p>
             </div>
           </div>
 
@@ -100,7 +113,9 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
               <p className="text-gray-500 font-normal text-sm ">
                 Total Apartments
               </p>
-              <p className="font-semibold text-xl text-gray-800 ">12 </p>
+              <p className="font-semibold text-xl text-gray-800 ">
+                {totalApartments}
+              </p>
             </div>
           </div>
 
@@ -189,17 +204,23 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
         <p className="text-gray-900 font-semibold text-xl ">Payment Summary</p>
         <div className="flex md:flex-row items-center border-b justify-between py-4 ">
           <p className="text-gray-600 text-base font-medium ">
-            Subtotal (3 properties)
+            Subtotal ({properties.length} properties)
           </p>
-          <p className="text-gray-800 font-semibold text-xl ">150000</p>
+          <p className="text-gray-800 font-semibold text-xl ">
+            {properties?.length * 50000}
+          </p>
         </div>
         <div className="flex md:flex-row items-center border-b justify-between py-4 ">
           <p className="text-gray-600 text-base font-medium ">VAT(7.5%) </p>
-          <p className="text-gray-800 font-semibold text-xl ">11250</p>
+          <p className="text-gray-800 font-semibold text-xl ">
+            {(7.5 / 100) * 50000}
+          </p>
         </div>
         <div className="flex md:flex-row items-center justify-between py-4 ">
           <p className="text-gray-600 text-base font-medium ">Total Amount </p>
-          <p className="text-gray-800 font-semibold text-xl ">161250</p>
+          <p className="text-gray-800 font-semibold text-xl ">
+            {(7.5 / 100) * 50000 + properties?.length * 50000}
+          </p>
         </div>
       </div>
 
@@ -241,7 +262,7 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
           Back
         </button>
         <Button variant="primary" disabled={!agreed} onClick={payFees}>
-          Pay 161120
+          Pay {(7.5 / 100) * 50000 + properties?.length * 50000}
         </Button>
       </div>
     </div>

@@ -3,6 +3,7 @@ import styles from "./Step1Property.module.css";
 import {
   getApartmentTypes,
   getLocationFilterParameters,
+  getLocationNeighbourhoods,
   getLocations,
 } from "src/pages/api/property";
 import CustomDropdown from "@/molecules/CustomDropdown";
@@ -24,6 +25,7 @@ export type Property = {
   deed: File | null;
   webLink: string;
   open: boolean;
+  neighbourhood: DropdownOption | undefined;
   apartments: Apartment[];
 };
 
@@ -47,6 +49,10 @@ function Step1Property({
   }, []);
 
   const [availableLocations, setAvailableLocations] = useState<any>([]);
+  const [choosenLocation, setChoosenLocation] = useState<any>();
+  const [availableNeighbourhoods, setAvailableNeighbourhoods] = useState<any>(
+    []
+  );
   const [availableApartmentTypes, setAvailableApartmentTypes] = useState([]);
 
   useEffect(() => {
@@ -58,6 +64,14 @@ function Step1Property({
       setAvailableApartmentTypes(response.data.data);
     });
   }, []);
+
+  useEffect(() => {
+    getLocationNeighbourhoods(choosenLocation?.id).then((response: any) => {
+      setAvailableNeighbourhoods(response?.data?.data);
+    });
+  }, [choosenLocation]);
+
+  console.log("Nna mehnnnn: ", choosenLocation);
 
   // helpers
   const toggleProperty = (pid: number) =>
@@ -89,6 +103,7 @@ function Step1Property({
         deed: null,
         webLink: "",
         open: true,
+        neighbourhood: undefined,
         apartments: [{ id: 1, type: undefined, images: [], open: true }],
       },
     ]);
@@ -289,20 +304,21 @@ function Step1Property({
 
             {property.open && (
               <div className="space-y-4 mt-2">
-                <div className="w-full px-6  ">
-                  <div className="w-full flex items-center gap-4 pb-5 md:flex-row border-b ">
+                <div className="w-full px-6 pb-6  border-b">
+                  <div className="w-full flex items-center gap-4 pb-5 md:flex-row  ">
                     {/* Location */}
-                    <div className="w-[40%] ">
+                    <div className="w-[50%] ">
                       <label className="block text-sm text-gray-900 font-medium pb-1">
-                        Location
+                        State
                       </label>
                       <CustomDropdown
                         placeholder="Select"
                         options={availableLocations}
                         value={property.location}
-                        onChange={(option) =>
-                          updatePropertyField(property.id, "location", option)
-                        }
+                        onChange={(option) => {
+                          updatePropertyField(property.id, "location", option);
+                          setChoosenLocation(option);
+                        }}
                         buttonClassName={styles.btndiv}
                         dropdownClassName={styles.dropdowndiv}
                         toggleIcon="/images/chevron-down-outline.png"
@@ -310,33 +326,55 @@ function Step1Property({
                       />
                     </div>
 
-                    {/* Address */}
-                    <div className="w-full md:w-[60%] ">
+                    {/* Neighbourhood */}
+                    <div className="w-[50%] ">
                       <label className="block text-sm text-gray-900 font-medium pb-1">
-                        Address
+                        Neighbourhood
                       </label>
-                      <div className="relative ">
-                        <div className="absolute left-3 top-[50%] -translate-y-1/2">
-                          {" "}
-                          <img
-                            src="/images/map-pin-outline.png"
-                            alt="img"
-                            className="w-5 h-5 "
-                          />{" "}
-                        </div>
-                        <input
-                          placeholder="Input Address"
-                          className={styles.inputdiv}
-                          value={property.address}
-                          onChange={(e) =>
-                            updatePropertyField(
-                              property.id,
-                              "address",
-                              e.target.value
-                            )
-                          }
+                      <CustomDropdown
+                        placeholder="Select"
+                        options={availableNeighbourhoods}
+                        value={property.neighbourhood}
+                        onChange={(option) =>
+                          updatePropertyField(
+                            property.id,
+                            "neighbourhood",
+                            option
+                          )
+                        }
+                        buttonClassName={styles.btndiv}
+                        dropdownClassName={styles.dropdowndiv}
+                        toggleIcon="/images/chevron-down-outline.png"
+                        // spanClassName="flex items-center gap-3"
+                      />
+                    </div>
+                  </div>
+                  {/* Address */}
+                  <div className="w-full md:w-full ">
+                    <label className="block text-sm text-gray-900 font-medium pb-1">
+                      Address
+                    </label>
+                    <div className="relative ">
+                      <div className="absolute left-3 top-[50%] -translate-y-1/2">
+                        {" "}
+                        <img
+                          src="/images/map-pin-outline.png"
+                          alt="img"
+                          className="w-5 h-5 "
                         />{" "}
                       </div>
+                      <input
+                        placeholder="Input Address"
+                        className={styles.inputdiv}
+                        value={property.address}
+                        onChange={(e) =>
+                          updatePropertyField(
+                            property.id,
+                            "address",
+                            e.target.value
+                          )
+                        }
+                      />{" "}
                     </div>
                   </div>
                 </div>

@@ -1,0 +1,29 @@
+import { useRouter } from "next/router";
+import SignupLeftside from "@/molecules/SignupLeftside";
+import RecoverpwdComp from "@/molecules/RecoverpwdComp";
+
+export default function RecoverPassword() {
+  const router = useRouter();
+  const handleSignupClick = () => {
+    router.push("/signup");
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* LEFT SIDE - IMAGE + MODAL */}
+      <div className="hidden md:block w-full md:w-1/2 ">
+        <SignupLeftside
+          text="Create an Account"
+          onClick={handleSignupClick}
+          title=" Ready to find the perfect Short let"
+          subtitle="We've got you covered."
+        />
+      </div>
+
+      {/* RIGHT SIDE - FORM */}
+      <div className="w-full md:w-1/2">
+        <RecoverpwdComp />
+      </div>
+    </div>
+  );
+}

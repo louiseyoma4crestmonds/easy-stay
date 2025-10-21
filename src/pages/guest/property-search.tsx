@@ -7,6 +7,8 @@ import {
   getPopularProperties,
   getPropertiesByLocation,
   getPropertiesNearby,
+  propertiesSearch,
+  searchWithFilterParameters,
 } from "../api/property";
 import HeroSec from "@/molecules/HeroSec";
 import FooterComp from "@/organisms/FooterComp";
@@ -28,7 +30,19 @@ function PropertySearch() {
     pets,
     locationId,
   } = router.query;
-  // const { category, ...query } = router.query;
+
+  console.log(
+    "Search Parameters:",
+    location,
+    checkin,
+    checkout,
+    adults,
+    children,
+    infants,
+    pets,
+    locationId
+  );
+
   const { firstName, lastName } = useSessionDetails();
 
   // const [cities, setCities] = useState([]);
@@ -84,6 +98,21 @@ function PropertySearch() {
       setPopularProperties(response.data.data);
     });
   }, []);
+
+  useEffect(() => {
+    propertiesSearch({
+      location,
+      checkin,
+      checkout,
+      adults,
+      children,
+      infants,
+      pets,
+      locationId,
+    }).then((response: any) => {
+      setProperties(response?.data?.data);
+    });
+  }, [router.query]);
 
   //  Main fetch logic (combined categories + query params)
   useEffect(() => {

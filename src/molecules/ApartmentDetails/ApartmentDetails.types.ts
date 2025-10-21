@@ -8,6 +8,7 @@ export type Review = {
   };
   rating: number; // e.g., 1–5
   comment: string;
+
   date: string; // ISO date string (e.g., "2025-08-21T14:30:00Z")
 };
 

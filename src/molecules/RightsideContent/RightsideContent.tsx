@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 
 function RightsideContent({
   guests,
+  apartment,
+  price,
   isLoggedIn,
   isMobile,
 }: RightsideContentProps) {
@@ -83,12 +85,12 @@ function RightsideContent({
 
   const handleSigninClick = () => {
     setShowAuthModal(false);
-    router.push("/guest/signin");
+    router.push("/signin");
   };
 
   const handleSignupClick = () => {
     setShowAuthModal(false);
-    router.push("/guest/signup");
+    router.push("/signup");
   };
 
   return (
@@ -228,7 +230,9 @@ function RightsideContent({
           <p className="font-normal text-sm text-gray-500 ">
             Save 20% by booking more than 3 nights
           </p>
-          <p className="font-bold text-sm text-primary-600 ">₦70,000/Night</p>
+          <p className="font-bold text-sm text-primary-600 ">
+            ₦{(80 / 100) * price}/Night
+          </p>
         </div>
       </div>
       <div className="hidden md:block relative mt-6 ">
@@ -255,6 +259,9 @@ function RightsideContent({
       {showBookingSummary && (
         <BookingModal
           setShowBookingSummary={setShowBookingSummary}
+          apartment={apartment}
+          checkinDate={checkinDate}
+          checkoutDate={checkoutDate}
           showBookingSummary={showBookingSummary}
           setBookingSuccessModal={setBookingSuccessModal}
           isMobile={isMobile}

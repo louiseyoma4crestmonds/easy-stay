@@ -259,7 +259,7 @@ function SearchComp(props: SearchCompProps) {
                     neighbourhood={apt?.neighbourhood.name}
                     rate={apt?.rate}
                     rating={apt?.rating}
-                    rooms={apt?.rooms.name}
+                    rooms={apt?.type.name}
                     id={apt?.id}
                     onSave={(id, isSaved) => {
                       if (!isSaved) {
