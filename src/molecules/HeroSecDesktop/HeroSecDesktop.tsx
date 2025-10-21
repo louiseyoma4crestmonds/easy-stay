@@ -99,7 +99,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
                 : "hover:bg-white hover:bg-opacity-10"
             } px-2 py-1 rounded-sm`}
           >
-            <label className="font-medium text-sm text-white">Where</label>
+            <label className="font-medium text-sm text-gray-800">Where</label>
 
             <input
               type="text"
@@ -114,7 +114,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
                 // open dropdown on focus (user may focus without typing)
                 setLocationDropdownOpen(true);
               }}
-              className="bg-transparent text-sm text-gray-200 font-normal focus:outline-none w-full placeholder-gray-200"
+              className="bg-transparent text-sm text-gray-800 font-normal focus:outline-none w-full placeholder-gray-800"
               aria-label="Location"
             />
           </div>
@@ -146,7 +146,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
             setCheckoutOpen(false);
           }}
         >
-          <p className={styles.text}>Check In</p>
+          <p className="font-medium text-sm text-gray-800">Check In</p>
 
           <div className={styles.seconddiv}>
             <img
@@ -154,7 +154,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
               alt="calendar icon"
               className="w-4 h-4"
             />
-            <span className="text-sm text-gray-200 font-normal">
+            <span className="text-sm text-gray-800 font-normal">
               {checkinDate ? checkinDate.toLocaleDateString() : "Select Date"}
             </span>
           </div>
@@ -189,7 +189,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
           //     setCheckinOpen(false);
           //   }}
         >
-          <p className={styles.text}>Check Out</p>
+          <p className="font-medium text-sm text-gray-800">Check Out</p>
 
           <div className={styles.seconddiv}>
             <img
@@ -198,7 +198,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
               className="w-4 h-4"
             />
 
-            <span className="text-sm text-gray-200 font-normal">
+            <span className="text-sm text-gray-800 font-normal">
               {checkoutDate ? checkoutDate.toLocaleDateString() : "Select Date"}
             </span>
           </div>
@@ -225,7 +225,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
           }`}
           onClick={() => setGuestDropdownOpen((prev) => !prev)}
         >
-          <p className={styles.text}>Guests</p>
+          <p className="font-medium text-sm text-gray800">Guests</p>
 
           <div className={styles.seconddiv}>
             <img
@@ -234,7 +234,7 @@ function HeroSecDesktop(props: HeroSecDesktopProps) {
               className="w-4 h-4"
             />
 
-            <span className="text-sm text-gray-200 font-normal">
+            <span className="text-sm text-gray-800 font-normal">
               {guestCounts.adults === 0 &&
               guestCounts.children === 0 &&
               guestCounts.infants === 0 &&

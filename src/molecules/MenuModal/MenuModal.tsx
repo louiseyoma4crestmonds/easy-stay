@@ -34,7 +34,7 @@ function MenuModal({
   isLoggedIn,
 }: MenuModalProps) {
   const router = useRouter();
-  const handleSignupClick = () => router.push("/guest/signup");
+  const handleSignupClick = () => router.push("/signin");
   const [open, setOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);

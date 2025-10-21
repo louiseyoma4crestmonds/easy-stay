@@ -12,7 +12,7 @@ export default function SignupPage() {
 
   const router = useRouter();
   const handleSigninClick = () => {
-    router.push("/guest/signin");
+    router.push("/signin");
   };
 
   return (

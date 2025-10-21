@@ -1,8 +1,8 @@
 .heroP1 {
-  @apply font-normal text-sm md:text-base text-center text-white py-5;
+  @apply font-normal text-sm md:text-base text-center text-gray-300 py-5;
 }
 .heroSearchdiv {
-  @apply w-[90%] md:w-[80%]  mx-auto border border-gray-300 px-2 md:px-8 py-2 md:py-4  rounded-lg flex justify-between items-center shadow-lg bg-[#00000033];
+  @apply w-[90%] md:w-[80%]  mx-auto border border-gray-300 px-2 md:px-8 py-2 md:py-4  rounded-lg flex justify-between items-center shadow-lg bg-white;
 }
 .checkoutdiv {
   @apply hidden relative md:flex cursor-pointer flex-col w-[12%] border-r border-gray-300;

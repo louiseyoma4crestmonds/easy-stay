@@ -131,7 +131,7 @@ function Properties() {
                     neighbourhood={listing.neighbourhood.name}
                     rate={listing.rate}
                     rating={listing.rating}
-                    rooms={listing.rooms.name}
+                    rooms={listing.type.name}
                     id={listing.id}
                   />
                 )}

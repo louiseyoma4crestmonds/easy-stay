@@ -17,6 +17,22 @@ export async function getLocationNeighbourhoods(locationId: any) {
   return response;
 }
 
+export async function getPropertyReviews(propertyId: any) {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/property/reviews/${propertyId}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
+export async function getPropertyAmenities(propertyId: any) {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/property/amenities/${propertyId}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
 export async function getPropertiesNearby(
   usersLattitude: string,
   usersLongitude: String

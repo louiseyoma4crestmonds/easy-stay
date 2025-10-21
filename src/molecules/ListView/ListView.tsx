@@ -160,7 +160,7 @@ function ListView({ properties, isLoggedIn }: ListViewProps) {
 
               <div className="mt-2 flex justify-between">
                 <div className="px-2 bg-gray-100 rounded-md">
-                  <p className="text-xs text-gray-900">{property.rooms.name}</p>
+                  <p className="text-xs text-gray-900">{property.type.name}</p>
                 </div>
                 <p className="text-gray-500 text-xs truncate">
                   {property.neighbourhood.name}

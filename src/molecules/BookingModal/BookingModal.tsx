@@ -9,6 +9,9 @@ import { useState } from "react";
 function BookingModal(props: BookingModalProps) {
   const {
     showBookingSummary,
+    apartment,
+    checkinDate,
+    checkoutDate,
     setShowBookingSummary,
     setBookingSuccessModal,
     isMobile,
@@ -45,26 +48,30 @@ function BookingModal(props: BookingModalProps) {
             <div className="flex flex-col ">
               <div className="flex flex-row items-center gap-2 mb-1 md:mb-0">
                 <p className="text-gray-900 font-medium text-base ">
-                  Luxury Suite, Lekki
+                  {apartment.name}
                 </p>
                 <div>
                   <Image src="/images/little-star.png" width={16} height={16} />
                   <span className="text-gray-400 ml-0.5 font-normal text-sm ">
-                    4.4
+                    {apartment.rating}
                   </span>
                 </div>
               </div>
               <div className="text-primary-600 font-bold text-sm ">
-                ₦100,000/Night
+                ₦{apartment.price}/Night
               </div>
               <div className="flex flex-row items-center gap-2 my-1 md:my-0  ">
                 <p className="bg-gray-100 px-3 mt-1 rounded-md text-gray-900 font-medium text-sm ">
                   {" "}
-                  2 Bedrooms
+                  {apartment.type.name}
                 </p>
                 <p className="bg-gray-100 px-3  mt-1 rounded-md text-gray-900 font-medium text-sm ">
                   {" "}
-                  2 Guests
+                  {apartment.number_off_allowed_infants +
+                    apartment.number_off_allowed_adults +
+                    apartment.number_off_allowed_children +
+                    apartment.number_off_allowed_pets}{" "}
+                  Guests
                 </p>
               </div>
             </div>
@@ -72,9 +79,7 @@ function BookingModal(props: BookingModalProps) {
 
           <div className="flex flex-col py-4 border-y  ">
             <p className={styles.text}>Address</p>
-            <p className={styles.text2}>
-              2715 Ash Dr. San Jose, South Dakota 83475
-            </p>
+            <p className={styles.text2}>{apartment.address}</p>
           </div>
 
           <div className="flex flex-row justify-between items-center py-4 border-b ">
@@ -87,7 +92,9 @@ function BookingModal(props: BookingModalProps) {
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Check In Time</p>
-                <p className={styles.text2}>11:00 </p>
+                <p className={styles.text2}>
+                  {apartment.expected_checkin_time}{" "}
+                </p>
               </div>
             </div>
             <div className="flex flex-row w-[50%] items-center gap-3 ">
@@ -99,7 +106,9 @@ function BookingModal(props: BookingModalProps) {
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Check Out Time</p>
-                <p className={styles.text2}>16:00 </p>
+                <p className={styles.text2}>
+                  {apartment.expected_checkout_time}{" "}
+                </p>
               </div>
             </div>
           </div>
@@ -114,7 +123,9 @@ function BookingModal(props: BookingModalProps) {
               />
               <div className="flex flex-col ">
                 <p className={styles.text}>Number of days</p>
-                <p className={styles.text2}>2 </p>
+                <p className={styles.text2}>
+                  {(checkoutDate - checkinDate) / (3600000 * 24)}{" "}
+                </p>
               </div>
             </div>
             <button
@@ -128,19 +139,37 @@ function BookingModal(props: BookingModalProps) {
           <div className="flex flex-col space-y-2 py-4 border-b  ">
             <p className={styles.text}>Payment Summary</p>
             <div className="flex flex-row justify-between items-center ">
-              <p className={styles.text}>Booking (₦100,000 x 3)</p>
-              <p className={styles.text3}>₦300,000</p>
+              <p className={styles.text}>
+                Booking (₦{apartment.price} x{" "}
+                {(checkoutDate - checkinDate) / (3600000 * 24)})
+              </p>
+              <p className={styles.text3}>
+                ₦
+                {(apartment.price * (checkoutDate - checkinDate)) /
+                  (3600000 * 24)}
+              </p>
             </div>
           </div>
 
           <div className="flex flex-row justify-between items-center py-4 border-b">
             <p className={styles.text}>VAT (7.5%)</p>
-            <p className={styles.text3}>₦11,250</p>
+            <p className={styles.text3}>
+              ₦
+              {(7.5 / 100) *
+                ((apartment.price * (checkoutDate - checkinDate)) /
+                  (3600000 * 24))}
+            </p>
           </div>
         </div>
         <div className="flex flex-row justify-between items-center p-5 border-b">
           <p className="text-gray-800 font-semibold text-base ">Total Amount</p>
-          <p className={styles.text3}>₦311,250</p>
+          <p className={styles.text3}>
+            ₦
+            {(7.5 / 100) *
+              ((apartment.price * (checkoutDate - checkinDate)) /
+                (3600000 * 24)) +
+              (apartment.price * (checkoutDate - checkinDate)) / (3600000 * 24)}
+          </p>
         </div>
 
         <div className="flex flex-col  md:flex-row justify-between items-center py-4 px-5 ">
