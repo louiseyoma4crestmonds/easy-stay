@@ -141,6 +141,7 @@ function Home(): JSX.Element {
             <PropertyCard
               photo={listings?.photo}
               name={listings?.name}
+              price={listings?.price}
               description={listings.description}
               neighbourhood={listings?.neighbourhood.name}
               rate={listings?.rate}
@@ -236,7 +237,7 @@ function Home(): JSX.Element {
 
       <section className="w-[90%] md:w-[80%] flex justify-center items-center mx-auto ">
         <CarouselComp
-          title="Popular Apartments in Lagos"
+          title="Popular Apartments"
           itemsPerPage={3}
           items={popularProperties}
           className=" md:mb-28 "
@@ -246,7 +247,8 @@ function Home(): JSX.Element {
               name={listings?.name}
               description={listings.description}
               neighbourhood={listings?.neighbourhood.name}
-              rate={listings?.rate}
+              rate={""}
+              price={listings?.price}
               rating={listings?.rating}
               rooms={listings?.type.name}
               id={listings?.id}

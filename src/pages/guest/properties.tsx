@@ -130,6 +130,7 @@ function Properties() {
                     name={listing.name}
                     neighbourhood={listing.neighbourhood.name}
                     rate={listing.rate}
+                    price={listing.price}
                     rating={listing.rating}
                     rooms={listing.type.name}
                     id={listing.id}

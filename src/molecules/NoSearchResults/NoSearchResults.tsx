@@ -45,6 +45,7 @@ function NoSearchResults({
             description={listings.description}
             neighbourhood={listings?.neighbourhood.name}
             rate={listings?.rate}
+            price={listings.price}
             rating={listings?.rating}
             rooms={listings?.type.name}
             id={listings?.id}
@@ -63,6 +64,7 @@ function NoSearchResults({
             description={listings.description}
             neighbourhood={listings?.neighbourhood.name}
             rate={listings?.rate}
+            price={listings?.price}
             rating={listings?.rating}
             rooms={listings?.type.name}
             id={listings?.id}

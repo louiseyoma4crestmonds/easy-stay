@@ -16,6 +16,7 @@ function PropertyCard(props: PropertyCardProps) {
     neighbourhood,
     rate,
     rating,
+    price,
     rooms,
     onSave,
     description,
@@ -71,12 +72,12 @@ function PropertyCard(props: PropertyCardProps) {
 
   const handleSigninClick = () => {
     setShowAuthModal(false);
-    router.push("/guest/signin");
+    router.push("/signin");
   };
 
   const handleSignupClick = () => {
     setShowAuthModal(false);
-    router.push("/guest/signup");
+    router.push("/signup");
   };
 
   return (
@@ -184,7 +185,7 @@ function PropertyCard(props: PropertyCardProps) {
           {description}
         </p>
         <div className="flex justify-between items-start">
-          <p className="font-bold text-sm text-gray-800">{rate}</p>
+          <p className="font-bold text-sm text-gray-800">₦{price}/Night</p>
           <div className="flex items-center gap-1 ">
             <Image
               src="/images/little-star.png"

@@ -257,7 +257,8 @@ function SearchComp(props: SearchCompProps) {
                     name={apt?.name}
                     description={apt.description}
                     neighbourhood={apt?.neighbourhood.name}
-                    rate={apt?.rate}
+                    price={apt?.price}
+                    rate={""}
                     rating={apt?.rating}
                     rooms={apt?.type.name}
                     id={apt?.id}
