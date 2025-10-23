@@ -6,7 +6,7 @@ export type PropertyCardProps = {
   rate: string; // number for easy math/formatting
   rating: number; // 0-5
   status?: string;
-  price:number;
+  price: number;
   rooms: string;
   onSave?: (id: string | number, saved: boolean) => void;
   className?: string;

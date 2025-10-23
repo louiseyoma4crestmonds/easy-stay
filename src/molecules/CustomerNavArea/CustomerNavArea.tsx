@@ -104,7 +104,7 @@ function CustomerNavArea(props: CustomerNavAreaProps) {
         </div>
 
         {isLoggedIn && <CustomerTabs defaultTextColor={defaultTextColor} />}
-        {!isMobile && (
+        {!isMobile && isLoggedIn && (
           <div className="flex justify-between items-center gap-2 ">
             <MenuModal
               buttonClassName={isOnImage ? styles.btndiv : styles.btndivBanner}

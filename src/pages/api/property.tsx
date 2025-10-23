@@ -167,3 +167,24 @@ export async function registerProperty(properties: any, token: string) {
 
   return response;
 }
+
+export async function initiateFlutterwavePayment(data: any, token: string) {
+  const response = await axios
+    .post(`${endpointUrl}/easystay/initiate-flutterwave-payment`, data, {
+      headers: {
+        Authorization: `Token ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res);
+
+  return response;
+}
+
+export async function verifyFlutterwavePayment(data: any) {
+  const response = await axios
+    .post(`${endpointUrl}/easystay/verify-flutterwave-payment`, data, {})
+    .then((res) => res);
+
+  return response;
+}

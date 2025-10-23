@@ -4,6 +4,8 @@ export default function Document() {
   return (
     <Html>
       <Head />
+      <script src="https://checkout.flutterwave.com/v3.js"></script>
+
       <body>
         <Main />
         <NextScript />

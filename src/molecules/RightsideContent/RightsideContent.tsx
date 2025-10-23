@@ -10,6 +10,7 @@ import Modal from "../Modal";
 import BookingModal from "../BookingModal";
 import Calendar from "../Calendar";
 import { useRouter } from "next/router";
+import PaymentMethods from "@/organisms/PaymentMethods";
 
 function RightsideContent({
   guests,
@@ -30,12 +31,15 @@ function RightsideContent({
   const [showBookingSummary, setShowBookingSummary] = useState(false);
   const [bookingSuccessModal, setBookingSuccessModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [showChoosePaymentMethod, setShowChoosePaymentMethod] =
+    useState<boolean>(false);
   const [guestCounts, setGuestCounts] = useState<GuestCounts>({
     adults: 0,
     children: 0,
     infants: 0,
     pets: 0,
   });
+  const [amount, setAmount] = useState<any>(1);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -264,6 +268,8 @@ function RightsideContent({
           checkoutDate={checkoutDate}
           showBookingSummary={showBookingSummary}
           setBookingSuccessModal={setBookingSuccessModal}
+          setShowChoosePaymentMethod={setShowChoosePaymentMethod}
+          setAmountToPay={setAmount}
           isMobile={isMobile}
         />
       )}
@@ -278,6 +284,27 @@ function RightsideContent({
           modalcontent={styles.modalContent2}
         >
           <div className="pt-3 "> Booking Successful</div>
+        </Modal>
+      )}
+
+      {showChoosePaymentMethod && (
+        <Modal
+          isOpen
+          onClose={() => setShowChoosePaymentMethod(false)}
+          imageUrl=""
+          title="Payment Method"
+          width={48}
+          height={48}
+          modalcontent={""}
+        >
+          <div className="pt-3 ">
+            <PaymentMethods
+              checkinDate={checkinDate}
+              checkoutDate={checkoutDate}
+              apartment={apartment}
+              amount={amount}
+            />
+          </div>
         </Modal>
       )}
 

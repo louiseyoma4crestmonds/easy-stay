@@ -14,16 +14,20 @@ function BookingModal(props: BookingModalProps) {
     checkoutDate,
     setShowBookingSummary,
     setBookingSuccessModal,
+    setShowChoosePaymentMethod,
+    setAmountToPay,
     isMobile,
   } = props;
 
   const [agreed, setAgreed] = useState(false);
 
   const handlePayNow = () => {
-    // API CALL
-
-    setShowBookingSummary(false);
-    setBookingSuccessModal(true);
+    setShowChoosePaymentMethod(true);
+    setAmountToPay(
+      (7.5 / 100) *
+        ((apartment.price * (checkoutDate - checkinDate)) / (3600000 * 24)) +
+        (apartment.price * (checkoutDate - checkinDate)) / (3600000 * 24)
+    );
   };
 
   return (
