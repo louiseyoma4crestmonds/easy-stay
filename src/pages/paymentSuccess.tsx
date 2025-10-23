@@ -9,8 +9,9 @@ function PaymentSuccess() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const txid = urlParams.get("transaction_id");
+    const tx_ref = urlParams.get("tx_ref");
 
-    verifyFlutterwavePayment({ txid }).then((response: any) => {
+    verifyFlutterwavePayment({ txid, tx_ref }).then((response: any) => {
       if (response.data.status === "success") {
         // payment successful
         setPaymentSuccessful(true);

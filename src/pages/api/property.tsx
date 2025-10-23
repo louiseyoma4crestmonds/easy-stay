@@ -131,6 +131,14 @@ export async function getLocationFilterParameters() {
   return response;
 }
 
+export async function getGuestBookings(guestEmail: string) {
+  const response = await axios
+    .get(`${endpointUrl}/easystay/guest/bookings/${guestEmail}`)
+    .then((res) => res)
+    .catch((err) => err.message);
+  return response;
+}
+
 export async function searchWithFilterParameters(filterParameters: any) {
   const data = {
     filterParameters,

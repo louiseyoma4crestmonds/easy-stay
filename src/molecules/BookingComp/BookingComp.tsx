@@ -13,6 +13,8 @@ import Modal from "../Modal";
 import Button from "@/atoms/Button";
 import StarRating from "@/atoms/StarRating";
 import NoBooking from "@/atoms/NoBooking";
+import { getGuestBookings } from "src/pages/api/property";
+import { getSessionDetails } from "src/pages/api/user";
 
 const statusLabel: Record<BookingStatus, string> = {
   active: "Active",
@@ -56,6 +58,9 @@ function BookingComp({ isMobile }: BookingCompProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
+
   const tabs: BookingStatus[] = ["active", "upcoming", "past", "cancelled"];
 
   const counts = {
@@ -93,8 +98,20 @@ function BookingComp({ isMobile }: BookingCompProps) {
   ];
 
   useEffect(() => {
+    if (token === "") {
+      getSessionDetails().then((response: any) => {
+        setToken(response?.user.user.token.token.userData.data[0].token);
+        setEmail(response?.user.user.token.token.userData.data[0].user.email);
+      });
+    }
+  }, [token]);
+
+  useEffect(() => {
     // Simulated API response
-    setBookings(MOCK_BOOKINGS);
+    getGuestBookings(email).then((response: any) => {
+      setBookings(response?.data?.data);
+    });
+    // setBookings(MOCK_BOOKINGS);
   }, []);
 
   // Filtered bookings based on searchTerm
