@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Booking } from "src/helpers/dataTypes";
 import styles from "./BookingDrawer.module.css";
+import Moment from "react-moment";
 
 type BookingDrawerProps = {
   open: boolean;
@@ -12,6 +13,10 @@ type BookingDrawerProps = {
 
 function BookingDrawer(props: BookingDrawerProps) {
   const { open, onClose, booking, handleCancel, showReviewModal } = props;
+
+  const start: any = new Date(booking.checkin_date);
+  const end: any = new Date(booking.checkout_date);
+  const numberOfDays = (end - start) / (1000 * 60 * 60 * 24);
 
   const statusStyles: Record<string, string> = {
     active: "bg-primary-100 text-primary-800",
@@ -31,13 +36,17 @@ function BookingDrawer(props: BookingDrawerProps) {
                 <p className="text-gray-500 font-normal text-sm ">
                   Date Booked
                 </p>
-                <p className={styles.P2}>12/12/2025</p>
+                <p className={styles.P2}>
+                  <Moment format="DD/MM/YYYY">{booking.created_at}</Moment>
+                </p>
               </div>
               <div className="flex flex-col mt-3 md:mt-0 ">
                 <p className="text-gray-500 font-normal text-sm ">
                   Booking Dates
                 </p>
-                <p className={styles.P2}>07/05/2016 - 09/05/2016</p>
+                <p className={styles.P2}>
+                  {booking.checkin_date} - {booking.checkout_date}
+                </p>
               </div>
             </div>
 
@@ -46,18 +55,29 @@ function BookingDrawer(props: BookingDrawerProps) {
                 <p className="text-gray-500 font-normal text-sm ">
                   Number of Days
                 </p>
-                <p className={styles.P2}>{booking.numberOfDays} </p>
+                <p className={styles.P2}>
+                  {numberOfDays}
+                  {/*
+                  {Math.floor(
+                    (checkoutDate - checkinDate) / (3600000 * 24)
+                  )}{" "}
+                  */}
+                </p>
               </div>
               <div className="flex flex-col">
                 <p className="text-gray-500 font-normal text-sm ">
                   Rates/Night
                 </p>
-                <p className={styles.P2}>100,0000</p>
+                <p className={styles.P2}>{booking.property.price}</p>
               </div>
             </div>
             <div className="flex flex-col mb-4 ">
               <p className="text-gray-500 font-normal text-sm ">Address</p>
-              <p className={styles.P2}>{booking.location}</p>
+              <p className={styles.P2}>
+                {booking.property.address},{" "}
+                {booking.property.neighbourhood.name},
+                {booking.property.location.name}
+              </p>
             </div>
             <div className="flex flex-col">
               <p className="text-gray-500 font-normal text-sm ">
@@ -73,19 +93,24 @@ function BookingDrawer(props: BookingDrawerProps) {
             <div className="flex flex-col md:flex-row items-start md:items-center ">
               <div className="flex flex-col w-full md:w-[50%] ">
                 <p className="text-gray-500 font-normal text-sm ">Host Name</p>
-                <p className={styles.P2}>Lekan Okeowo</p>
+                <p className={styles.P2}>
+                  {booking.property.host.account.first_name},{" "}
+                  {booking.property.host.account.last_name}
+                </p>
               </div>
               <div className="flex flex-col mt-3 md:mt-0 ">
                 <p className="text-gray-500 font-normal text-sm ">
                   Host Phone Number
                 </p>
-                <p className={styles.P2}>+2347031267197</p>
+                <p className={styles.P2}>
+                  {booking.property.host.account.phone}
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col mt-3 md:mt-2 mb-4 ">
               <p className="text-gray-500 font-normal text-sm ">Email</p>
-              <p className={styles.P2}>okeowo.lekan@gmail.com</p>
+              <p className={styles.P2}>{booking.property.host.account.email}</p>
             </div>
           </div>
 
@@ -98,7 +123,7 @@ function BookingDrawer(props: BookingDrawerProps) {
                 <p className={styles.P2}>
                   {booking.status === "upcoming"
                     ? "-"
-                    : "07/05/2025 09:17AM"}{" "}
+                    : booking.checkin_date}{" "}
                 </p>
               </div>
               <div className="flex flex-col mt-3 md:mt-0 ">
@@ -107,7 +132,7 @@ function BookingDrawer(props: BookingDrawerProps) {
                   {" "}
                   {booking.status === "active" || booking.status === "upcoming"
                     ? "-"
-                    : "07/05/2025 09:17AM"}{" "}
+                    : booking.checkout_date}{" "}
                 </p>
               </div>
             </div>
@@ -137,55 +162,6 @@ function BookingDrawer(props: BookingDrawerProps) {
             </div>
           )}
 
-          {/* DAYS PROGRESS */}
-          {booking.numberOfDays && booking.numberOfDays > 0 && (
-            <div className="flex flex-col border-b py-2">
-              <div className="">
-                {Array.from({ length: booking.numberOfDays }, (_, i) => {
-                  const dayNumber = i + 1;
-
-                  // Example logic: all days before today = completed, otherwise upcoming
-                  const isCompleted =
-                    booking.status === "past" ||
-                    (booking.status === "active" && i < 1);
-
-                  return (
-                    <div
-                      key={dayNumber}
-                      className="flex items-center justify-between py-2"
-                    >
-                      {/* Left side: Image + Day text */}
-                      <div className="flex items-center gap-3">
-                        <Image
-                          src={
-                            isCompleted
-                              ? "/images/completed.png"
-                              : "/images/upcoming2.png"
-                          }
-                          width={24}
-                          height={24}
-                          alt={`Day ${dayNumber}`}
-                        />
-                        <p className="text-gray-500 font-normal text-sm ">{`Day ${dayNumber}`}</p>
-                      </div>
-
-                      {/* Right side: Status badge */}
-                      <span
-                        className={`px-3 py-1 text-xs md:text-sm font-normal uppercase rounded-md ${
-                          isCompleted
-                            ? "bg-green-100 text-green-900"
-                            : "bg-gray-100 text-gray-900"
-                        }`}
-                      >
-                        {isCompleted ? "Completed" : "Upcoming"}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
           {/*PAYMENT HISTORY*/}
           <div
             className={`flex flex-col py-3 ${booking.status === "cancelled" ? "border-b" : ""} `}
@@ -196,7 +172,10 @@ function BookingDrawer(props: BookingDrawerProps) {
               <p className="text-gray-500 font-normal text-sm ">
                 Total Amount Paid
               </p>
-              <p className={styles.P2}> ₦300,000</p>
+              <p className={styles.P2}>
+                {" "}
+                ₦{numberOfDays * booking.property.price}
+              </p>
             </div>
           </div>
 

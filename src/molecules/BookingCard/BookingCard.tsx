@@ -4,6 +4,7 @@ import CustomDropdown from "../CustomDropdown";
 import styles from "./BookingCard.module.css";
 import { useState, VoidFunctionComponent } from "react";
 import { DropdownOption } from "../CustomDropdown/CustomDropdown.types";
+import Moment from "react-moment";
 
 type BookingCardProps = {
   booking: Booking;
@@ -47,7 +48,7 @@ function BookingCard({ booking, onOpen, handleCancel }: BookingCardProps) {
               onChange={setSelectedOption}
               buttonClassName={styles.btndiv}
               dropdownClassName={styles.dropdowndiv}
-              toggleLabel={booking.id}
+              toggleLabel={booking.transaction_reference}
               hideButtonLabel
             />
           ) : (
@@ -57,10 +58,15 @@ function BookingCard({ booking, onOpen, handleCancel }: BookingCardProps) {
 
         <span className="hidden md:block">{booking.id}</span>
       </td>
-      <td className=" py-2 ">{booking.apartmentType}</td>
-      <td className=" py-2 truncate ">{booking.location}</td>
-      <td className="hidden md:table-cell  py-2">{booking.amount}</td>
-      <td className="hidden md:table-cell py-2">{booking.date}</td>
+      <td className=" py-2 ">{booking.property.type.name}</td>
+      <td className=" py-2 truncate ">
+        {booking.property.address}, {booking.property.neighbourhood.name},{" "}
+        {booking.property.location.name}
+      </td>
+      <td className="hidden md:table-cell  py-2">N{booking.property.price}</td>
+      <td className="hidden md:table-cell py-2">
+        <Moment format="DD/MM/YYYY">{booking.created_at}</Moment>
+      </td>
       <td className="hidden md:table-cell py-2">
         <span
           className={`px-2.5 py-0.5 rounded-md  text-xs font-normal uppercase ${

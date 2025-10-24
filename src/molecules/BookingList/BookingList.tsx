@@ -39,7 +39,7 @@ function BookingList({
           ) : (
             bookings.map((booking) => (
               <BookingCard
-                key={booking.id}
+                key={booking.transaction_reference}
                 booking={booking}
                 onOpen={onOpen}
                 handleCancel={handleCancel}

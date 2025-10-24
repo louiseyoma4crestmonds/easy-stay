@@ -128,7 +128,9 @@ function BookingModal(props: BookingModalProps) {
               <div className="flex flex-col ">
                 <p className={styles.text}>Number of days</p>
                 <p className={styles.text2}>
-                  {(checkoutDate - checkinDate) / (3600000 * 24)}{" "}
+                  {Math.floor(
+                    (checkoutDate - checkinDate) / (3600000 * 24)
+                  )}{" "}
                 </p>
               </div>
             </div>
@@ -145,7 +147,7 @@ function BookingModal(props: BookingModalProps) {
             <div className="flex flex-row justify-between items-center ">
               <p className={styles.text}>
                 Booking (₦{apartment.price} x{" "}
-                {(checkoutDate - checkinDate) / (3600000 * 24)})
+                {Math.floor((checkoutDate - checkinDate) / (3600000 * 24))})
               </p>
               <p className={styles.text3}>
                 ₦

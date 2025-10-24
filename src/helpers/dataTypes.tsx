@@ -109,18 +109,6 @@ export type PaymentStatus =
   | "approved"
   | "rejected";
 
-export type Booking = {
-  id: string;
-  apartmentType: string;
-  title: string;
-  location: string;
-  date: string; // ISO date
-  status: BookingStatus;
-  imageUrl: string;
-  amount: number;
-  numberOfDays: number;
-};
-
 export type HostBooking = {
   id: string;
   guestName: string;
@@ -198,6 +186,38 @@ export type HostIssues = {
   };
 };
 
+export type Booking = {
+  id: number;
+  checkin_date: string;
+  checkout_date: string;
+  property: {
+    address: string;
+    expected_checkin_time: string;
+    expected_checkout_time: string;
+    price: number;
+    type: { name: string };
+    location: { name: string };
+    name: string;
+    neighbourhood: { name: string };
+    number_off_allowed_adults: number;
+    number_off_allowed_children: number;
+    number_off_allowed_guests: number;
+    number_off_allowed_infants: number;
+    number_off_allowed_pets: number;
+    host: {
+      account: {
+        email: string;
+        phone: string;
+        first_name: string;
+        last_name: string;
+      };
+    };
+  };
+  status: string;
+  transaction_reference: string;
+  created_at: string;
+};
+
 const SHARED_ISSUE_MESSAGE =
   "1 apartment and 1 property requires additional documentation before it can be approved. Please review and resubmit the required documents. within specified timing.";
 const SHARED_ISSUE_TIMING = 48;
@@ -254,6 +274,7 @@ export const hostFAQs: FAQ[] = [
   },
 ];
 
+/*
 export const MOCK_BOOKINGS: Booking[] = [
   {
     id: "b1",
@@ -311,6 +332,7 @@ export const MOCK_BOOKINGS: Booking[] = [
     amount: 250000,
   },
 ];
+*/
 
 export const HOST_MOCK_BOOKINGS: HostBooking[] = [
   {

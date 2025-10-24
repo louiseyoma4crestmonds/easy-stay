@@ -2,7 +2,7 @@ import StatsCategory, {
   CategoriesProp,
 } from "@/atoms/StatsCategory/StatsCategory";
 import { useEffect, useState } from "react";
-import { Booking, BookingStatus, MOCK_BOOKINGS } from "src/helpers/dataTypes";
+import { Booking, BookingStatus } from "src/helpers/dataTypes";
 import styles from "./BookingComp.module.css";
 import SearchInput from "@/atoms/SearchInput";
 import Tabs from "@/atoms/Tabs";
@@ -64,10 +64,10 @@ function BookingComp({ isMobile }: BookingCompProps) {
   const tabs: BookingStatus[] = ["active", "upcoming", "past", "cancelled"];
 
   const counts = {
-    active: bookings.filter((b) => b.status === "active").length,
-    upcoming: bookings.filter((b) => b.status === "upcoming").length,
-    past: bookings.filter((b) => b.status === "past").length,
-    cancelled: bookings.filter((b) => b.status === "cancelled").length,
+    active: bookings?.filter((b) => b.status === "active").length,
+    upcoming: bookings?.filter((b) => b.status === "upcoming").length,
+    past: bookings?.filter((b) => b.status === "past").length,
+    cancelled: bookings?.filter((b) => b.status === "cancelled").length,
   };
 
   const categories: CategoriesProp[] = [
@@ -109,18 +109,19 @@ function BookingComp({ isMobile }: BookingCompProps) {
   useEffect(() => {
     // Simulated API response
     getGuestBookings(email).then((response: any) => {
-      setBookings(response?.data?.data);
+      if (email !== "") {
+        setBookings(response?.data?.data[0]);
+      }
     });
-    // setBookings(MOCK_BOOKINGS);
-  }, []);
+  }, [email]);
 
   // Filtered bookings based on searchTerm
   // WILL CONSUME API FOR THIS
   // Filter bookings by active tab and search term
-  const filteredBookings = bookings.filter(
+  const filteredBookings = bookings?.filter(
     (b) =>
       b.status === activeTab &&
-      b.title.toLowerCase().includes(searchTerm.toLowerCase())
+      b.property.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const onOpen = (b: Booking) => {
@@ -207,7 +208,7 @@ function BookingComp({ isMobile }: BookingCompProps) {
         </div>
 
         <div className="mt-6 ">
-          {filteredBookings.length > 0 ? (
+          {filteredBookings?.length > 0 ? (
             <BookingList
               bookings={filteredBookings}
               searchTerm={searchTerm}
