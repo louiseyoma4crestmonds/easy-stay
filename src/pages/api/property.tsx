@@ -163,14 +163,22 @@ export async function propertiesSearch(filterParameters: any) {
   return response;
 }
 
-export async function registerProperty(properties: any, token: string) {
+export async function registerProperty(
+  properties: any,
+  batch: string,
+  token: string
+) {
   const response = await axios
-    .post(`${endpointUrl}/easystay/register/properties`, properties, {
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    .post(
+      `${endpointUrl}/easystay/register/properties`,
+      { properties, batch },
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
     .then((res) => res);
 
   return response;
@@ -192,6 +200,18 @@ export async function initiateFlutterwavePayment(data: any, token: string) {
 export async function verifyFlutterwavePayment(data: any) {
   const response = await axios
     .post(`${endpointUrl}/easystay/verify-flutterwave-payment`, data, {})
+    .then((res) => res);
+
+  return response;
+}
+
+export async function verifyFlutterwavePropertyVerificationPayment(data: any) {
+  const response = await axios
+    .post(
+      `${endpointUrl}/easystay/verify-flutterwave-property-registration-payment`,
+      data,
+      {}
+    )
     .then((res) => res);
 
   return response;

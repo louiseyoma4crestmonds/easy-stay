@@ -1,9 +1,7 @@
 import Button from "@/atoms/Button";
 import styles from "./Step3PropVerification.module.css";
 import { Property } from "../Step1Property/Step1Property";
-import Properties from "src/pages/guest/properties";
 import { useEffect, useState } from "react";
-import Terms from "@/atoms/Host/Terms";
 
 type Step3PropVerificationProps = {
   onProceed: () => void;
@@ -31,7 +29,6 @@ function Step3PropVerification(props: Step3PropVerificationProps) {
 
   const payFees = () => {
     //CONSUME API
-
     setSaveProperty(true);
   };
 

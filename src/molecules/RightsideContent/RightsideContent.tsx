@@ -303,6 +303,7 @@ function RightsideContent({
               checkoutDate={checkoutDate}
               apartment={apartment}
               amount={amount}
+              operation="booking"
             />
           </div>
         </Modal>

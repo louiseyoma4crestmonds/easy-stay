@@ -9,6 +9,10 @@ import styles from "./OnboardingComp.module.css";
 import Quality from "@/atoms/Host/Quality";
 import Cookies from "@/atoms/Host/Cookies";
 import { registerProperty } from "src/pages/api/property";
+import Modal from "@/molecules/Modal";
+import PaymentMethods from "@/organisms/PaymentMethods";
+import { json } from "stream/consumers";
+import { generateRandomString } from "src/services/utilities/generateRandomString";
 
 type componentProp = {
   token: string;
@@ -17,6 +21,7 @@ type componentProp = {
 function OnboardingComp(props: componentProp) {
   const { token } = props;
   const [step, setStep] = useState(1);
+  const [batch, setBatch] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [saveProperty, setSaveProperty] = useState(false);
   const [properties, setProperties] = useState<Property[]>([
@@ -39,16 +44,23 @@ function OnboardingComp(props: componentProp) {
   const next = () => setStep((s) => Math.min(s + 1, 3));
   const back = () => setStep((s) => Math.max(s - 1, 1));
 
+  const [showChoosePaymentMethod, setShowChoosePaymentMethod] =
+    useState<boolean>(false);
+
   const backToStep1 = () => {
     setStep(1);
   };
 
   useEffect(() => {
+    setBatch(generateRandomString(64));
+  }, []);
+
+  useEffect(() => {
     if (saveProperty) {
-      // Submit to properties data to server if it is successfull then show payment page.
-      registerProperty(properties, token).then((response: any) => {
+      localStorage.setItem("propertiesToRegister", JSON.stringify(properties));
+      registerProperty(properties, batch, token).then((response: any) => {
         if (response.status === 201) {
-          setShowSuccess(true);
+          setShowChoosePaymentMethod(true);
         }
       });
     }
@@ -131,6 +143,30 @@ function OnboardingComp(props: componentProp) {
       {showModal === "terms" && <Terms setShowModal={setShowModal} />}
       {showModal === "quality" && <Quality setShowModal={setShowModal} />}
       {showModal === "privacy" && <Cookies setShowModal={setShowModal} />}
+
+      {/* PAYMENT MODAL */}
+      {showChoosePaymentMethod && (
+        <Modal
+          isOpen
+          onClose={() => setShowChoosePaymentMethod(false)}
+          imageUrl=""
+          title="Payment Method"
+          width={48}
+          height={48}
+          modalcontent={""}
+        >
+          <div className="pt-3 ">
+            <PaymentMethods
+              checkinDate={""}
+              checkoutDate={""}
+              operation="verification"
+              apartment={batch}
+              amount={(7.5 / 100) * 50000 + properties?.length * 50000}
+            />
+          </div>
+        </Modal>
+      )}
+      {/* END PAYMENT MODAL */}
     </div>
   );
 }

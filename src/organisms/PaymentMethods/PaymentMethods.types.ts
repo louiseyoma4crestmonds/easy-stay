@@ -4,4 +4,5 @@ export type PaymentMethodsProps = {
   checkinDate: any;
   checkoutDate: any;
   apartment: any;
+  operation: string;
 };

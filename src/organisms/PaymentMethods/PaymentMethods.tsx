@@ -8,7 +8,13 @@ import { initiateFlutterwavePayment } from "src/pages/api/property";
 import { getSessionDetails } from "src/pages/api/user";
 
 function HeroBanner(props: PaymentMethodsProps) {
-  const { amount, checkinDate, checkoutDate, apartment } = props;
+  const {
+    amount,
+    checkinDate,
+    checkoutDate,
+    apartment,
+    operation = "booking",
+  } = props;
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -29,7 +35,7 @@ function HeroBanner(props: PaymentMethodsProps) {
           checkinDate,
           checkoutDate,
           apartment,
-          operation: "booking",
+          operation: operation,
         },
         token
       ).then((response: any) => {
@@ -55,8 +61,6 @@ function HeroBanner(props: PaymentMethodsProps) {
       });
     }
   }, [token]);
-
-  console.log(checkinDate, checkoutDate, apartment);
 
   return (
     <div className="w-full p-4">
